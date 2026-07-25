@@ -211,13 +211,6 @@
   .stat{border:1px solid var(--rim);border-radius:var(--r);background:var(--panel);padding:var(--s3) var(--s4)}
   .stat .k{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:600}
   .stat .v{font-family:'Anton',sans-serif;font-size:28px;line-height:1.1;font-variant-numeric:tabular-nums}
-  .mixrow{margin-top:var(--s4)}
-  .mixrow .mhead{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;margin-bottom:var(--s1)}
-  .mixrow .mhead b{font-weight:600}
-  .mixrow .mhead .tgt{color:var(--mute);font-variant-numeric:tabular-nums}
-  .bar{height:10px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);position:relative;overflow:hidden}
-  .bar .fill{position:absolute;inset:0 auto 0 0;border-radius:999px}
-  .bar .tick{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);opacity:.6}
   .entry{border:1px solid var(--rim);border-radius:var(--r);background:var(--panel);padding:var(--s3) var(--s4);margin-top:var(--s3)}
   .entry .etop{display:flex;justify-content:space-between;gap:var(--s3);align-items:baseline;flex-wrap:wrap}
   .entry .etitle{font-weight:600;font-size:14px}
@@ -259,7 +252,83 @@
   .scale .ulab{font-family:ui-monospace,monospace;font-size:10px;color:var(--mute);text-align:center;margin-top:2px}
 
   footer.foot{margin-top:var(--s16);padding-top:var(--s6);border-top:1px solid var(--line);color:var(--mute);font-size:12px}
+
+  /* ================= DONUTS ================= */
+  .donutwrap{display:grid;grid-template-columns:1fr 1fr;gap:var(--s6)}
+  @media(max-width:640px){.donutwrap{grid-template-columns:1fr}}
+  .donut{display:flex;flex-direction:column;align-items:center;gap:var(--s3)}
+  .donut svg{width:min(200px,100%);height:auto}
+  .donut .dtitle{font-family:'Anton',sans-serif;font-size:15px;letter-spacing:.03em;text-transform:uppercase;text-align:center}
+  .dleg{width:100%;display:flex;flex-direction:column;gap:var(--s1)}
+  .dleg .lrow{display:flex;align-items:center;gap:var(--s2);font-size:12.5px}
+  .dleg .dot{width:10px;height:10px;border-radius:999px;flex:0 0 auto}
+  .dleg .lname{color:var(--ink);font-weight:600;flex:1}
+  .dleg .lval{color:var(--mute);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .dcenter{font-family:'Anton',sans-serif;fill:var(--ink);font-size:26px}
+  .dcenter2{font-family:'Inter',sans-serif;fill:var(--mute);font-size:8px;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+  .dring-note{font-size:11px;color:var(--mute);text-align:center}
+
+  /* ================= BACKGROUND ATMOSPHERE =================
+     A fixed layer behind the shell. Never louder than the content.
+     Options are picked on the Today tab and saved on device. */
+  .shell{position:relative;z-index:1}
+  #bglayer{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  #bglayer .bgl{position:absolute;inset:0;opacity:0;transition:opacity .5s ease}
+
+  /* grain. an svg noise tile, stepped so it flickers like film, nudged by the pointer */
+  .bg-grain{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:240px 240px;opacity:0;mix-blend-mode:screen}
+  html:not([data-theme="light"]) .bg-grain{mix-blend-mode:screen}
+  :root[data-theme="light"] .bg-grain{mix-blend-mode:multiply}
+  @media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .bg-grain{mix-blend-mode:multiply}}
+  #bglayer.on-grain .bg-grain,#bglayer.on-glowgrain .bg-grain{opacity:.045}
+  :root[data-theme="light"] #bglayer.on-grain .bg-grain,:root[data-theme="light"] #bglayer.on-glowgrain .bg-grain{opacity:.05}
+  @keyframes grainjump{0%{background-position:0 0}12%{background-position:-60px 40px}25%{background-position:40px -70px}37%{background-position:-80px -20px}50%{background-position:70px 60px}62%{background-position:-30px 90px}75%{background-position:90px -40px}87%{background-position:-50px -80px}100%{background-position:0 0}}
+  #bglayer.on-grain .bg-grain,#bglayer.on-glowgrain .bg-grain{animation:grainjump .9s steps(1) infinite}
+  @media (prefers-reduced-motion: reduce){#bglayer .bg-grain{animation:none !important}}
+
+  /* grid. a faint geometry that only really shows near the pointer */
+  .bg-grid{
+    --gline:rgba(236,232,224,.033);
+    background-image:linear-gradient(var(--gline) 1px,transparent 1px),linear-gradient(90deg,var(--gline) 1px,transparent 1px);
+    background-size:56px 56px;
+  }
+  :root[data-theme="light"] .bg-grid{--gline:rgba(26,26,26,.05)}
+  @media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .bg-grid{--gline:rgba(26,26,26,.05)}}
+  .bg-gridspot{
+    --gline2:rgba(109,40,217,.14);
+    background-image:linear-gradient(var(--gline2) 1px,transparent 1px),linear-gradient(90deg,var(--gline2) 1px,transparent 1px);
+    background-size:56px 56px;
+    -webkit-mask-image:radial-gradient(240px 240px at var(--mx,50%) var(--my,30%),#000 0%,transparent 70%);
+    mask-image:radial-gradient(240px 240px at var(--mx,50%) var(--my,30%),#000 0%,transparent 70%);
+  }
+  #bglayer.on-grid .bg-grid{opacity:1}
+  #bglayer.on-grid .bg-gridspot{opacity:1}
+
+  /* glow. hero purple only, huge, blurred, and slow. one accent, never a second */
+  .bg-glow .blob{position:absolute;border-radius:50%;filter:blur(80px);will-change:transform}
+  .bg-glow .b1{width:clamp(420px,62vmax,880px);height:clamp(420px,62vmax,880px);right:-22%;top:-16%;background:radial-gradient(circle,rgba(109,40,217,.22) 0%,transparent 65%)}
+  .bg-glow .b2{width:clamp(360px,54vmax,760px);height:clamp(360px,54vmax,760px);left:-26%;bottom:-18%;background:radial-gradient(circle,rgba(109,40,217,.15) 0%,transparent 65%)}
+  :root[data-theme="light"] .bg-glow .b1{background:radial-gradient(circle,rgba(109,40,217,.14) 0%,transparent 65%)}
+  :root[data-theme="light"] .bg-glow .b2{background:radial-gradient(circle,rgba(109,40,217,.10) 0%,transparent 65%)}
+  @keyframes drift1{0%{transform:translate(0,0) scale(1)}50%{transform:translate(-6vw,5vh) scale(1.12)}100%{transform:translate(0,0) scale(1)}}
+  @keyframes drift2{0%{transform:translate(0,0) scale(1.08)}50%{transform:translate(5vw,-5vh) scale(.96)}100%{transform:translate(0,0) scale(1.08)}}
+  #bglayer.on-glow .bg-glow,#bglayer.on-glowgrain .bg-glow{opacity:1}
+  #bglayer.on-glow .b1,#bglayer.on-glowgrain .b1{animation:drift1 52s ease-in-out infinite}
+  #bglayer.on-glow .b2,#bglayer.on-glowgrain .b2{animation:drift2 64s ease-in-out infinite}
+  @media (prefers-reduced-motion: reduce){#bglayer .blob{animation:none !important}}
+
+  .bgpick{display:flex;gap:var(--s1);flex-wrap:wrap}
+  .bgpick button{font-size:12px;font-weight:600;color:var(--mute);border:1px solid var(--rim);border-radius:999px;padding:var(--s1) var(--s3)}
+  .bgpick button[aria-pressed="true"]{background:var(--purple);border-color:var(--purple);color:#ECE8E0}
 </style>
+
+<div id="bglayer" aria-hidden="true">
+  <div class="bgl bg-glow"><div class="blob b1"></div><div class="blob b2"></div></div>
+  <div class="bgl bg-grid"></div>
+  <div class="bgl bg-gridspot"></div>
+  <div class="bgl bg-grain"></div>
+</div>
 
 <div class="shell">
   <header class="top">
@@ -321,6 +390,20 @@
         <button class="btn" data-goto="tracker">Log a post</button>
         <button class="btn ghost" data-goto="build">Build a piece</button>
         <button class="btn ghost" data-goto="library">Grab approved copy</button>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Background · pick what feels right</div>
+      <div class="panelcard">
+        <div class="bgpick" role="group" aria-label="Background style">
+          <button data-bg="flat">Flat</button>
+          <button data-bg="grain">Grain</button>
+          <button data-bg="grid">Grid</button>
+          <button data-bg="glow">Glow</button>
+          <button data-bg="glowgrain">Glow + grain</button>
+        </div>
+        <p class="note" style="margin-top:var(--s3)">Five takes on softening the black. Grain is moving film noise. Grid is a faint geometry that reveals itself around your pointer. Glow is a slow drift of hero purple. The pick saves on this device, tell Claude which one to lock in for everywhere.</p>
       </div>
     </div>
 
@@ -804,6 +887,33 @@
   tabs.forEach(function(t){ t.addEventListener('click', function(){ show(t.dataset.view); }); });
   document.querySelectorAll('[data-goto]').forEach(function(b){ b.addEventListener('click', function(){ show(b.dataset.goto); }); });
 
+  /* ---------- background atmosphere ---------- */
+  var BGKEY='rt-hub-bg-v1';
+  var bglayer=document.getElementById('bglayer');
+  var bgChoice='glowgrain';
+  try{ bgChoice = localStorage.getItem(BGKEY) || 'glowgrain'; }catch(e){}
+  function applyBg(c){
+    bgChoice=c;
+    bglayer.className = c==='flat' ? '' : 'on-'+c;
+    document.querySelectorAll('.bgpick button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.bg===c)); });
+    try{ localStorage.setItem(BGKEY,c); }catch(e){}
+  }
+  document.querySelectorAll('.bgpick button').forEach(function(b){ b.addEventListener('click', function(){ applyBg(b.dataset.bg); }); });
+  applyBg(bgChoice);
+  var grainEl=bglayer.querySelector('.bg-grain');
+  var pmQueued=false, px=0, py=0;
+  window.addEventListener('pointermove', function(e){
+    px=e.clientX; py=e.clientY;
+    if(pmQueued) return; pmQueued=true;
+    requestAnimationFrame(function(){
+      pmQueued=false;
+      document.documentElement.style.setProperty('--mx', px+'px');
+      document.documentElement.style.setProperty('--my', py+'px');
+      var dx=(px/window.innerWidth-.5)*8, dy=(py/window.innerHeight-.5)*8;
+      grainEl.style.transform='translate('+dx.toFixed(1)+'px,'+dy.toFixed(1)+'px)';
+    });
+  }, {passive:true});
+
   /* ---------- clipboard ---------- */
   function copyText(txt, btn){
     function done(){ if(btn){ var old=btn.innerHTML; btn.classList.add('done'); btn.innerHTML='✓ Copied'; setTimeout(function(){ btn.classList.remove('done'); btn.innerHTML=old; },1400);} }
@@ -934,9 +1044,56 @@
     if(d<=20) return {cls:'warn',icon:'!',word:'Drifting'};
     return {cls:'err',icon:'✕',word:'Off mix'};
   }
-  function barRow(label,actual,target,colour){
-    return '<div class="mixrow"><div class="mhead"><span><b>'+label+'</b></span><span class="tgt">'+actual+'% now · target '+target+'%</span></div>'+
-      '<div class="bar"><div class="fill" style="width:'+Math.min(actual,100)+'%;background:'+colour+'"></div><div class="tick" style="left:'+target+'%"></div></div></div>';
+  /* ---------- hollow pie ----------
+     Inner thick ring is the actual mix. Outer thin ring is the target.
+     2px surface gaps between segments, and every value is written in the
+     legend so colour is never the only carrier. */
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+  function ringPaths(segs, cx, cy, r, t){
+    var total = segs.reduce(function(a,s){ return a+s.value; },0);
+    if(!total) return '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="var(--code)" stroke-width="'+t+'"/>';
+    var vis = segs.filter(function(s){ return s.value>0; });
+    if(vis.length===1){
+      return '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+vis[0].color+'" stroke-width="'+t+'"><title>'+esc(vis[0].tip)+'</title></circle>';
+    }
+    var gap = 2.2/r; /* about 2px of arc, in radians */
+    var a = -Math.PI/2, out = '';
+    segs.forEach(function(s){
+      if(!s.value) return;
+      var sweep = s.value/total*Math.PI*2;
+      var a0 = a + gap/2, a1 = a + sweep - gap/2;
+      if(a1 > a0){
+        var x0=cx+r*Math.cos(a0), y0=cy+r*Math.sin(a0), x1=cx+r*Math.cos(a1), y1=cy+r*Math.sin(a1);
+        var large = (a1-a0)>Math.PI?1:0;
+        out += '<path d="M'+x0.toFixed(2)+' '+y0.toFixed(2)+' A'+r+' '+r+' 0 '+large+' 1 '+x1.toFixed(2)+' '+y1.toFixed(2)+'" fill="none" stroke="'+s.color+'" stroke-width="'+t+'" stroke-linecap="butt"><title>'+esc(s.tip)+'</title></path>';
+      }
+      a += sweep;
+    });
+    return out;
+  }
+  var SERIES_COLS = ['var(--pink)','var(--aqua)','var(--purple)'];
+  function donutHTML(title, keys, labels, targets, counts, total, centreWord, emptyMsg){
+    var html = '<div class="donut"><div class="dtitle">'+esc(title)+'</div>';
+    if(!total){
+      return html + '<p class="note" style="text-align:center;max-width:30ch">'+esc(emptyMsg)+'</p></div>';
+    }
+    var actual = keys.map(function(k,i){
+      var v = counts[k]||0;
+      return {value:v, color:SERIES_COLS[i], tip:labels[k]+' · '+v+' of '+total+' · '+pct(v,total)+'% (target '+targets[k]+'%)'};
+    });
+    var tgt = keys.map(function(k,i){
+      return {value:targets[k], color:SERIES_COLS[i], tip:labels[k]+' target · '+targets[k]+'%'};
+    });
+    var svg = '<svg viewBox="0 0 120 120" role="img" aria-label="'+esc(title)+'">';
+    svg += ringPaths(tgt, 60, 60, 55, 4);
+    svg += ringPaths(actual, 60, 60, 42, 15);
+    svg += '<text class="dcenter" x="60" y="63" text-anchor="middle">'+total+'</text>';
+    svg += '<text class="dcenter2" x="60" y="77" text-anchor="middle">'+esc(centreWord)+'</text></svg>';
+    html += svg + '<div class="dleg">';
+    keys.forEach(function(k,i){
+      html += '<div class="lrow"><span class="dot" style="background:'+SERIES_COLS[i]+'"></span><span class="lname">'+esc(labels[k])+'</span><span class="lval">'+pct(counts[k]||0,total)+'% now · target '+targets[k]+'%</span></div>';
+    });
+    return html + '</div><div class="dring-note">Thick ring is the actual mix. Thin outer ring is the target.</div></div>';
   }
 
   function renderStats(){
@@ -951,40 +1108,19 @@
       '<div class="stat"><div class="k">LinkedIn</div><div class="v">'+list.filter(function(e){return e.platform==='LinkedIn';}).length+'</div></div>';
 
     var mb = document.getElementById('mixbars');
-    var html = '<div class="h3">Topic mix vs 75/20/5</div>';
-    if(!topic.total){ html += '<p class="note">Nothing shipped in this window yet. Log a piece and the bars fill in.</p>'; }
-    else {
-      ['deep','niche','personal'].forEach(function(k){
-        var a = pct(topic.counts[k]||0, topic.total);
-        var col = k==='deep'?'var(--pink)':(k==='niche'?'var(--aqua)':'var(--purple)');
-        html += barRow(TOPIC_L[k], a, TOPIC_T[k], col);
-      });
+    var html = '<div class="donutwrap">';
+    html += donutHTML('Topic vs 75/20/5', ['deep','niche','personal'], TOPIC_L, TOPIC_T, topic.counts, topic.total, topic.total===1?'piece':'pieces', 'Nothing shipped in this window yet. Log a piece and the ring fills in.');
+    html += donutHTML('Effort vs 70/20/10', ['proven','iteration','swing'], EFFORT_L, EFFORT_T, effort.counts, effort.total, 'with effort set', 'No entries with effort set in this window. Effort is optional, set it when you know the bucket.');
+    html += '</div>';
+    if(topic.total){
       var vd = verdict(pct(topic.counts.deep||0,topic.total),75);
-      html += '<div style="margin-top:12px"><span class="sgbadge '+vd.cls+'"><span aria-hidden="true">'+vd.icon+'</span>'+vd.word+' on deep content</span></div>';
-    }
-    html += '<div class="h3" style="margin-top:24px">Effort mix vs 70/20/10</div>';
-    if(!effort.total){ html += '<p class="note">No entries with effort set in this window. Effort is optional, set it when you know which bucket a piece was.</p>'; }
-    else {
-      ['proven','iteration','swing'].forEach(function(k){
-        var a = pct(effort.counts[k]||0, effort.total);
-        var col = k==='proven'?'var(--pink)':(k==='iteration'?'var(--aqua)':'var(--purple)');
-        html += barRow(EFFORT_L[k], a, EFFORT_T[k], col);
-      });
+      html += '<div style="margin-top:16px;text-align:center"><span class="sgbadge '+vd.cls+'"><span aria-hidden="true">'+vd.icon+'</span>'+vd.word+' on deep content</span></div>';
     }
     mb.innerHTML = html;
 
     var tm = document.getElementById('today-mix');
     if(tm){
-      var thtml='';
-      if(!topic.total){ thtml='<p class="note">Nothing shipped in the last 90 days. Log the first piece in the Tracker tab.</p>'; }
-      else {
-        ['deep','niche','personal'].forEach(function(k){
-          var a = pct(topic.counts[k]||0, topic.total);
-          var col = k==='deep'?'var(--pink)':(k==='niche'?'var(--aqua)':'var(--purple)');
-          thtml += barRow(TOPIC_L[k], a, TOPIC_T[k], col);
-        });
-      }
-      tm.innerHTML=thtml;
+      tm.innerHTML = donutHTML('Topic vs 75/20/5', ['deep','niche','personal'], TOPIC_L, TOPIC_T, topic.counts, topic.total, topic.total===1?'piece':'pieces', 'Nothing shipped in the last 90 days. Log the first piece in the Tracker tab.');
     }
   }
 
