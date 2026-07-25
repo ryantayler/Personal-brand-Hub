@@ -321,6 +321,47 @@
   .bgpick{display:flex;gap:var(--s1);flex-wrap:wrap}
   .bgpick button{font-size:12px;font-weight:600;color:var(--mute);border:1px solid var(--rim);border-radius:999px;padding:var(--s1) var(--s3)}
   .bgpick button[aria-pressed="true"]{background:var(--purple);border-color:var(--purple);color:#ECE8E0}
+
+  /* ================= V2 · POSTER MODE =================
+     The CRAFT carousel language applied to the whole hub. A giant Anton
+     letterform in a deep tone of the view's lane sits behind the content
+     and bleeds off the frame. Content layers over it with a soft shadow,
+     and each view carries slide furniture, the signature and a page count. */
+  :root{
+    --ghost-purple:rgba(109,40,217,.30);
+    --ghost-aqua:rgba(45,226,195,.13);
+    --ghost-pink:rgba(255,45,107,.24);
+    --tsh-strong:0 3px 30px rgba(0,0,0,.65);
+    --tsh-soft:0 1px 6px rgba(0,0,0,.35);
+  }
+  @media (prefers-color-scheme: light){
+    :root{--ghost-purple:rgba(109,40,217,.13);--ghost-aqua:rgba(13,148,136,.12);--ghost-pink:rgba(255,45,107,.11);--tsh-strong:none;--tsh-soft:none}
+  }
+  :root[data-theme="dark"]{--ghost-purple:rgba(109,40,217,.30);--ghost-aqua:rgba(45,226,195,.13);--ghost-pink:rgba(255,45,107,.24);--tsh-strong:0 3px 30px rgba(0,0,0,.65);--tsh-soft:0 1px 6px rgba(0,0,0,.35)}
+  :root[data-theme="light"]{--ghost-purple:rgba(109,40,217,.13);--ghost-aqua:rgba(13,148,136,.12);--ghost-pink:rgba(255,45,107,.11);--tsh-strong:none;--tsh-soft:none}
+
+  .ghostwrap{display:none}
+  .v2 .ghostwrap{display:block;position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+  .gletter{position:absolute;font-family:'Anton',sans-serif;font-weight:400;line-height:.78;letter-spacing:-.01em;white-space:nowrap;user-select:none;-webkit-mask-image:linear-gradient(180deg,#000 40%,transparent 92%);mask-image:linear-gradient(180deg,#000 40%,transparent 92%)}
+  .gletter.g-purple{color:var(--ghost-purple)}
+  .gletter.g-aqua{color:var(--ghost-aqua)}
+  .gletter.g-pink{color:var(--ghost-pink)}
+  .v2 section.view{position:relative}
+  .v2 section.view>:not(.ghostwrap){position:relative;z-index:1}
+  .v2 h1{font-size:clamp(40px,12vw,92px);text-shadow:var(--tsh-strong)}
+  .v2 .h2{text-shadow:var(--tsh-strong)}
+  .v2 .kick{font-size:clamp(23px,6.2vw,32px);text-shadow:var(--tsh-soft)}
+  .v2 .sub,.v2 .eyebrow,.v2 .note{text-shadow:var(--tsh-soft)}
+  .v2 .statement{box-shadow:0 18px 50px -18px rgba(0,0,0,.55)}
+
+  .modetoggle{display:flex;gap:var(--s1);background:var(--panel);border:1px solid var(--rim);border-radius:999px;padding:var(--s1)}
+  .modetoggle button{font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--mute);border-radius:999px;padding:var(--s1) var(--s3)}
+  .modetoggle button[aria-pressed="true"]{background:var(--purple);color:#ECE8E0}
+
+  .slidefoot{display:none}
+  .v2 .slidefoot{display:flex;justify-content:space-between;align-items:center;gap:var(--s4);margin-top:var(--s12)}
+  .slidefoot .sig-foot{width:84px;height:auto;color:var(--ink)}
+  .slidefoot .pageno{font-size:13px;color:var(--mute);letter-spacing:.14em;font-variant-numeric:tabular-nums}
 </style>
 
 <div id="bglayer" aria-hidden="true">
@@ -342,7 +383,11 @@
           <path d="M480.33,125.74c.43-.37,1.35-1.85,2.36-1.91,8.73-.52,12.99-7.61,18.89-12.34,4.35-3.49,8.89-7.02,13.91-9.29,1.92-.86,5.71,1.33,8,3.02.77.56.2,4.4-.93,5.82-5.91,7.45-14.35,11.38-22.71,15.35-.45.21-1.02.22-1.39.5-1.96,1.47-6.32.64-5.21,5.04.92,3.66,6.06,6,9.97,4.85,2.99-.88,5.97-2.06,9.02-2.35,1.7-.17,3.55,1.2,5.34,1.87-.86,1.52-1.34,3.77-2.64,4.43-5.6,2.88-11.82,4.06-17.65,1.48-3.39-1.5-6.01-4.86-8.78-7.58-2.66-2.62-5.08-5.49-8.19-8.9Z"/>
           <path d="M239.68,138.14c-.65-7.2,8.02-27.88,13.23-32.48,5.41,2.44,4.48,6.28,2.61,11.09,1.94-.99,3.85-2.03,5.81-2.95,7.94-3.73,14.38.27,13.54,9-.59,6.14-2.65,12.12-3.95,18.2-.75,3.5-1.01,7.14-2.07,10.53-.61,1.95-2.37,4.95-3.67,4.98-2.74.06-5.02-2.21-4.25-5.41,1.87-7.78,4.04-15.5,6.12-23.23.62-2.29,1.35-4.55,2.22-7.48-7.63-.43-12.1,4.1-16.94,7.4-3.26,2.22-5.92,5.28-8.93,7.88-1.02.89-2.27,1.52-3.71,2.46Z"/>
           <path d="M527.69,144.84c-3.08-1.21-4.62-3.9-3.22-7.44,4.02-10.2,8.33-20.3,12.56-30.42.17-.41.72-.66,1.64-1.47,1.58,2.81,3.06,5.46,4.8,8.55,2.45-1.21,5.76-2.78,9-4.46,4.33-2.24,7.89-.88,10.89,2.39.71.77,1.24,2.65.79,3.33-.77,1.18-2.61,2.78-3.57,2.53-8.9-2.31-13.91,3.76-18.84,8.97-5.04,5.34-9.12,11.58-14.06,18.01Z"/></svg>
-      <span class="wm-meta">Brand Hub · v1.0</span>
+      <span class="wm-meta">Brand Hub</span>
+    </div>
+    <div class="modetoggle" role="group" aria-label="Design mode">
+      <button data-mode="v1" aria-pressed="false">V1</button>
+      <button data-mode="v2" aria-pressed="false">V2</button>
     </div>
   </header>
 
@@ -360,6 +405,7 @@
 
   <!-- ============================================================ TODAY -->
   <section class="view active" id="view-today">
+    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-purple" style="font-size:min(58vmax,600px);top:-.14em;right:-.24em">RT</div></div>
     <div class="kick">the whole system, in your pocket</div>
     <h1>One <span class="v">hero</span>.<br>Two lanes. One hub.</h1>
     <p class="sub"><b>Purple is you.</b> Aqua is what you build. Pink is what you teach. Everything approved lives here, and the tracker keeps the posting mix honest against the targets.</p>
@@ -417,6 +463,7 @@
 
   <!-- ============================================================ BRAND -->
   <section class="view" id="view-brand">
+    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-purple" style="font-size:min(62vmax,640px);top:-.08em;right:-.16em">B</div></div>
     <div class="kick brand">which colour, which font, no guessing</div>
     <div class="h2">The visual system</div>
     <p class="sub"><b>Dark is canonical.</b> Design dark first, light is a supported adaptation. One accent per piece, never more than one. Purple is the default when a piece has no clear lane.</p>
@@ -536,6 +583,7 @@
 
   <!-- ============================================================ VOICE -->
   <section class="view" id="view-voice">
+    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-pink" style="font-size:min(62vmax,640px);top:-.06em;right:-.14em">V</div></div>
     <div class="kick">sound like you, every time</div>
     <div class="h2">The voice</div>
     <p class="sub">A working entrepreneur narrating real moves in the moment. <b>We report what happened and let the reader draw the lesson.</b> Never a content creator performing.</p>
@@ -630,6 +678,7 @@
 
   <!-- ============================================================ BUILD -->
   <section class="view" id="view-build">
+    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-aqua" style="font-size:min(62vmax,640px);top:-.08em;right:-.16em">B</div></div>
     <div class="kick">bring a topic, leave with a build</div>
     <div class="h2">Build a piece</div>
     <p class="sub"><b>One subject per piece.</b> A problem an owner has, or a belief in the industry. Your proof picks the format, and the format walks you across the whole build.</p>
@@ -685,6 +734,7 @@
 
   <!-- ============================================================ IP -->
   <section class="view" id="view-ip">
+    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-purple" style="font-size:min(56vmax,580px);top:-.08em;right:-.22em">IP</div></div>
     <div class="kick brand">the shelf where your thinking lives</div>
     <div class="h2">Your IP</div>
     <p class="sub">Every framework and method that is <b>verified yours</b>, in full, plus the build standard that decides when the next one graduates. Nothing gets promoted to this shelf without your call.</p>
@@ -775,6 +825,7 @@
 
   <!-- ============================================================ LIBRARY -->
   <section class="view" id="view-library">
+    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-pink" style="font-size:min(62vmax,640px);top:-.06em;right:-.12em">L</div></div>
     <div class="kick">approved words, ready to ship</div>
     <div class="h2">The library</div>
     <p class="sub">Locked bios, locked quotes, gold standard posts, and approved graphics. <b>Copy from here, never from memory.</b> The frameworks themselves live in the IP tab.</p>
@@ -802,6 +853,7 @@
 
   <!-- ============================================================ TRACKER -->
   <section class="view" id="view-tracker">
+    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-aqua" style="font-size:min(62vmax,640px);top:-.06em;right:-.14em">T</div></div>
     <div class="kick">keep the mix honest</div>
     <div class="h2">Post tracker</div>
     <p class="sub">Log every piece, then check the mix against the targets. <b>75/20/5 on topic, 70/20/10 on effort,</b> long form as the trust engine.</p>
@@ -862,6 +914,19 @@
 
   </main>
 
+  <div class="slidefoot" aria-hidden="true">
+    <svg class="sig-foot" viewBox="0 0 601.04 273.69" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M394.25,46.02c32.82.56,65.41,1.12,97.93,1.68.55-2.98,1-5.46,1.47-8.05,6.11,1.13,6.02,5.62,6.52,10.1,4.97,0,9.74.2,14.49-.05,5.58-.29,9.47,2.55,12.68,6.47,1.02,1.25,1.33,3.37,1.35,5.1.04,2.69-1.29,4.69-3.79,1.98-6.56-7.09-15.54-4.8-23.51-6.34-1.04-.2-3.15,1.45-3.63,2.68-6.12,15.73-11.35,31.84-18.19,47.24-6.12,13.79-13.8,26.92-21.18,40.12-1.1,1.98-4.36,2.75-6.62,4.08l-1.19-1.02c.64-2.21.8-4.73,2.01-6.57,8.7-13.24,16.1-27.13,21.86-41.91,5.65-14.52,11.38-29,17.56-44.72-6.9-.81-12.64-2.02-18.38-2.06-28.76-.19-57.52-.14-86.28.11-2.12.02-5.25,1.81-6.18,3.65-12.6,25.01-25.31,49.98-37.1,75.37-7.93,17.06-14.45,34.78-21.23,51.29-2.73-.29-4.63-.49-7.51-.8.2-2.64.47-6.06.72-9.49.31-4.31,1.14-8.65.82-12.91-1.41-19-6.87-36.27-22.12-49.15-10.1-8.53-21.47-14.71-33.84-19.23-9.74-3.56-19.52-7.05-29.13-10.93-2.19-.88-5.35-3.28-5.3-4.89.08-2.58,2.03-5.53,4.01-7.5,1.75-1.74,4.53-2.74,7.03-3.38,12.55-3.19,25.11-6.41,37.77-9.12,10.92-2.34,21.95-4.18,32.99-5.9,5.93-.93,11.98-1.13,17.97-1.69,9.24-.86,18.46-1.92,27.71-2.53,5.34-.35,10.73-.1,16.09.13,5.91.26,10.39-1.93,14.01-6.6,1.22-1.58,3.98-3.6,5.21-3.15,1.89.69,3.12,3.29,4.48,5.19.4.56.3,1.5.51,2.78ZM373.24,55.73c-46.61,1.06-92.54,8.58-137.92,20.46.71.88,1.4,1.22,2.12,1.47,23.34,8.13,46.84,15.94,65.22,33.68,9.73,9.39,16.05,20.68,19.22,33.73,1.13,4.64,1.8,9.38,2.68,14.12,16.33-34.71,32.45-68.96,48.68-103.46Z"/>
+          <path d="M131.29,176.82c11.1-14.62,21.78-28.67,32.73-43.1-5.7-1.03-10.34-3.16-10.78-9.02-.48-6.44-1.27-13.29,5.13-17.99,2.81,2.95,5.86,5.35,2.89,10.05-1.12,1.78-.49,4.66-.71,7.71,12.73-3.86,19.39-14.44,28.61-21.48,4.99,3.58,5,5.85,1.1,10.86-17.49,22.41-34.87,44.91-52.65,67.85,7.33,5.22,14.52,10.12,21.47,15.33,19.32,14.48,38.54,29.1,57.83,43.62,4.6,3.46,9.47,6.56,13.94,10.16,1.37,1.11,1.84,3.33,2.72,5.04-2.2-.04-4.99.78-6.5-.26-8.31-5.69-16.24-11.93-24.42-17.81-21.05-15.11-42.42-29.78-63.17-45.29-16.3-12.18-31.92-25.29-47.72-38.13-2.53-2.06-4.65-4.74-6.54-7.42-6.27-8.88-4.43-16.06,5.8-20.42,6.73-2.87,14.18-4.08,20.92-6.93,15.29-6.46,31.26-11.74,44.39-22.4,3.27-2.66,6.49-5.91,8.43-9.58,5-9.46-.5-17.61-12.67-21.06-15.93-4.51-31.67-2.62-47.66-.52-15.85,2.09-29.86,8.08-42.29,17.69-4.19,3.25-7.61,7.79-10.53,12.29-3.12,4.81-1.59,8.85,3.11,12.37,2.66,1.98,5.14,4.25,7.41,6.66.64.68.79,2.71.24,3.37-.55.67-2.37.84-3.4.51-14.91-4.79-17.55-23.64-9.8-32.39,8.14-9.18,17.15-16.8,29.39-20.18,6.87-1.9,13.24-5.82,20.16-7.23,8.77-1.79,17.91-1.72,26.82-2.9,9.51-1.27,18.7.22,27.79,2.56,10.84,2.79,21.33,12.69,19.57,23.26-.68,4.1-3.03,8.23-5.55,11.65-13.77,18.68-34.49,26.22-55.19,33.74-6.19,2.25-12.38,4.49-18.48,6.96-5.5,2.22-6.34,5.1-1.98,9.05,10.77,9.74,21.88,19.1,32.91,28.55,1.98,1.69,4.22,3.08,6.68,4.86Z"/>
+          <path d="M431.94,124.6c12.34-4.7,19.77-14.08,28.36-21.8,4.93,3.56,5.41,5.22,1.97,9.7-14.59,19.01-29.29,37.93-43.97,56.88-3.95,5.1-8.03,10.1-11.92,15.25-1.35,1.78-2.35,4.1-4.91,1.79-2.1-1.9-3.34-4.06-1.12-6.91,5.48-7.04,10.83-14.18,16.23-21.28,6.09-8.01,12.17-16.01,18.32-24.09-12.21-4.63-15.04-18.99-5.62-27.23,3.38,2.84,6.09,5.6,2.81,10.51-.97,1.45-.15,4.1-.15,7.2Z"/>
+          <path d="M219.18,130.17c-1.39.94-2.82,1.83-4.18,2.83-5.77,4.23-11.35,8.73-17.32,12.65-3.56,2.34-8.8,3.7-11.36.19-1.62-2.22-.61-7.89,1.19-10.78,7.77-12.47,17.54-23.11,31.58-28.91,1.22-.5,2.38-1.22,3.64-1.52,2.07-.48,5.8-1.45,6.05-.91,1.5,3.19,4.9,4.66,4.82,9.71-.17,10.81-6.25,18.88-9.71,28.14-.34.92-.61,2.19-1.32,2.59-2.23,1.26-4.65,2.19-6.99,3.24-.13-2.14-.87-4.47-.26-6.38,1.11-3.5,3.02-6.74,4.59-10.09-.25-.25-.49-.51-.74-.76ZM196.05,135.61l1.06,1.17c9.47-7.07,18.97-14.1,28.37-21.27.92-.7,1.2-2.22,1.78-3.37l-1.25-1.01c-11.1,6.78-22.83,12.77-29.95,24.48Z"/>
+          <path d="M382.41,136.72c8.58-6.36,17.53-12.29,25.59-19.26,4.02-3.47,6.05.83,9.03.5.08,2.2.9,4.71.12,6.53-2.79,6.47-5.83,12.88-9.42,18.93-1.28,2.16-4.42,3.21-6.72,4.76-.66-.48-1.31-.95-1.97-1.43,1.88-5.34,3.75-10.67,6.12-17.4-2.61,1.88-4.14,2.96-5.64,4.07-5.74,4.26-11.47,8.55-17.23,12.78-.51.37-1.26.63-1.87.59-3.15-.24-6.84.24-9.21-1.28-1.18-.76-.74-5.63.34-8.02,4.31-9.54,11.61-16.89,19.69-23.19,5.22-4.07,11.49-6.84,17.44-9.92,1.56-.81,5.04-1.23,5.26-.75,1.4,3.09,7.09,4.44,3.78,10.07-8.03-5.24-13.18,1.27-18.71,5.27-5.55,4.01-10.47,8.91-15.58,13.51-.89.8-1.37,2.07-2.04,3.12l1.03,1.11Z"/>
+          <path d="M105.43,76.5c3.34,4.73,2.94,8.07.12,12.3-17.26,25.79-34.13,51.83-51.22,77.73-.76,1.16-2.37,1.76-3.58,2.62-.33-1.94-1.55-4.34-.83-5.74,3-5.85,6.46-11.48,9.99-17.04,13.62-21.4,27.33-42.75,41.04-64.09,1.22-1.89,2.76-3.57,4.48-5.79Z"/>
+          <path d="M480.33,125.74c.43-.37,1.35-1.85,2.36-1.91,8.73-.52,12.99-7.61,18.89-12.34,4.35-3.49,8.89-7.02,13.91-9.29,1.92-.86,5.71,1.33,8,3.02.77.56.2,4.4-.93,5.82-5.91,7.45-14.35,11.38-22.71,15.35-.45.21-1.02.22-1.39.5-1.96,1.47-6.32.64-5.21,5.04.92,3.66,6.06,6,9.97,4.85,2.99-.88,5.97-2.06,9.02-2.35,1.7-.17,3.55,1.2,5.34,1.87-.86,1.52-1.34,3.77-2.64,4.43-5.6,2.88-11.82,4.06-17.65,1.48-3.39-1.5-6.01-4.86-8.78-7.58-2.66-2.62-5.08-5.49-8.19-8.9Z"/>
+          <path d="M239.68,138.14c-.65-7.2,8.02-27.88,13.23-32.48,5.41,2.44,4.48,6.28,2.61,11.09,1.94-.99,3.85-2.03,5.81-2.95,7.94-3.73,14.38.27,13.54,9-.59,6.14-2.65,12.12-3.95,18.2-.75,3.5-1.01,7.14-2.07,10.53-.61,1.95-2.37,4.95-3.67,4.98-2.74.06-5.02-2.21-4.25-5.41,1.87-7.78,4.04-15.5,6.12-23.23.62-2.29,1.35-4.55,2.22-7.48-7.63-.43-12.1,4.1-16.94,7.4-3.26,2.22-5.92,5.28-8.93,7.88-1.02.89-2.27,1.52-3.71,2.46Z"/>
+          <path d="M527.69,144.84c-3.08-1.21-4.62-3.9-3.22-7.44,4.02-10.2,8.33-20.3,12.56-30.42.17-.41.72-.66,1.64-1.47,1.58,2.81,3.06,5.46,4.8,8.55,2.45-1.21,5.76-2.78,9-4.46,4.33-2.24,7.89-.88,10.89,2.39.71.77,1.24,2.65.79,3.33-.77,1.18-2.61,2.78-3.57,2.53-8.9-2.31-13.91,3.76-18.84,8.97-5.04,5.34-9.12,11.58-14.06,18.01Z"/></svg>
+    <span class="pageno" id="pageno">1 / 7</span>
+  </div>
+
   <footer class="foot">Ryan Tayler · personal brand hub · dark is canonical · one accent per piece, never more than one. Formats and hook rules after Kallaway, ratios after Ralston, meats after Hormozi, taught with attribution, never published as original IP.</footer>
 </div>
 
@@ -879,11 +944,27 @@
 
   /* ---------- tabs ---------- */
   var tabs = document.querySelectorAll('.tab');
+  var VIEW_ORDER = ['today','brand','voice','build','ip','library','tracker'];
   function show(view){
     tabs.forEach(function(t){ t.setAttribute('aria-selected', String(t.dataset.view===view)); });
     document.querySelectorAll('section.view').forEach(function(s){ s.classList.toggle('active', s.id==='view-'+view); });
+    var pn = document.getElementById('pageno');
+    if(pn) pn.textContent = (VIEW_ORDER.indexOf(view)+1) + ' / ' + VIEW_ORDER.length;
     window.scrollTo({top:0});
   }
+
+  /* ---------- design mode V1 / V2 ---------- */
+  var MODEKEY='rt-hub-mode-v1';
+  var mode='v2';
+  try{ mode = localStorage.getItem(MODEKEY) || 'v2'; }catch(e){}
+  function applyMode(m){
+    mode=m;
+    document.documentElement.classList.toggle('v2', m==='v2');
+    document.querySelectorAll('.modetoggle button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.mode===m)); });
+    try{ localStorage.setItem(MODEKEY,m); }catch(e){}
+  }
+  document.querySelectorAll('.modetoggle button').forEach(function(b){ b.addEventListener('click', function(){ applyMode(b.dataset.mode); }); });
+  applyMode(mode);
   tabs.forEach(function(t){ t.addEventListener('click', function(){ show(t.dataset.view); }); });
   document.querySelectorAll('[data-goto]').forEach(function(b){ b.addEventListener('click', function(){ show(b.dataset.goto); }); });
 
