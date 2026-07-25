@@ -144,12 +144,14 @@
   .pill.teach{border-color:var(--ol-pink);color:var(--pink-ink)}
   .sgbadge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:var(--s1) var(--s3);font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--on-fill)}
   .sgbadge.ok{background:var(--ok)} .sgbadge.warn{background:var(--warn)} .sgbadge.err{background:var(--err)}
+  /* Status banners are flat zone tints with an icon and a word.
+     Edge accent stripes are banned (ruling July 2026), colour never marks a card by tinting one edge. */
   .sgbanner{border-radius:var(--r-sm);padding:var(--s3) var(--s4);display:flex;gap:var(--s3);align-items:flex-start;font-size:13px;color:var(--ink)}
   .sgbanner b{font-weight:600}
   .sgbanner .ico{font-weight:700;flex:0 0 auto}
-  .sgbanner.ok{background:var(--ok-zone);border-left:3px solid var(--ok)} .sgbanner.ok .ico{color:var(--ok)}
-  .sgbanner.warn{background:var(--warn-zone);border-left:3px solid var(--warn)} .sgbanner.warn .ico{color:var(--warn)}
-  .sgbanner.err{background:var(--err-zone);border-left:3px solid var(--err)} .sgbanner.err .ico{color:var(--err)}
+  .sgbanner.ok{background:var(--ok-zone)} .sgbanner.ok .ico{color:var(--ok)}
+  .sgbanner.warn{background:var(--warn-zone)} .sgbanner.warn .ico{color:var(--warn)}
+  .sgbanner.err{background:var(--err-zone)} .sgbanner.err .ico{color:var(--err)}
 
   /* copy chip */
   .copybtn{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--ink);border:1px solid var(--rim);border-radius:999px;padding:var(--s1) var(--s3);background:var(--panel2)}
@@ -173,8 +175,7 @@
   details.acc .accbody{padding:0 var(--s4) var(--s4);border-top:1px solid var(--line);color:var(--mute);font-size:13.5px}
   details.acc .accbody b{color:var(--ink);font-weight:600}
   details.acc .accname{font-family:'Anton',sans-serif;font-size:15px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink)}
-  details.acc.you{box-shadow:inset 3px 0 0 var(--aqua)}
-  details.acc.care{box-shadow:inset 3px 0 0 var(--warn)}
+  /* No edge stripes on the yours and care rows. The Yours and Care word pills carry the meaning alone. */
   .beatrow{margin-top:var(--s3)}
   .beatrow .bl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:2px}
   .beatrow .bv{font-size:13.5px;color:var(--ink)}
@@ -273,6 +274,7 @@
     <button class="tab" role="tab" data-view="brand" aria-selected="false">Brand</button>
     <button class="tab" role="tab" data-view="voice" aria-selected="false">Voice</button>
     <button class="tab" role="tab" data-view="build" aria-selected="false">Build</button>
+    <button class="tab" role="tab" data-view="ip" aria-selected="false">IP</button>
     <button class="tab" role="tab" data-view="library" aria-selected="false">Library</button>
     <button class="tab" role="tab" data-view="tracker" aria-selected="false">Tracker</button>
   </nav>
@@ -393,6 +395,7 @@
         <span class="li"><b>Inner vignette.</b> Colour fills only. Inset shadow, black at 38%, blur 25% of card width, spread 1.5%. Grey and panel cards stay flat.</span>
         <span class="li"><b>Outline.</b> 1px solid. Full colour cards take their accent at 45% over base. Grey, panel, and split cards take the grey rim. Colour never rims a grey surface.</span>
         <span class="li"><b>Radius.</b> 8px chips and swatches, 16px panels and utility, 24px hero and statement cards. Pills fully round.</span>
+        <span class="li"><b>Edge accents are banned</b> (ruling July 2026). Colour never marks a card by tinting one edge, no stripes down the left of a grey card, no accent bars on panels. Colour arrives as a full fill with an inner vignette, as accent text or a word pill, or as the 45% rim of a full colour card. Nothing in between.</span>
         <span class="li"><b>One accent per piece.</b> Never two lanes in one frame. Purple is the default.</span>
       </div>
       <div class="panelcard" style="margin-top:var(--s3)">
@@ -550,7 +553,7 @@
 
     <div class="block">
       <div class="eyebrow">Step 3 · read the build across</div>
-      <p class="note" style="margin-bottom:var(--s2)"><b>Aqua edged formats are your strongest.</b> Amber edged formats fight your voice, use them rarely. Each card is the whole build, hook to Waterfall cuts.</p>
+      <p class="note" style="margin-bottom:var(--s2)"><b>Formats tagged Yours are your strongest.</b> Formats tagged Care fight your voice, use them rarely. Each card is the whole build, hook to Waterfall cuts.</p>
       <div id="formats"></div>
     </div>
 
@@ -581,11 +584,101 @@
     </div>
   </section>
 
+  <!-- ============================================================ IP -->
+  <section class="view" id="view-ip">
+    <div class="kick brand">the shelf where your thinking lives</div>
+    <div class="h2">Your IP</div>
+    <p class="sub">Every framework and method that is <b>verified yours</b>, in full, plus the build standard that decides when the next one graduates. Nothing gets promoted to this shelf without your call.</p>
+
+    <div class="block">
+      <div class="eyebrow">The CRAFT Method™ · My Idea Crafting Framework™</div>
+      <div style="display:flex;gap:var(--s2);flex-wrap:wrap;margin-bottom:var(--s3)"><span class="pill own">Own · flagship</span><span class="pill">Public</span></div>
+      <div class="statement purple" style="margin-bottom:var(--s4)"><div class="vignette"></div><div class="tag">Own · your flagship IP</div><div class="word">Your brain is for having ideas, not holding them.</div><p>A 5 step system turning your thoughts into ideas, and ideas into finished assets.</p></div>
+      <div class="panelcard">
+        <div class="beatrow"><div class="bl">C · Capture · "don't trust your memory"</div><div class="bv">Quickly move a thought from Brain RAM™ into Digital RAM™ before it disappears.</div></div>
+        <div class="beatrow"><div class="bl">R · Refine · "come back to it next week"</div><div class="bv">Go back to the thought and add to it, expand on it, refine it, and build it into a structured idea.</div></div>
+        <div class="beatrow"><div class="bl">A · Assess · "ask someone who'll be honest"</div><div class="bv">Test the idea, run it through your mind, run it past friends, and prove it deserves to stay.</div></div>
+        <div class="beatrow"><div class="bl">F · Finalise · "make it look like you mean it"</div><div class="bv">Visualise and document the idea, turn it into a finished asset, something tangible and public ready.</div></div>
+        <div class="beatrow"><div class="bl">T · Transfer · "done means you share it"</div><div class="bv">Send the finished asset out into the world, then move it into Hard Storage™ and archive it in Digital RAM™.</div></div>
+      </div>
+      <div class="panelcard" style="margin-top:var(--s3)">
+        <div class="h3">The language</div>
+        <div class="beatrow"><div class="bl">Thought</div><div class="bv">Something that comes to you quickly. Unstructured, often incomplete, and untested.</div></div>
+        <div class="beatrow"><div class="bl">Idea</div><div class="bv">A collection of thoughts that have been structured and tested.</div></div>
+        <div class="beatrow"><div class="bl">Brain RAM™</div><div class="bv">Your working memory. Fast and creative, but it holds nothing for long.</div></div>
+        <div class="beatrow"><div class="bl">Digital RAM™</div><div class="bv">Your notes system. Where thoughts are captured and worked on until they become ideas.</div></div>
+        <div class="beatrow"><div class="bl">Finished asset</div><div class="bv">An idea made tangible and public ready. A graphic, a slide, a doc, a framework.</div></div>
+        <div class="beatrow"><div class="bl">Hard Storage™</div><div class="bv">Your long term archive. Where finished assets live once they are out in the world.</div></div>
+      </div>
+      <div class="rulebox"><b>Naming rules, locked.</b> The CRAFT Method™ always carries the trademark mark. CRAFT always all caps. Finalise always spelled with an S. Brain RAM™, Digital RAM™, and Hard Storage™ always carry the mark. The asset lockup sets The CRAFT Method™ small above My Idea Crafting Framework™ at eyebrow size on every page it appears. The approved carousel lives in the Library tab.</div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">The Partnership Belief System</div>
+      <div style="display:flex;gap:var(--s2);flex-wrap:wrap;margin-bottom:var(--s3)"><span class="pill own">Own · positioning spine</span><span class="pill locked">Locked July 2026</span><span class="pill">Public</span></div>
+      <div class="panelcard">
+        <div class="beatrow"><div class="bl">The belief</div><div class="bv">Partnerships with specialists beat in-housing everything. You grow faster by partnering with people who are the best at their piece.</div></div>
+        <div class="beatrow"><div class="bl">The enemy</div><div class="bv">In-housing. Event businesses pulling AV, crew, and venues in house to protect margin. The enemy word is always in-housing, consolidation was rejected.</div></div>
+        <div class="beatrow"><div class="bl">The redefinition</div><div class="bv">Supplier vs partner, your own operational definition. The locked wording lives in the Library as the keeper line.</div></div>
+        <div class="beatrow"><div class="bl">The verbatim assets</div><div class="bv">Banner headline, official statement, keeper line, emergency line, and mission sentence. All locked word for word, all in the Library tab with copy buttons.</div></div>
+      </div>
+      <div class="rulebox"><b>Ownership boundary.</b> The container concept (a contrarian belief plus a common enemy) is Ralston's framework and is never claimed as yours. The belief content, the enemy word choice, the redefinition, and every locked quote are yours.</div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">The Momentum Formula</div>
+      <div style="display:flex;gap:var(--s2);flex-wrap:wrap;margin-bottom:var(--s3)"><span class="pill own">Own · confirmed</span><span class="pill">Not public yet</span></div>
+      <div class="panelcard">
+        <div class="beatrow"><div class="bl">Layer one · Momentum</div><div class="bv">Momentum = (P / P prior) x 100, profit against the prior period. States, Momentum and Stalling.</div></div>
+        <div class="beatrow"><div class="bl">Layer two · Acceleration</div><div class="bv">Acceleration = (M / M prior) x 100, momentum against its own prior reading. States, Acceleration and Deceleration, with a rare Neutral.</div></div>
+        <div class="beatrow"><div class="bl">What the IP is</div><div class="bv">Openly a reframe of year on year profit growth. The IP is the framing, the naming, and the two layer system, not the arithmetic.</div></div>
+      </div>
+      <div class="rulebox"><b>Holding rule.</b> Momentum is a candidate umbrella brand name and that question is not settled. The word does not go public facing until it is.</div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">The Negotiation Playbook</div>
+      <div style="display:flex;gap:var(--s2);flex-wrap:wrap;margin-bottom:var(--s3)"><span class="pill own">Own · confirmed</span><span class="pill">V1</span></div>
+      <div class="panelcard"><p class="note">The poker analogy framework. Confirmed yours at V1, ready to develop into a content series. The full playbook gets documented here as it builds out.</p></div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">The CRAFT Consult</div>
+      <div style="display:flex;gap:var(--s2);flex-wrap:wrap;margin-bottom:var(--s3)"><span class="pill own">Own · in progress</span></div>
+      <div class="panelcard"><p class="note">Partially built. Needs further development and an eventual rebuild into standalone Ryan IP, separate from any ASG framing, before it ships anywhere public.</p></div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">The build standard · when the next framework graduates</div>
+      <div class="rulebox">
+        A raw idea becomes ownable IP only when it clears all five gates.
+        <span class="li"><b>1. Mechanism.</b> A new way the thing works that is genuinely yours, not a borrowed shape with a fresh label.</span>
+        <span class="li"><b>2. Diagram.</b> It can be drawn. If you cannot sketch it, it has no structure yet, only a slogan.</span>
+        <span class="li"><b>3. Sequence.</b> Ordered steps with a reason the order is what it is. If the steps could shuffle with no loss, the sequence is decorative.</span>
+        <span class="li"><b>4. Contrarian POV.</b> A built in belief that disagrees with the dominant narrative. Without an edge it is a checklist.</span>
+        <span class="li"><b>5. Slot in the system.</b> A defined place beside the CRAFT Method™, the Momentum Formula, the Negotiation Playbook, and the CRAFT Consult. Orphans get parked, not shipped.</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">The register · what is not yours</div>
+      <div class="panelcard">
+        <div class="h3">Never attribute to Ryan</div>
+        <p class="note">Every mentor framework (Hormozi, Ralston, Koe, Kallaway, Gray, Noske, Codie Sanchez). ASG proprietary frameworks including Human Signal, Triple Threat, Proof Bank, and Credibility Pattern. Teach them freely with attribution, never publish them as yours.</p>
+      </div>
+      <div class="panelcard" style="margin-top:var(--s3)">
+        <div class="h3">Derivative · needs a full rebuild first</div>
+        <p class="note">INFINITE Framework, Consultation Framework V4, and Equity Consult. Raw material, not finished assets. Each needs its own mechanism, a diagrammable structure, and a contrarian edge before it can graduate to this shelf.</p>
+      </div>
+      <div class="rulebox"><b>The two hard guardrails.</b> Nothing is attributed to you unless it is verified yours. And a rebrand is not ownership, renaming someone else's framework does not make it yours. Ownership comes from a new mechanism, a diagram, a real sequence, a contrarian edge, and a slot in the system.</div>
+    </div>
+  </section>
+
   <!-- ============================================================ LIBRARY -->
   <section class="view" id="view-library">
     <div class="kick">approved words, ready to ship</div>
     <div class="h2">The library</div>
-    <p class="sub">Locked bios, locked quotes, gold standard posts, approved graphics, and the IP register. <b>Copy from here, never from memory.</b></p>
+    <p class="sub">Locked bios, locked quotes, gold standard posts, and approved graphics. <b>Copy from here, never from memory.</b> The frameworks themselves live in the IP tab.</p>
 
     <div class="block">
       <div class="eyebrow">Locked segments · reproduce exactly, never paraphrase</div>
@@ -604,20 +697,7 @@
     </div>
 
     <div class="block">
-      <div class="eyebrow">IP register · what is yours and what is not</div>
-      <div class="panelcard">
-        <div class="h3">Confirmed Ryan IP</div>
-        <p class="note"><b>The CRAFT Method™</b> with My Idea Crafting Framework™ and the Brain RAM™, Digital RAM™, Hard Storage™ sub model. <b>The Momentum Formula.</b> <b>The Negotiation Playbook</b> (V1). <b>The CRAFT Consult</b> (in progress). <b>The Partnership Belief System</b> (locked July 2026).</p>
-      </div>
-      <div class="panelcard" style="margin-top:var(--s3)">
-        <div class="h3">Never attribute to Ryan</div>
-        <p class="note">Every mentor framework (Hormozi, Ralston, Koe, Kallaway, Gray, Noske, Codie Sanchez). ASG proprietary frameworks including Human Signal, Triple Threat, Proof Bank, and Credibility Pattern. Teach them freely with attribution, never publish them as Ryan's own.</p>
-      </div>
-      <div class="panelcard" style="margin-top:var(--s3)">
-        <div class="h3">Needs a full rebuild first</div>
-        <p class="note">INFINITE Framework, Consultation Framework V4, and Equity Consult. Raw material, not finished assets. Each needs a new mechanism, a diagrammable structure, and a contrarian edge before it graduates.</p>
-      </div>
-      <div class="rulebox"><b>CRAFT formatting rules.</b> The CRAFT Method™ always carries the trademark mark. CRAFT always all caps. Finalise always spelled with an S. Brain RAM™, Digital RAM™, and Hard Storage™ always carry the mark. Momentum is not a public facing word until the umbrella question is settled.</div>
+      <div class="rulebox"><b>Looking for the frameworks?</b> The full CRAFT Method™, the Partnership Belief System, the Momentum Formula, the Negotiation Playbook, and the ownership register all live in the IP tab.</div>
     </div>
   </section>
 
