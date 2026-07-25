@@ -17,7 +17,7 @@
     --ink:#ECE8E0; --mute:#8A8A8A; --line:#1c1c1c; --rim:#2E2E2E; --code:#161616;
     /* accents */
     --purple:#6D28D9; --aqua:#2DE2C3; --pink:#FF2D6B;
-    --purple-ink:#A78BFA; --aqua-ink:#2DE2C3; --pink-ink:#FF2D6B;
+    --purple-ink:#6D28D9; --aqua-ink:#2DE2C3; --pink-ink:#FF2D6B;
     --ol-purple:rgba(109,40,217,.45); --ol-aqua:rgba(45,226,195,.45); --ol-pink:rgba(255,45,107,.45);
     /* zones and highlights */
     --purple-zone:#161021; --aqua-zone:#10211E; --pink-zone:#211015;
@@ -44,7 +44,7 @@
   :root[data-theme="dark"]{
     --base:#0A0A0A; --panel:#111111; --panel2:#0d0d0d;
     --ink:#ECE8E0; --mute:#8A8A8A; --line:#1c1c1c; --rim:#2E2E2E; --code:#161616;
-    --aqua:#2DE2C3; --purple-ink:#A78BFA; --aqua-ink:#2DE2C3; --pink-ink:#FF2D6B;
+    --aqua:#2DE2C3; --purple-ink:#6D28D9; --aqua-ink:#2DE2C3; --pink-ink:#FF2D6B;
     --ol-aqua:rgba(45,226,195,.45);
     --purple-zone:#161021; --aqua-zone:#10211E; --pink-zone:#211015;
     --ok:#22C55E; --warn:#F5B027; --err:#FF4B3E;
@@ -328,21 +328,21 @@
      and bleeds off the frame. Content layers over it with a soft shadow,
      and each view carries slide furniture, the signature and a page count. */
   :root{
-    --ghost-purple:rgba(109,40,217,.30);
-    --ghost-aqua:rgba(45,226,195,.13);
-    --ghost-pink:rgba(255,45,107,.24);
+    --ghost-purple:rgba(109,40,217,.36);
+    --ghost-aqua:rgba(45,226,195,.17);
+    --ghost-pink:rgba(255,45,107,.30);
     --tsh-strong:0 3px 30px rgba(0,0,0,.65);
     --tsh-soft:0 1px 6px rgba(0,0,0,.35);
   }
   @media (prefers-color-scheme: light){
-    :root{--ghost-purple:rgba(109,40,217,.13);--ghost-aqua:rgba(13,148,136,.12);--ghost-pink:rgba(255,45,107,.11);--tsh-strong:none;--tsh-soft:none}
+    :root{--ghost-purple:rgba(109,40,217,.16);--ghost-aqua:rgba(13,148,136,.15);--ghost-pink:rgba(255,45,107,.13);--tsh-strong:none;--tsh-soft:none}
   }
-  :root[data-theme="dark"]{--ghost-purple:rgba(109,40,217,.30);--ghost-aqua:rgba(45,226,195,.13);--ghost-pink:rgba(255,45,107,.24);--tsh-strong:0 3px 30px rgba(0,0,0,.65);--tsh-soft:0 1px 6px rgba(0,0,0,.35)}
-  :root[data-theme="light"]{--ghost-purple:rgba(109,40,217,.13);--ghost-aqua:rgba(13,148,136,.12);--ghost-pink:rgba(255,45,107,.11);--tsh-strong:none;--tsh-soft:none}
+  :root[data-theme="dark"]{--ghost-purple:rgba(109,40,217,.36);--ghost-aqua:rgba(45,226,195,.17);--ghost-pink:rgba(255,45,107,.30);--tsh-strong:0 3px 30px rgba(0,0,0,.65);--tsh-soft:0 1px 6px rgba(0,0,0,.35)}
+  :root[data-theme="light"]{--ghost-purple:rgba(109,40,217,.16);--ghost-aqua:rgba(13,148,136,.15);--ghost-pink:rgba(255,45,107,.13);--tsh-strong:none;--tsh-soft:none}
 
   .ghostwrap{display:none}
   .v2 .ghostwrap{display:block;position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-  .gletter{position:absolute;font-family:'Anton',sans-serif;font-weight:400;line-height:.78;letter-spacing:-.01em;white-space:nowrap;user-select:none;-webkit-mask-image:linear-gradient(180deg,#000 40%,transparent 92%);mask-image:linear-gradient(180deg,#000 40%,transparent 92%)}
+  .gletter{position:absolute;font-family:'Anton',sans-serif;font-weight:400;line-height:.78;letter-spacing:-.01em;white-space:nowrap;user-select:none;-webkit-mask-image:linear-gradient(180deg,#000 55%,transparent 100%);mask-image:linear-gradient(180deg,#000 55%,transparent 100%)}
   .gletter.g-purple{color:var(--ghost-purple)}
   .gletter.g-aqua{color:var(--ghost-aqua)}
   .gletter.g-pink{color:var(--ghost-pink)}
@@ -405,7 +405,7 @@
 
   <!-- ============================================================ TODAY -->
   <section class="view active" id="view-today">
-    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-purple" style="font-size:min(58vmax,600px);top:-.14em;right:-.24em">RT</div></div>
+    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-purple" style="font-size:min(80vw,540px);top:-.08em;right:-.06em">RT</div></div>
     <div class="kick">the whole system, in your pocket</div>
     <h1>One <span class="v">hero</span>.<br>Two lanes. One hub.</h1>
     <p class="sub"><b>Purple is you.</b> Aqua is what you build. Pink is what you teach. Everything approved lives here, and the tracker keeps the posting mix honest against the targets.</p>
@@ -463,7 +463,7 @@
 
   <!-- ============================================================ BRAND -->
   <section class="view" id="view-brand">
-    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-purple" style="font-size:min(62vmax,640px);top:-.08em;right:-.16em">B</div></div>
+    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-purple" style="font-size:min(135vw,720px);top:-.1em;right:-.04em">B</div></div>
     <div class="kick brand">which colour, which font, no guessing</div>
     <div class="h2">The visual system</div>
     <p class="sub"><b>Dark is canonical.</b> Design dark first, light is a supported adaptation. One accent per piece, never more than one. Purple is the default when a piece has no clear lane.</p>
@@ -583,7 +583,7 @@
 
   <!-- ============================================================ VOICE -->
   <section class="view" id="view-voice">
-    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-pink" style="font-size:min(62vmax,640px);top:-.06em;right:-.14em">V</div></div>
+    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-pink" style="font-size:min(130vw,700px);top:-.08em;right:-.03em">V</div></div>
     <div class="kick">sound like you, every time</div>
     <div class="h2">The voice</div>
     <p class="sub">A working entrepreneur narrating real moves in the moment. <b>We report what happened and let the reader draw the lesson.</b> Never a content creator performing.</p>
@@ -678,7 +678,7 @@
 
   <!-- ============================================================ BUILD -->
   <section class="view" id="view-build">
-    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-aqua" style="font-size:min(62vmax,640px);top:-.08em;right:-.16em">B</div></div>
+    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-aqua" style="font-size:min(135vw,720px);top:-.1em;right:-.04em">B</div></div>
     <div class="kick">bring a topic, leave with a build</div>
     <div class="h2">Build a piece</div>
     <p class="sub"><b>One subject per piece.</b> A problem an owner has, or a belief in the industry. Your proof picks the format, and the format walks you across the whole build.</p>
@@ -734,7 +734,7 @@
 
   <!-- ============================================================ IP -->
   <section class="view" id="view-ip">
-    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-purple" style="font-size:min(56vmax,580px);top:-.08em;right:-.22em">IP</div></div>
+    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-purple" style="font-size:min(95vw,620px);top:-.08em;right:-.05em">IP</div></div>
     <div class="kick brand">the shelf where your thinking lives</div>
     <div class="h2">Your IP</div>
     <p class="sub">Every framework and method that is <b>verified yours</b>, in full, plus the build standard that decides when the next one graduates. Nothing gets promoted to this shelf without your call.</p>
@@ -825,7 +825,7 @@
 
   <!-- ============================================================ LIBRARY -->
   <section class="view" id="view-library">
-    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-pink" style="font-size:min(62vmax,640px);top:-.06em;right:-.12em">L</div></div>
+    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-pink" style="font-size:min(170vw,900px);top:-.04em;right:.01em">“</div></div>
     <div class="kick">approved words, ready to ship</div>
     <div class="h2">The library</div>
     <p class="sub">Locked bios, locked quotes, gold standard posts, and approved graphics. <b>Copy from here, never from memory.</b> The frameworks themselves live in the IP tab.</p>
@@ -853,7 +853,7 @@
 
   <!-- ============================================================ TRACKER -->
   <section class="view" id="view-tracker">
-    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-aqua" style="font-size:min(62vmax,640px);top:-.06em;right:-.14em">T</div></div>
+    <div class="ghostwrap" aria-hidden="true"><div class="gletter g-aqua" style="font-size:min(130vw,700px);top:-.08em;right:-.03em">T</div></div>
     <div class="kick">keep the mix honest</div>
     <div class="h2">Post tracker</div>
     <p class="sub">Log every piece, then check the mix against the targets. <b>75/20/5 on topic, 70/20/10 on effort,</b> long form as the trust engine.</p>
