@@ -1,0 +1,992 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Brand Hub · Ryan Tayler</title>
+<style>
+  /* ============================================================
+     RYAN TAYLER · PERSONAL BRAND HUB
+     Locked brand system. Dark is canonical, light is a supported
+     adaptation. One accent per piece, purple is the default.
+     ============================================================ */
+  @font-face{font-family:'Anton';font-style:normal;font-weight:400;font-display:swap;src:url(data:font/woff2;base64,__FONT_ANTON__) format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(data:font/woff2;base64,__FONT_INTER__) format('woff2')}
+  @font-face{font-family:'Caveat';font-style:normal;font-weight:700;font-display:swap;src:url(data:font/woff2;base64,__FONT_CAVEAT__) format('woff2')}
+
+  :root{
+    /* neutrals (dark, canonical) */
+    --base:#0A0A0A; --panel:#111111; --panel2:#0d0d0d;
+    --ink:#ECE8E0; --mute:#8A8A8A; --line:#1c1c1c; --rim:#2E2E2E; --code:#161616;
+    /* accents */
+    --purple:#6D28D9; --aqua:#2DE2C3; --pink:#FF2D6B;
+    --purple-ink:#A78BFA; --aqua-ink:#2DE2C3; --pink-ink:#FF2D6B;
+    --ol-purple:rgba(109,40,217,.45); --ol-aqua:rgba(45,226,195,.45); --ol-pink:rgba(255,45,107,.45);
+    /* zones and highlights */
+    --purple-zone:#161021; --aqua-zone:#10211E; --pink-zone:#211015;
+    /* status signals. state, never lane */
+    --ok:#22C55E; --warn:#F5B027; --err:#FF4B3E;
+    --ok-zone:#0E1A12; --warn-zone:#1C1608; --err-zone:#1E0E0C;
+    --on-fill:#0A0A0A;
+    /* spacing */
+    --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s6:24px; --s8:32px; --s12:48px; --s16:64px;
+    --r-sm:8px; --r:16px; --r-lg:24px;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --base:#F0F2F6; --panel:#FFFFFF; --panel2:#F7F8FB;
+      --ink:#1A1A1A; --mute:#5F646B; --line:#E6E9EF; --rim:#DCE0E7; --code:#E8ECF2;
+      --aqua:#0D9488; --purple-ink:#6D28D9; --aqua-ink:#0A7A6E; --pink-ink:#C21E58;
+      --ol-aqua:rgba(13,148,136,.45);
+      --purple-zone:#EDE6FA; --aqua-zone:#DFF3F0; --pink-zone:#FBE6ED;
+      --ok:#14783A; --warn:#9A4B07; --err:#C62B2B;
+      --ok-zone:#E4F6EA; --warn-zone:#FBEFD6; --err-zone:#FBE4E2;
+      --on-fill:#F2F5F8;
+    }
+  }
+  :root[data-theme="dark"]{
+    --base:#0A0A0A; --panel:#111111; --panel2:#0d0d0d;
+    --ink:#ECE8E0; --mute:#8A8A8A; --line:#1c1c1c; --rim:#2E2E2E; --code:#161616;
+    --aqua:#2DE2C3; --purple-ink:#A78BFA; --aqua-ink:#2DE2C3; --pink-ink:#FF2D6B;
+    --ol-aqua:rgba(45,226,195,.45);
+    --purple-zone:#161021; --aqua-zone:#10211E; --pink-zone:#211015;
+    --ok:#22C55E; --warn:#F5B027; --err:#FF4B3E;
+    --ok-zone:#0E1A12; --warn-zone:#1C1608; --err-zone:#1E0E0C;
+    --on-fill:#0A0A0A;
+  }
+  :root[data-theme="light"]{
+    --base:#F0F2F6; --panel:#FFFFFF; --panel2:#F7F8FB;
+    --ink:#1A1A1A; --mute:#5F646B; --line:#E6E9EF; --rim:#DCE0E7; --code:#E8ECF2;
+    --aqua:#0D9488; --purple-ink:#6D28D9; --aqua-ink:#0A7A6E; --pink-ink:#C21E58;
+    --ol-aqua:rgba(13,148,136,.45);
+    --purple-zone:#EDE6FA; --aqua-zone:#DFF3F0; --pink-zone:#FBE6ED;
+    --ok:#14783A; --warn:#9A4B07; --err:#C62B2B;
+    --ok-zone:#E4F6EA; --warn-zone:#FBEFD6; --err-zone:#FBE4E2;
+    --on-fill:#F2F5F8;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--base)}
+  body{background:var(--base);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.5;font-size:15px;-webkit-text-size-adjust:100%}
+  button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  input,select,textarea{font-family:inherit;font-size:14px;color:var(--ink);background:var(--panel2);border:1px solid var(--rim);border-radius:var(--r-sm);padding:var(--s2) var(--s3);width:100%}
+  input:focus,select:focus,textarea:focus,button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
+  @media (prefers-reduced-motion: reduce){*{transition:none !important;animation:none !important}}
+
+  /* ================= APP SHELL ================= */
+  .shell{max-width:980px;margin:0 auto;padding:0 clamp(14px,4vw,28px) 96px}
+  header.top{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);padding:var(--s4) 0 var(--s3)}
+  .wordmark{display:flex;align-items:center;gap:var(--s3)}
+  .wordmark .sig-sm{width:92px;height:auto;color:var(--ink);flex:0 0 auto}
+  .wordmark .wm-meta{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);font-weight:600}
+
+  nav.tabs{position:sticky;top:0;z-index:40;background:var(--base);display:flex;gap:var(--s1);overflow-x:auto;-webkit-overflow-scrolling:touch;padding:var(--s2) 0;border-bottom:1px solid var(--line);scrollbar-width:none}
+  nav.tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--mute);padding:var(--s2) var(--s4);border-radius:999px;border:1px solid transparent;white-space:nowrap}
+  .tab[aria-selected="true"]{background:var(--purple);color:#ECE8E0}
+  .tab:not([aria-selected="true"]):hover{border-color:var(--rim);color:var(--ink)}
+
+  main section.view{display:none;padding-top:var(--s6)}
+  main section.view.active{display:block}
+
+  /* ================= TYPE ROLES ================= */
+  .kick{font-family:'Caveat',cursive;font-weight:700;font-size:clamp(21px,5.5vw,28px);line-height:1;color:var(--ink);margin-bottom:var(--s2)}
+  .kick.brand{color:var(--purple-ink)}
+  h1{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(34px,9vw,64px);line-height:.92;text-transform:uppercase;margin-bottom:var(--s3);text-wrap:balance}
+  h1 .v{color:var(--purple)}
+  .sub{color:var(--mute);font-size:14.5px;max-width:56ch}
+  .sub b{color:var(--ink);font-weight:600}
+  .h2{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(21px,5.5vw,30px);line-height:1.02;text-transform:uppercase;margin-bottom:var(--s3);text-wrap:balance}
+  .h3{font-family:'Anton',sans-serif;font-weight:400;font-size:16px;letter-spacing:.03em;text-transform:uppercase;margin-bottom:var(--s3)}
+  .eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:var(--s3)}
+  .block{margin-top:var(--s12)}
+  .block:first-child{margin-top:0}
+  .note{color:var(--mute);font-size:13.5px;max-width:60ch}
+  .note b{color:var(--ink);font-weight:600}
+  code.inl{font-family:ui-monospace,monospace;color:var(--ink);font-size:12.5px;background:var(--code);padding:0 var(--s2);border-radius:var(--r-sm)}
+
+  /* ================= CARDS ================= */
+  .panelcard{border:1px solid var(--rim);border-radius:var(--r);background:var(--panel);padding:var(--s4) var(--s6)}
+  .vignette{position:absolute;inset:0;pointer-events:none;z-index:0;box-shadow:inset 0 0 calc(var(--cw,400px)*.25) calc(var(--cw,400px)*.015) rgba(0,0,0,.38)}
+  .statement{border-radius:var(--r-lg);position:relative;overflow:hidden;padding:var(--s6);--cw:min(400px,90vw)}
+  .statement>:not(.vignette){position:relative;z-index:1}
+  .statement.purple{background:var(--purple);color:#ECE8E0;border:1px solid var(--ol-purple)}
+  .statement.aqua{background:var(--aqua);color:#0A0A0A;border:1px solid var(--ol-aqua)}
+  .statement.pink{background:var(--pink);color:#0A0A0A;border:1px solid var(--ol-pink)}
+  .statement .tag{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;opacity:.9;margin-bottom:var(--s3)}
+  .statement .word{font-family:'Anton',sans-serif;font-size:clamp(24px,6vw,34px);line-height:.98;text-transform:uppercase;margin-bottom:var(--s2)}
+  .statement p{font-size:13px;opacity:.92;max-width:34ch}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+  @media(max-width:720px){.grid3{grid-template-columns:1fr}}
+  @media(max-width:560px){.grid2{grid-template-columns:1fr}}
+
+  /* rule box */
+  .rulebox{margin-top:var(--s4);border:1px solid var(--rim);border-radius:var(--r);background:var(--panel);padding:var(--s4) var(--s6);color:var(--mute);font-size:13.5px}
+  .rulebox b{color:var(--ink);font-weight:600}
+  .rulebox .li{display:block;margin-top:var(--s2)}
+
+  /* locked strip */
+  .found{border:1px solid var(--rim);border-radius:var(--r);background:var(--panel);overflow:hidden}
+  .found .ftop{display:flex;align-items:center;gap:var(--s2);padding:var(--s3) var(--s4);border-bottom:1px solid var(--line);background:var(--panel2)}
+  .found .ftop span{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);font-weight:600}
+  .lock{width:12px;height:12px;border:1.5px solid var(--mute);border-radius:3px;position:relative;flex:0 0 auto}
+  .lock:before{content:"";position:absolute;width:6px;height:5px;border:1.5px solid var(--mute);border-bottom:none;border-radius:3px 3px 0 0;top:-5px;left:1px}
+  .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}
+  .fitem{background:var(--panel);padding:var(--s3) var(--s4)}
+  .fitem .fl{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:2px}
+  .fitem .fvv{font-size:13px;color:var(--ink);font-weight:600}
+  .fitem.enemy .fvv{color:var(--pink-ink)}
+
+  /* pills, badges */
+  .pill{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:2px var(--s3);border:1px solid var(--rim);color:var(--mute)}
+  .pill.locked{border-color:var(--ol-purple);color:var(--purple-ink)}
+  .pill.own{border-color:var(--ol-purple);color:var(--purple-ink)}
+  .pill.build{border-color:var(--ol-aqua);color:var(--aqua-ink)}
+  .pill.teach{border-color:var(--ol-pink);color:var(--pink-ink)}
+  .sgbadge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:var(--s1) var(--s3);font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--on-fill)}
+  .sgbadge.ok{background:var(--ok)} .sgbadge.warn{background:var(--warn)} .sgbadge.err{background:var(--err)}
+  .sgbanner{border-radius:var(--r-sm);padding:var(--s3) var(--s4);display:flex;gap:var(--s3);align-items:flex-start;font-size:13px;color:var(--ink)}
+  .sgbanner b{font-weight:600}
+  .sgbanner .ico{font-weight:700;flex:0 0 auto}
+  .sgbanner.ok{background:var(--ok-zone);border-left:3px solid var(--ok)} .sgbanner.ok .ico{color:var(--ok)}
+  .sgbanner.warn{background:var(--warn-zone);border-left:3px solid var(--warn)} .sgbanner.warn .ico{color:var(--warn)}
+  .sgbanner.err{background:var(--err-zone);border-left:3px solid var(--err)} .sgbanner.err .ico{color:var(--err)}
+
+  /* copy chip */
+  .copybtn{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--ink);border:1px solid var(--rim);border-radius:999px;padding:var(--s1) var(--s3);background:var(--panel2)}
+  .copybtn:hover{border-color:var(--purple)}
+  .copybtn.done{border-color:var(--ok);color:var(--ok)}
+
+  /* segment card */
+  .seg{border:1px solid var(--rim);border-radius:var(--r);background:var(--panel);overflow:hidden;margin-top:var(--s4)}
+  .seg .shead{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);padding:var(--s3) var(--s4);border-bottom:1px solid var(--line);background:var(--panel2);flex-wrap:wrap}
+  .seg .sname{font-family:'Anton',sans-serif;font-weight:400;font-size:14px;letter-spacing:.03em;text-transform:uppercase}
+  .seg .sbody{padding:var(--s4);font-size:14px;white-space:pre-wrap;color:var(--ink)}
+  .seg .snote{padding:0 var(--s4) var(--s4);font-size:12px;color:var(--mute)}
+  .seg .shead .hgroup{display:flex;align-items:center;gap:var(--s2);flex-wrap:wrap}
+
+  /* details accordions */
+  details.acc{border:1px solid var(--rim);border-radius:var(--r);background:var(--panel);margin-top:var(--s3);overflow:hidden}
+  details.acc summary{list-style:none;cursor:pointer;padding:var(--s3) var(--s4);display:flex;align-items:center;gap:var(--s3);flex-wrap:wrap}
+  details.acc summary::-webkit-details-marker{display:none}
+  details.acc summary:before{content:'▸';color:var(--mute);font-size:13px}
+  details.acc[open] summary:before{content:'▾'}
+  details.acc .accbody{padding:0 var(--s4) var(--s4);border-top:1px solid var(--line);color:var(--mute);font-size:13.5px}
+  details.acc .accbody b{color:var(--ink);font-weight:600}
+  details.acc .accname{font-family:'Anton',sans-serif;font-size:15px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink)}
+  details.acc.you{box-shadow:inset 3px 0 0 var(--aqua)}
+  details.acc.care{box-shadow:inset 3px 0 0 var(--warn)}
+  .beatrow{margin-top:var(--s3)}
+  .beatrow .bl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:2px}
+  .beatrow .bv{font-size:13.5px;color:var(--ink)}
+  .beatrow .bv .b{color:var(--pink-ink);font-weight:700}
+
+  /* palette */
+  .swcard{border-radius:var(--r);overflow:hidden;border:1px solid var(--rim);text-align:left;display:block;width:100%}
+  .swcard .sw{height:84px;position:relative;--cw:min(300px,88vw)}
+  .swcard .meta{background:var(--panel);padding:var(--s3) var(--s4)}
+  .swcard .name{font-family:'Anton',sans-serif;font-size:15px;text-transform:uppercase;letter-spacing:.02em}
+  .swcard .lane{font-size:11px;font-weight:600;color:var(--mute);margin-top:1px}
+  .swcard .hex{font-family:ui-monospace,monospace;font-size:12px;color:var(--mute);margin-top:var(--s1)}
+  .neut{display:flex;align-items:center;gap:var(--s3);border:1px solid var(--rim);border-radius:var(--r);padding:var(--s2) var(--s3);background:var(--panel);width:100%;text-align:left}
+  .neut .chip{width:36px;height:36px;border-radius:var(--r-sm);flex:0 0 auto;border:1px solid rgba(120,120,120,.45)}
+  .neut .nname{font-weight:600;font-size:13px}
+  .neut .nhex{font-family:ui-monospace,monospace;font-size:11.5px;color:var(--mute)}
+
+  table.simple{border-collapse:collapse;width:100%;font-size:13px}
+  table.simple th,table.simple td{text-align:left;padding:var(--s2) var(--s3);border-bottom:1px solid var(--line)}
+  table.simple th{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+  .tscroll{overflow-x:auto}
+
+  /* ratio bar */
+  .ratio{display:flex;height:52px;border-radius:var(--r-sm);overflow:hidden;border:1px solid var(--rim)}
+  .ratio .seg2{display:flex;flex-direction:column;justify-content:center;padding:0 var(--s3);min-width:44px}
+  .ratio .seg2 .p{font-family:'Anton',sans-serif;font-size:17px;line-height:1}
+  .ratio .seg2 .l{font-size:9px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;opacity:.9}
+  .ratio .a{background:var(--pink);color:#0A0A0A} .ratio .b2{background:var(--aqua);color:#0A0A0A} .ratio .c{background:var(--purple);color:#ECE8E0}
+
+  /* tracker */
+  .statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3)}
+  @media(max-width:640px){.statgrid{grid-template-columns:1fr 1fr}}
+  .stat{border:1px solid var(--rim);border-radius:var(--r);background:var(--panel);padding:var(--s3) var(--s4)}
+  .stat .k{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:600}
+  .stat .v{font-family:'Anton',sans-serif;font-size:28px;line-height:1.1;font-variant-numeric:tabular-nums}
+  .mixrow{margin-top:var(--s4)}
+  .mixrow .mhead{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;margin-bottom:var(--s1)}
+  .mixrow .mhead b{font-weight:600}
+  .mixrow .mhead .tgt{color:var(--mute);font-variant-numeric:tabular-nums}
+  .bar{height:10px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);position:relative;overflow:hidden}
+  .bar .fill{position:absolute;inset:0 auto 0 0;border-radius:999px}
+  .bar .tick{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);opacity:.6}
+  .entry{border:1px solid var(--rim);border-radius:var(--r);background:var(--panel);padding:var(--s3) var(--s4);margin-top:var(--s3)}
+  .entry .etop{display:flex;justify-content:space-between;gap:var(--s3);align-items:baseline;flex-wrap:wrap}
+  .entry .etitle{font-weight:600;font-size:14px}
+  .entry .edate{font-size:12px;color:var(--mute);font-variant-numeric:tabular-nums}
+  .entry .epills{display:flex;gap:var(--s1);flex-wrap:wrap;margin-top:var(--s2)}
+  .entry .enotes{font-size:12.5px;color:var(--mute);margin-top:var(--s2)}
+  .entry .eact{margin-top:var(--s2);display:flex;gap:var(--s2)}
+  .entry .eact button{font-size:12px;color:var(--mute);text-decoration:underline;padding:2px}
+  .entry .eact button:hover{color:var(--ink)}
+  .formgrid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3)}
+  @media(max-width:560px){.formgrid{grid-template-columns:1fr}}
+  .formgrid .full{grid-column:1/-1}
+  label.f{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:var(--s1)}
+  .btn{display:inline-flex;align-items:center;gap:var(--s2);background:var(--purple);color:#ECE8E0;font-weight:600;font-size:14px;border-radius:999px;padding:var(--s2) var(--s6)}
+  .btn.ghost{background:transparent;border:1px solid var(--rim);color:var(--ink);font-size:13px}
+  .btn.ghost:hover{border-color:var(--purple)}
+  .winbtns{display:flex;gap:var(--s1)}
+  .winbtns button{font-size:12px;font-weight:600;color:var(--mute);border:1px solid var(--rim);border-radius:999px;padding:var(--s1) var(--s3)}
+  .winbtns button[aria-pressed="true"]{background:var(--purple);border-color:var(--purple);color:#ECE8E0}
+
+  /* gallery */
+  .gal{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3)}
+  @media(max-width:720px){.gal{grid-template-columns:repeat(2,1fr)}}
+  .gal button{border:1px solid var(--rim);border-radius:var(--r-sm);overflow:hidden;padding:0;display:block;background:var(--panel)}
+  .gal img{display:block;width:100%;height:auto}
+  .gal .gcap{font-size:11px;color:var(--mute);padding:var(--s1) var(--s2) var(--s2);text-align:left}
+  .lightbox{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;padding:var(--s4)}
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:min(92vw,560px);max-height:86vh;border-radius:var(--r-sm)}
+  .lightbox .lclose{position:absolute;top:var(--s4);right:var(--s4);color:#ECE8E0;font-size:15px;font-weight:600;border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:var(--s2) var(--s4)}
+
+  /* signature */
+  .sig{display:block;width:min(260px,70%);height:auto;color:var(--ink)}
+  .sigwrap{display:flex;flex-direction:column;align-items:center;gap:var(--s3);padding:var(--s8) var(--s4)}
+
+  /* spacing scale strip */
+  .scale{display:flex;align-items:flex-end;gap:var(--s2);flex-wrap:wrap;margin-top:var(--s2)}
+  .scale .u{background:var(--rim);border-radius:4px;width:20px}
+  .scale .ulab{font-family:ui-monospace,monospace;font-size:10px;color:var(--mute);text-align:center;margin-top:2px}
+
+  footer.foot{margin-top:var(--s16);padding-top:var(--s6);border-top:1px solid var(--line);color:var(--mute);font-size:12px}
+</style>
+
+<div class="shell">
+  <header class="top">
+    <div class="wordmark">
+      <svg class="sig-sm" viewBox="0 0 601.04 273.69" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Ryan Tayler">__SIG_PATHS__</svg>
+      <span class="wm-meta">Brand Hub · v1.0</span>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Hub sections">
+    <button class="tab" role="tab" data-view="today" aria-selected="true">Today</button>
+    <button class="tab" role="tab" data-view="brand" aria-selected="false">Brand</button>
+    <button class="tab" role="tab" data-view="voice" aria-selected="false">Voice</button>
+    <button class="tab" role="tab" data-view="build" aria-selected="false">Build</button>
+    <button class="tab" role="tab" data-view="library" aria-selected="false">Library</button>
+    <button class="tab" role="tab" data-view="tracker" aria-selected="false">Tracker</button>
+  </nav>
+
+  <main>
+
+  <!-- ============================================================ TODAY -->
+  <section class="view active" id="view-today">
+    <div class="kick">the whole system, in your pocket</div>
+    <h1>One <span class="v">hero</span>.<br>Two lanes. One hub.</h1>
+    <p class="sub"><b>Purple is you.</b> Aqua is what you build. Pink is what you teach. Everything approved lives here, and the tracker keeps the posting mix honest against the targets.</p>
+
+    <div class="block">
+      <div class="found">
+        <div class="ftop"><span class="lock" aria-hidden="true"></span><span>Locked · set once · the foundation</span></div>
+        <div class="fgrid">
+          <div class="fitem"><div class="fl">Game</div><div class="fvv">B2B trust, not views</div></div>
+          <div class="fitem"><div class="fl">Territory</div><div class="fvv">Live events &amp; production, AU</div></div>
+          <div class="fitem enemy"><div class="fl">Enemy</div><div class="fvv">In-housing</div></div>
+          <div class="fitem"><div class="fl">Topic mix</div><div class="fvv">75 deep / 20 niche wide / 5 personal</div></div>
+          <div class="fitem"><div class="fl">Effort mix</div><div class="fvv">70 proven / 20 iterate / 10 swings</div></div>
+          <div class="fitem"><div class="fl">Proof numbers</div><div class="fvv">115+ live events · 56,000+ attendees</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">The mix right now · last 90 days</div>
+      <div id="today-mix" class="panelcard"></div>
+      <p class="note" style="margin-top:var(--s3)">Counted from approved and published entries in the tracker. Open the Tracker tab to log a piece or see the full breakdown.</p>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Quick actions</div>
+      <div style="display:flex;gap:var(--s3);flex-wrap:wrap">
+        <button class="btn" data-goto="tracker">Log a post</button>
+        <button class="btn ghost" data-goto="build">Build a piece</button>
+        <button class="btn ghost" data-goto="library">Grab approved copy</button>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">How this hub stays current</div>
+      <div class="rulebox"><b>Claude maintains this page.</b> When a new post is approved, a bio changes, or a rule gets locked, paste it to Claude and say add it to the hub. Claude bakes it into this page and republishes to the same link, so every device sees it.
+        <span class="li"><b>Tracker entries you log here save on this device.</b> Use Export in the Tracker tab and hand the file to Claude to make them permanent everywhere.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ BRAND -->
+  <section class="view" id="view-brand">
+    <div class="kick brand">which colour, which font, no guessing</div>
+    <div class="h2">The visual system</div>
+    <p class="sub"><b>Dark is canonical.</b> Design dark first, light is a supported adaptation. One accent per piece, never more than one. Purple is the default when a piece has no clear lane.</p>
+
+    <div class="block">
+      <div class="eyebrow">The meaning system · one noun, two verbs</div>
+      <div class="grid3">
+        <div class="statement purple"><div class="vignette"></div><div class="tag">Own · hero · the spine</div><div class="word">Own</div><p>You, and everything you own. Your IP, your frameworks. The default when a piece has no clear verb.</p></div>
+        <div class="statement aqua"><div class="vignette"></div><div class="tag">Build · lane one</div><div class="word">Build</div><p>Anything you make. Ventures, businesses, systems, live events and production.</p></div>
+        <div class="statement pink"><div class="vignette"></div><div class="tag">Teach · lane two</div><div class="word">Teach</div><p>Anything you share to change how someone thinks. Content, point of view, hot takes.</p></div>
+      </div>
+      <div class="rulebox"><b>Say the word, not just the colour.</b> Every coloured piece also carries its word, Own, Build, or Teach. The label is the meaning, the colour is the reinforcement. Never rely on colour alone.</div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Palette · tap any card to copy the hex</div>
+      <div class="grid3">
+        <button class="swcard" data-hexd="#6D28D9" data-hexl="#6D28D9"><span class="sw" style="background:var(--purple);display:block"><span class="vignette"></span></span><span class="meta" style="display:block"><span class="name" style="display:block">Hero Purple</span><span class="lane" style="display:block">Own · you · your IP</span><span class="hex" style="display:block">#6D28D9 · holds on both themes</span></span></button>
+        <button class="swcard" data-hexd="#2DE2C3" data-hexl="#0D9488"><span class="sw" style="background:var(--aqua);display:block"><span class="vignette"></span></span><span class="meta" style="display:block"><span class="name" style="display:block">Aqua</span><span class="lane" style="display:block">Build · ventures · production</span><span class="hex" style="display:block">#2DE2C3 dark · #0D9488 light</span></span></button>
+        <button class="swcard" data-hexd="#FF2D6B" data-hexl="#FF2D6B"><span class="sw" style="background:var(--pink);display:block"><span class="vignette"></span></span><span class="meta" style="display:block"><span class="name" style="display:block">Pink</span><span class="lane" style="display:block">Teach · POV · hot takes</span><span class="hex" style="display:block">#FF2D6B · holds on both themes</span></span></button>
+      </div>
+      <div class="grid2" style="margin-top:var(--s4)">
+        <button class="neut" data-hexd="#0A0A0A" data-hexl="#F0F2F6"><span class="chip" style="background:var(--base)"></span><span><span class="nname" style="display:block">Base</span><span class="nhex">#0A0A0A dark · #F0F2F6 light</span></span></button>
+        <button class="neut" data-hexd="#111111" data-hexl="#FFFFFF"><span class="chip" style="background:var(--panel)"></span><span><span class="nname" style="display:block">Panel</span><span class="nhex">#111111 dark · #FFFFFF light</span></span></button>
+        <button class="neut" data-hexd="#ECE8E0" data-hexl="#1A1A1A"><span class="chip" style="background:var(--ink)"></span><span><span class="nname" style="display:block">Text</span><span class="nhex">#ECE8E0 dark · #1A1A1A light</span></span></button>
+        <button class="neut" data-hexd="#8A8A8A" data-hexl="#5F646B"><span class="chip" style="background:var(--mute)"></span><span><span class="nname" style="display:block">Mute</span><span class="nhex">#8A8A8A dark · #5F646B light</span></span></button>
+        <button class="neut" data-hexd="#1c1c1c" data-hexl="#E6E9EF"><span class="chip" style="background:var(--line)"></span><span><span class="nname" style="display:block">Divider</span><span class="nhex">#1c1c1c dark · #E6E9EF light</span></span></button>
+        <button class="neut" data-hexd="#2E2E2E" data-hexl="#DCE0E7"><span class="chip" style="background:var(--rim)"></span><span><span class="nname" style="display:block">Rim</span><span class="nhex">#2E2E2E dark · #DCE0E7 light</span></span></button>
+      </div>
+      <div class="rulebox"><b>Cyan is retired.</b> It sat too close to aqua and collapsed for colourblind readers. Aqua now carries build, which includes events and production. Do not use cyan in new work.</div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Text on colour · contrast decides, not taste</div>
+      <div class="tscroll panelcard" style="padding:var(--s2) var(--s4)">
+        <table class="simple">
+          <thead><tr><th>Fill</th><th>Text</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td>Purple</td><td>Off white #ECE8E0</td><td>The only white text card</td></tr>
+            <tr><td>Aqua</td><td>Black #0A0A0A</td><td>Bright fill, dark text wins</td></tr>
+            <tr><td>Pink</td><td>Black #0A0A0A</td><td>Black is safe. White only on large bold headlines</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Type · three faces, locked</div>
+      <div class="panelcard">
+        <div style="font-family:'Anton',sans-serif;font-size:clamp(26px,6vw,40px);text-transform:uppercase;line-height:.95">Anton for <span style="color:var(--purple)">headers</span></div>
+        <p class="note" style="margin-top:var(--s2)">Headlines and card titles only. Uppercase, ultra condensed. Never for small labels, they turn cramped.</p>
+      </div>
+      <div class="panelcard" style="margin-top:var(--s3)">
+        <div style="font-size:19px;font-weight:500">Inter carries every paragraph, caption, and label.</div>
+        <p class="note" style="margin-top:var(--s2)">Weights 400, 500, 600. All reading text and every small utility label, set in Inter caps rather than Anton.</p>
+      </div>
+      <div class="panelcard" style="margin-top:var(--s3)">
+        <div style="font-family:'Caveat',cursive;font-weight:700;font-size:clamp(26px,6vw,36px);line-height:1">one handwritten moment per section</div>
+        <p class="note" style="margin-top:var(--s2)">Caveat is the personal voice. Accent only, never body, never a headline, never two in one view. It takes the piece's lane colour. It is not the signature.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Card build spec · zero guesswork</div>
+      <div class="rulebox">
+        <b>Fill.</b> One flat hex, no gradient. Pure black and pure white are never fills.
+        <span class="li"><b>Inner vignette.</b> Colour fills only. Inset shadow, black at 38%, blur 25% of card width, spread 1.5%. Grey and panel cards stay flat.</span>
+        <span class="li"><b>Outline.</b> 1px solid. Full colour cards take their accent at 45% over base. Grey, panel, and split cards take the grey rim. Colour never rims a grey surface.</span>
+        <span class="li"><b>Radius.</b> 8px chips and swatches, 16px panels and utility, 24px hero and statement cards. Pills fully round.</span>
+        <span class="li"><b>One accent per piece.</b> Never two lanes in one frame. Purple is the default.</span>
+      </div>
+      <div class="panelcard" style="margin-top:var(--s3)">
+        <div class="h3" style="margin-bottom:var(--s1)">Spacing scale</div>
+        <p class="note">Every gap, pad, and margin snaps to this. Borders stay 1px outside it.</p>
+        <div class="scale">
+          <div><div class="u" style="height:4px"></div><div class="ulab">4</div></div>
+          <div><div class="u" style="height:8px"></div><div class="ulab">8</div></div>
+          <div><div class="u" style="height:12px"></div><div class="ulab">12</div></div>
+          <div><div class="u" style="height:16px"></div><div class="ulab">16</div></div>
+          <div><div class="u" style="height:24px"></div><div class="ulab">24</div></div>
+          <div><div class="u" style="height:32px"></div><div class="ulab">32</div></div>
+          <div><div class="u" style="height:48px"></div><div class="ulab">48</div></div>
+          <div><div class="u" style="height:64px"></div><div class="ulab">64</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Signature · the only sign off</div>
+      <div class="panelcard sigwrap">
+        <svg class="sig" viewBox="0 0 601.04 273.69" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Ryan Tayler signature">__SIG_PATHS__</svg>
+        <p class="note" style="text-align:center;max-width:38ch">Ink only. Black on light, off white on dark. Never tinted, never on a colour fill, never on a busy photo. Clear space around it of at least the height of the capital R. Caveat never stands in for it.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Status signals · state, never lane</div>
+      <div class="panelcard">
+        <div style="display:flex;gap:var(--s2);flex-wrap:wrap">
+          <span class="sgbadge ok"><span aria-hidden="true">✓</span>Approved</span>
+          <span class="sgbadge warn"><span aria-hidden="true">!</span>Warning</span>
+          <span class="sgbadge err"><span aria-hidden="true">✕</span>Blocked</span>
+        </div>
+        <p class="note" style="margin-top:var(--s3)">Green, amber, and red report state and never carry lane meaning. Every signal ships with an icon and a word. Keep them small, ticks, dots, badges, banners. Never fill a content card with a signal colour, keep green away from aqua fills, and give red air from pink.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ VOICE -->
+  <section class="view" id="view-voice">
+    <div class="kick">sound like you, every time</div>
+    <div class="h2">The voice</div>
+    <p class="sub">A working entrepreneur narrating real moves in the moment. <b>We report what happened and let the reader draw the lesson.</b> Never a content creator performing.</p>
+
+    <div class="block">
+      <div class="grid2">
+        <div class="panelcard">
+          <div class="h3">We are</div>
+          <p class="note">Concrete. Specific. Casually Australian. Confident without selling. Relationship first, transaction second. Observant about craft, because experience is the job. Dry humour, deployed once.</p>
+        </div>
+        <div class="panelcard">
+          <div class="h3">We are not</div>
+          <p class="note">A content creator, a guru, a hype man, a thought leader, a motivational account, or an employee talking about the day job. We never perform insight.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Voice constants · every format</div>
+      <div class="rulebox">
+        <b>1. First person, in the moment.</b> Narrate from inside the event, not above it.
+        <span class="li"><b>2. Concrete specifics beat clever framing.</b> Welcome tea, QC testing, truss, LED. Specifics are the proof.</span>
+        <span class="li"><b>3. Contractions always.</b> I'm, I've, could've. Formal constructions kill the register.</span>
+        <span class="li"><b>4. Real paragraphs.</b> Two to four sentences each. Never one line per paragraph as a style.</span>
+        <span class="li"><b>5. Gary Provost rhythm.</b> Short sentences. Medium sentences. And occasionally a long one that builds, listing the real details one after another, and lands with weight.</span>
+        <span class="li"><b>6. Casual Australian register.</b> Plain talk. Mild profanity only when it is how a person would actually say it.</span>
+        <span class="li"><b>7. Close with one dry punch.</b> Understated, earned by the story, then stop. Never chain two.</span>
+        <span class="li"><b>8. The lesson gets one or two sentences,</b> placed where the story has already proven it.</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Hard rules · never bend</div>
+      <div class="rulebox">
+        <b>No dashes of any kind in prose.</b> Restructure with commas, full stops, or brackets.
+        <span class="li"><b>No colon in prose</b> unless it introduces a list.</span>
+        <span class="li"><b>Australian spelling always.</b> Finalise, optimise, colour, organise.</span>
+        <span class="li"><b>Never operator, CEO for hire, or executive.</b> Entrepreneur, partner, growth partner, investor.</span>
+        <span class="li"><b>Equity, acquisition, roll up, and PE never appear in public copy.</b> Entrepreneur and partner carry the signal.</span>
+        <span class="li"><b>Aaron Sansoni and ASG are backstory only.</b> Past tense lesson framing, never present tense, never friction.</span>
+        <span class="li"><b>No supplier names or deal specifics</b> in China or sourcing content.</span>
+        <span class="li"><b>Proof numbers are fixed.</b> 115+ live events, 56,000+ attendees. Never mix with other figures.</span>
+        <span class="li"><b>Named IP is never shoehorned.</b> When a piece is genuinely in that territory, name it properly. Otherwise leave it out.</span>
+        <span class="li"><b>Emoji.</b> Never forced. One per post as a functional visual hook when it earns its place, like a country flag.</span>
+        <span class="li"><b>Supplied formats are followed beat for beat.</b> The format is the control group. If a rule conflicts, follow the format and flag it.</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Ban list · instant rewrite if any appear</div>
+      <div class="rulebox">
+        Staccato broetry. Rhetorical reversals and Not X, Y constructions. Analogies and metaphors as framing devices. Hype adjectives. Manufactured hooks. Guru imperatives. Chained punchlines at the close. Dramatic one line pivots. Borrowed business cliches. You do X, I do Y pitch constructions. Hustle narration. Internal brand vocabulary spoken aloud in copy. Temporal anchors in evergreen assets. Engagement bait questions. Hashtag blocks. Starting a post with Unpopular opinion.
+        <span class="li"><b>Allowed and different.</b> A declared mission, one plain, concrete, checkable ambition sentence, is on brand.</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">LinkedIn post shape · the gold standard structure</div>
+      <div class="rulebox">
+        <b>1. Hook.</b> One or two lines. A concrete situation stated plainly. It works because the situation is interesting, not because it is withheld.
+        <span class="li"><b>2. Tension or contrast,</b> brief.</span>
+        <span class="li"><b>3. The story,</b> the longest section. Real details in flowing prose. The long Provost sentence usually lives here.</span>
+        <span class="li"><b>4. The principle,</b> one short paragraph max, where positioning lives.</span>
+        <span class="li"><b>5. The punch,</b> one line. Dry, confident, done.</span>
+        <span class="li">Roughly 120 to 220 words as a guide, not a hard rule. A small overrun never cuts a line that works.</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Personal post shape · five beats, one paragraph each</div>
+      <div class="rulebox">
+        <b>1. The opening lesson line.</b> Names that the lesson exists without stating it. The object must be small and physical.
+        <span class="li"><b>2. The scene.</b> Put us in the room. Clock, state of the room, who Ryan was at the time, the decision made.</span>
+        <span class="li"><b>3. The moment.</b> It went wrong, or it clicked. Short and factual.</span>
+        <span class="li"><b>4. The lesson.</b> The longest beat, where the POV lives.</span>
+        <span class="li"><b>5. The now.</b> Proof he still carries it, closing on the punch. The final sentence is punch shaped, lands, stops.</span>
+        <span class="li"><b>Approved moves.</b> The borrowed credibility opener, roughly one Personal post in four. The callback close, the strongest structural move in the format.</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Tone by format</div>
+      <div class="rulebox">
+        <b>LinkedIn.</b> The partner room. Every post should leave a founder thinking this is how a partner operates.
+        <span class="li"><b>Instagram feed.</b> Reuses the same copy as LinkedIn. One write, two platforms.</span>
+        <span class="li"><b>Reels and stories.</b> One or two punchy lines that lean on the visual. Story reshares get a three or four word reaction.</span>
+        <span class="li"><b>Comments.</b> Real reaction first, then one line of lived experience. Never lecture, never pitch. Slightly outside the lane is fine when it touches how Ryan works.</span>
+        <span class="li"><b>Bios.</b> Locked assets, reproduce exactly. Long bios are plain factual first person, evergreen, no pitching, no aphorisms.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ BUILD -->
+  <section class="view" id="view-build">
+    <div class="kick">bring a topic, leave with a build</div>
+    <div class="h2">Build a piece</div>
+    <p class="sub"><b>One subject per piece.</b> A problem an owner has, or a belief in the industry. Your proof picks the format, and the format walks you across the whole build.</p>
+
+    <div class="block">
+      <div class="eyebrow">Step 1 · pick the topic lane</div>
+      <div class="ratio" role="img" aria-label="Topic mix, 75 deep, 20 niche wide, 5 personal">
+        <div class="seg2 a" style="flex:75 1 0"><div class="p">75</div><div class="l">Deep</div></div>
+        <div class="seg2 b2" style="flex:20 1 0"><div class="p">20</div><div class="l">Niche wide</div></div>
+        <div class="seg2 c" style="flex:5 1 0"><div class="p">5</div><div class="l">You</div></div>
+      </div>
+      <p class="note" style="margin-top:var(--s3)">75% solves the painful specific problems of founders in live events and production. 20% goes niche wide inside the expertise. 5% is personal, the human side that makes it real.</p>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Step 2 · your proof picks the format</div>
+      <p class="note" style="margin-bottom:var(--s3)">You do not choose the format by mood. The proof in your hand chooses it for you. Tap what you have.</p>
+      <div id="picker" style="display:flex;flex-direction:column;gap:var(--s2)"></div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Step 3 · read the build across</div>
+      <p class="note" style="margin-bottom:var(--s2)"><b>Aqua edged formats are your strongest.</b> Amber edged formats fight your voice, use them rarely. Each card is the whole build, hook to Waterfall cuts.</p>
+      <div id="formats"></div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Step 4 · before you record or post</div>
+      <div class="panelcard">
+        <div class="h3">The hook answers four things, fast</div>
+        <div class="rulebox" style="border:none;padding:0;margin-top:var(--s2)">
+          <b>1. Who is it for.</b> An owner knows in the first line this is for them.
+          <span class="li"><b>2. Why you.</b> The proof that earns the right to say it.</span>
+          <span class="li"><b>3. Where it is going.</b> A reason to stay to the end.</span>
+          <span class="li"><b>4. One thing worth knowing.</b> The single takeaway they leave with.</span>
+        </div>
+      </div>
+      <div class="kick" style="text-align:center;margin-top:var(--s6)">if the proof is real, it is good enough</div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">The system around every piece</div>
+      <div class="rulebox">
+        <b>Waterfall everything.</b> One long form pillar becomes many platform native cuts. Never write twenty things from scratch when one piece holds twenty.
+        <span class="li"><b>Long form is the trust engine.</b> One ten minute piece builds the trust of roughly twenty shorts. Short form spreads awareness, long form compounds.</span>
+        <span class="li"><b>One platform gets the innovation.</b> LinkedIn is the partner room. Everything else coasts on Waterfall cuts until the priority is nailed.</span>
+        <span class="li"><b>Reintroduce every time.</b> New people always arrive. Re explain every framework, no insider references.</span>
+        <span class="li"><b>Effort mix 70/20/10.</b> 70% proven winners, 20% iterations, 10% big swings. Volume gathers data, iteration is the sauce.</span>
+        <span class="li"><b>The scoreboard is partner conversations,</b> never views. If a draft optimises for engagement at the cost of how a serious founder reads it, kill it.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ LIBRARY -->
+  <section class="view" id="view-library">
+    <div class="kick">approved words, ready to ship</div>
+    <div class="h2">The library</div>
+    <p class="sub">Locked bios, locked quotes, gold standard posts, approved graphics, and the IP register. <b>Copy from here, never from memory.</b></p>
+
+    <div class="block">
+      <div class="eyebrow">Locked segments · reproduce exactly, never paraphrase</div>
+      <div id="segments"></div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Gold standard posts · these outrank every rule</div>
+      <div id="goldposts"></div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Approved graphics · The CRAFT Method™ carousel</div>
+      <p class="note" style="margin-bottom:var(--s3)">My Idea Crafting Framework™. Capture, Refine, Assess, Finalise, Transfer. Tap a slide to view it large. Full resolution files live in the Personal-brand-Hub repo under assets.</p>
+      <div class="gal" id="gallery"></div>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">IP register · what is yours and what is not</div>
+      <div class="panelcard">
+        <div class="h3">Confirmed Ryan IP</div>
+        <p class="note"><b>The CRAFT Method™</b> with My Idea Crafting Framework™ and the Brain RAM™, Digital RAM™, Hard Storage™ sub model. <b>The Momentum Formula.</b> <b>The Negotiation Playbook</b> (V1). <b>The CRAFT Consult</b> (in progress). <b>The Partnership Belief System</b> (locked July 2026).</p>
+      </div>
+      <div class="panelcard" style="margin-top:var(--s3)">
+        <div class="h3">Never attribute to Ryan</div>
+        <p class="note">Every mentor framework (Hormozi, Ralston, Koe, Kallaway, Gray, Noske, Codie Sanchez). ASG proprietary frameworks including Human Signal, Triple Threat, Proof Bank, and Credibility Pattern. Teach them freely with attribution, never publish them as Ryan's own.</p>
+      </div>
+      <div class="panelcard" style="margin-top:var(--s3)">
+        <div class="h3">Needs a full rebuild first</div>
+        <p class="note">INFINITE Framework, Consultation Framework V4, and Equity Consult. Raw material, not finished assets. Each needs a new mechanism, a diagrammable structure, and a contrarian edge before it graduates.</p>
+      </div>
+      <div class="rulebox"><b>CRAFT formatting rules.</b> The CRAFT Method™ always carries the trademark mark. CRAFT always all caps. Finalise always spelled with an S. Brain RAM™, Digital RAM™, and Hard Storage™ always carry the mark. Momentum is not a public facing word until the umbrella question is settled.</div>
+    </div>
+  </section>
+
+  <!-- ============================================================ TRACKER -->
+  <section class="view" id="view-tracker">
+    <div class="kick">keep the mix honest</div>
+    <div class="h2">Post tracker</div>
+    <p class="sub">Log every piece, then check the mix against the targets. <b>75/20/5 on topic, 70/20/10 on effort,</b> long form as the trust engine.</p>
+
+    <div class="block">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:var(--s3);flex-wrap:wrap;margin-bottom:var(--s3)">
+        <div class="eyebrow" style="margin:0">The mix vs the targets</div>
+        <div class="winbtns" role="group" aria-label="Time window">
+          <button data-win="30" aria-pressed="false">30 days</button>
+          <button data-win="90" aria-pressed="true">90 days</button>
+          <button data-win="all" aria-pressed="false">All time</button>
+        </div>
+      </div>
+      <div class="statgrid" id="statcards"></div>
+      <div class="panelcard" style="margin-top:var(--s4)" id="mixbars"></div>
+      <p class="note" style="margin-top:var(--s3)">Counted from entries marked approved or published. Ideas and drafts sit out of the stats until they ship. Effort is only counted when set.</p>
+    </div>
+
+    <div class="block">
+      <div class="eyebrow">Log a piece</div>
+      <form class="panelcard" id="logform">
+        <div class="formgrid">
+          <div class="full"><label class="f" for="f-title">Title or one line description</label><input id="f-title" required placeholder="What is the piece"></div>
+          <div><label class="f" for="f-date">Date</label><input id="f-date" type="date" required></div>
+          <div><label class="f" for="f-status">Status</label><select id="f-status"><option value="idea">Idea</option><option value="drafted">Drafted</option><option value="approved">Approved</option><option value="published" selected>Published</option></select></div>
+          <div><label class="f" for="f-platform">Platform</label><select id="f-platform"><option>LinkedIn</option><option>Instagram feed</option><option>Reel</option><option>Story</option><option>YouTube</option><option>X</option><option>Newsletter</option><option>Other</option></select></div>
+          <div><label class="f" for="f-type">Asset type</label><select id="f-type"><option>Text post</option><option>Long form video</option><option>Short form video</option><option>Carousel</option><option>Story</option><option>Comment</option><option>Email</option></select></div>
+          <div><label class="f" for="f-topic">Topic mix</label><select id="f-topic"><option value="deep">Deep · 75 lane</option><option value="niche">Niche wide · 20 lane</option><option value="personal">Personal · 5 lane</option></select></div>
+          <div><label class="f" for="f-effort">Effort mix</label><select id="f-effort"><option value="">Not set</option><option value="proven">Proven winner · 70</option><option value="iteration">Iteration · 20</option><option value="swing">Big swing · 10</option></select></div>
+          <div><label class="f" for="f-format">Format</label><select id="f-format"><option>Contrarian</option><option>Case study</option><option>Personal</option><option>Problem</option><option>Education</option><option>Comparison</option><option>List</option><option>Secret reveal</option><option>Question</option><option>Other</option></select></div>
+          <div><label class="f" for="f-lane">Brand lane</label><select id="f-lane"><option value="own">Own · purple</option><option value="build">Build · aqua</option><option value="teach">Teach · pink</option></select></div>
+          <div class="full"><label class="f" for="f-notes">Notes or link</label><input id="f-notes" placeholder="Optional"></div>
+        </div>
+        <div style="margin-top:var(--s4);display:flex;gap:var(--s3);align-items:center;flex-wrap:wrap">
+          <button class="btn" type="submit">Save entry</button>
+          <span class="note" id="saveflash"></span>
+        </div>
+      </form>
+    </div>
+
+    <div class="block">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:var(--s3);flex-wrap:wrap;margin-bottom:var(--s2)">
+        <div class="eyebrow" style="margin:0">Entries</div>
+        <div style="display:flex;gap:var(--s2);flex-wrap:wrap">
+          <button class="btn ghost" id="exportbtn">Export</button>
+          <button class="btn ghost" id="importbtn">Import</button>
+        </div>
+      </div>
+      <div id="importbox" style="display:none;margin-top:var(--s3)" class="panelcard">
+        <label class="f" for="importarea">Paste an export here, then load it</label>
+        <textarea id="importarea" rows="4" placeholder='{"entries":[...]}'></textarea>
+        <div style="margin-top:var(--s3);display:flex;gap:var(--s2)"><button class="btn ghost" id="importgo">Load</button><span class="note" id="importflash"></span></div>
+      </div>
+      <div id="entrylist"></div>
+      <div class="sgbanner warn" style="margin-top:var(--s4)"><span class="ico" aria-hidden="true">!</span><span><b>On this device only.</b> Entries you log here live in this browser. Export and hand the file to Claude to bake them into the hub for every device. Entries with a lock came baked in, ask Claude to change them.</span></div>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="foot">Ryan Tayler · personal brand hub · dark is canonical · one accent per piece, never more than one. Formats and hook rules after Kallaway, ratios after Ralston, meats after Hormozi, taught with attribution, never published as original IP.</footer>
+</div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Slide preview">
+  <button class="lclose" id="lclose">Close</button>
+  <img id="limg" src="" alt="">
+</div>
+
+<script type="application/json" id="hubdata">__HUB_DATA__</script>
+
+<script>
+(function(){
+  'use strict';
+  var DATA = JSON.parse(document.getElementById('hubdata').textContent);
+
+  /* ---------- tabs ---------- */
+  var tabs = document.querySelectorAll('.tab');
+  function show(view){
+    tabs.forEach(function(t){ t.setAttribute('aria-selected', String(t.dataset.view===view)); });
+    document.querySelectorAll('section.view').forEach(function(s){ s.classList.toggle('active', s.id==='view-'+view); });
+    window.scrollTo({top:0});
+  }
+  tabs.forEach(function(t){ t.addEventListener('click', function(){ show(t.dataset.view); }); });
+  document.querySelectorAll('[data-goto]').forEach(function(b){ b.addEventListener('click', function(){ show(b.dataset.goto); }); });
+
+  /* ---------- clipboard ---------- */
+  function copyText(txt, btn){
+    function done(){ if(btn){ var old=btn.innerHTML; btn.classList.add('done'); btn.innerHTML='✓ Copied'; setTimeout(function(){ btn.classList.remove('done'); btn.innerHTML=old; },1400);} }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done, function(){ fallback(); }); } else { fallback(); }
+    function fallback(){ var ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); done(); }catch(e){} document.body.removeChild(ta); }
+  }
+  document.querySelectorAll('.swcard,.neut').forEach(function(card){
+    card.addEventListener('click', function(){
+      var light = document.documentElement.getAttribute('data-theme')==='light' || (!document.documentElement.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: light)').matches);
+      copyText(light ? card.dataset.hexl : card.dataset.hexd, null);
+      card.style.outline='2px solid var(--ok)'; setTimeout(function(){ card.style.outline=''; },700);
+    });
+  });
+
+  /* ---------- library segments ---------- */
+  var segWrap = document.getElementById('segments');
+  DATA.segments.forEach(function(s){
+    var el = document.createElement('div'); el.className='seg';
+    var head = document.createElement('div'); head.className='shead';
+    var hg = document.createElement('div'); hg.className='hgroup';
+    var nm = document.createElement('span'); nm.className='sname'; nm.textContent=s.name; hg.appendChild(nm);
+    if(s.locked){ var p=document.createElement('span'); p.className='pill locked'; p.textContent='Locked'; hg.appendChild(p); }
+    head.appendChild(hg);
+    var cb = document.createElement('button'); cb.className='copybtn'; cb.type='button'; cb.textContent='Copy';
+    cb.addEventListener('click', function(){ copyText(s.text, cb); });
+    head.appendChild(cb);
+    el.appendChild(head);
+    var body = document.createElement('div'); body.className='sbody'; body.textContent=s.text; el.appendChild(body);
+    if(s.note){ var n=document.createElement('div'); n.className='snote'; n.textContent=s.note; el.appendChild(n); }
+    segWrap.appendChild(el);
+  });
+
+  /* ---------- gold posts ---------- */
+  var goldWrap = document.getElementById('goldposts');
+  DATA.gold.forEach(function(g){
+    var el = document.createElement('details'); el.className='acc';
+    var sm = document.createElement('summary');
+    var nm = document.createElement('span'); nm.className='accname'; nm.textContent=g.name; sm.appendChild(nm);
+    var p = document.createElement('span'); p.className='pill'; p.textContent=g.meta; sm.appendChild(p);
+    var cb = document.createElement('button'); cb.className='copybtn'; cb.type='button'; cb.textContent='Copy';
+    cb.addEventListener('click', function(ev){ ev.preventDefault(); ev.stopPropagation(); copyText(g.text, cb); });
+    sm.appendChild(cb);
+    el.appendChild(sm);
+    var body = document.createElement('div'); body.className='accbody';
+    var t = document.createElement('div'); t.style.whiteSpace='pre-wrap'; t.style.color='var(--ink)'; t.style.fontSize='13.5px'; t.style.marginTop='12px'; t.textContent=g.text; body.appendChild(t);
+    var why = document.createElement('p'); why.style.marginTop='12px'; why.innerHTML='<b>Why it works.</b> '; why.appendChild(document.createTextNode(g.why)); body.appendChild(why);
+    el.appendChild(body);
+    goldWrap.appendChild(el);
+  });
+
+  /* ---------- gallery ---------- */
+  var gal = document.getElementById('gallery');
+  var lb = document.getElementById('lightbox'), limg = document.getElementById('limg');
+  DATA.slides.forEach(function(sl){
+    var b = document.createElement('button'); b.type='button';
+    var img = document.createElement('img'); img.src=sl.src; img.alt=sl.cap; img.loading='lazy'; b.appendChild(img);
+    var c = document.createElement('div'); c.className='gcap'; c.textContent=sl.cap; b.appendChild(c);
+    b.addEventListener('click', function(){ limg.src=sl.src; limg.alt=sl.cap; lb.classList.add('open'); });
+    gal.appendChild(b);
+  });
+  document.getElementById('lclose').addEventListener('click', function(){ lb.classList.remove('open'); });
+  lb.addEventListener('click', function(e){ if(e.target===lb) lb.classList.remove('open'); });
+
+  /* ---------- build tab ---------- */
+  var pickWrap = document.getElementById('picker');
+  var fmtWrap = document.getElementById('formats');
+  DATA.formats.forEach(function(f){
+    var el = document.createElement('details'); el.className='acc '+(f.tier||''); el.id='fmt-'+f.id;
+    var sm = document.createElement('summary');
+    var nm = document.createElement('span'); nm.className='accname'; nm.textContent=f.name; sm.appendChild(nm);
+    if(f.tier==='you'){ var p1=document.createElement('span'); p1.className='pill build'; p1.textContent='Yours'; sm.appendChild(p1); }
+    if(f.tier==='care'){ var p2=document.createElement('span'); p2.className='pill'; p2.style.borderColor='var(--warn)'; p2.style.color='var(--warn)'; p2.textContent='Care'; sm.appendChild(p2); }
+    var uw = document.createElement('span'); uw.style.cssText='font-size:12px;color:var(--mute);flex-basis:100%;padding-left:22px'; uw.textContent=f.when; sm.appendChild(uw);
+    el.appendChild(sm);
+    var body = document.createElement('div'); body.className='accbody';
+    [['Hook', f.hook],['Beat 1', f.b1],['Beat 2', f.b2],['Beat 3', f.b3],['Proof to drop', f.proof],['Meat', f.meat],['Cuts to Waterfall', f.cuts]].forEach(function(row){
+      var r = document.createElement('div'); r.className='beatrow';
+      var l = document.createElement('div'); l.className='bl'; l.textContent=row[0]; r.appendChild(l);
+      var v = document.createElement('div'); v.className='bv'; v.innerHTML=row[1].replace('[topic]','<span class="b">[topic]</span>'); r.appendChild(v);
+      body.appendChild(r);
+    });
+    el.appendChild(body);
+    fmtWrap.appendChild(el);
+
+    var pb = document.createElement('button'); pb.type='button'; pb.className='panelcard'; pb.style.cssText='text-align:left;display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:12px 16px;width:100%';
+    var h = document.createElement('span'); h.style.cssText='font-size:13px;color:var(--mute)'; h.innerHTML='<b style="color:var(--ink)">'+f.have+'</b>';
+    var g = document.createElement('span'); g.style.cssText='font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;color:'+(f.tier==='you'?'var(--aqua-ink)':(f.tier==='care'?'var(--warn)':'var(--ink)'))+'';
+    g.textContent=f.name+' →';
+    pb.appendChild(h); pb.appendChild(g);
+    pb.addEventListener('click', function(){
+      document.querySelectorAll('#formats details').forEach(function(d){ d.open=false; });
+      el.open=true; el.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+    pickWrap.appendChild(pb);
+  });
+
+  /* ---------- tracker ---------- */
+  var LSKEY='rt-hub-tracker-v1';
+  var storageOk=true;
+  function loadLocal(){ try{ return JSON.parse(localStorage.getItem(LSKEY)||'[]'); }catch(e){ storageOk=false; return []; } }
+  function saveLocal(list){ try{ localStorage.setItem(LSKEY, JSON.stringify(list)); }catch(e){ storageOk=false; } }
+  var localEntries = loadLocal();
+  var win = '90';
+
+  function allEntries(){ return DATA.entries.concat(localEntries); }
+  function inWindow(e){
+    if(win==='all') return true;
+    var days = parseInt(win,10);
+    var cut = new Date(); cut.setDate(cut.getDate()-days);
+    return new Date(e.date+'T00:00:00') >= cut;
+  }
+  function counted(){ return allEntries().filter(function(e){ return (e.status==='approved'||e.status==='published') && inWindow(e); }); }
+
+  var TOPIC_T={deep:75,niche:20,personal:5}, EFFORT_T={proven:70,iteration:20,swing:10};
+  var TOPIC_L={deep:'Deep',niche:'Niche wide',personal:'Personal'};
+  var EFFORT_L={proven:'Proven winners',iteration:'Iterations',swing:'Big swings'};
+  var LANE_L={own:'Own',build:'Build',teach:'Teach'};
+
+  function pct(n,d){ return d? Math.round(n*100/d) : 0; }
+  function mixOf(list, key){
+    var counts={}; list.forEach(function(e){ var v=e[key]; if(v) counts[v]=(counts[v]||0)+1; });
+    var total=Object.keys(counts).reduce(function(a,k){ return a+counts[k]; },0);
+    return {counts:counts,total:total};
+  }
+  function verdict(actual,target){
+    var d=Math.abs(actual-target);
+    if(d<=10) return {cls:'ok',icon:'✓',word:'On mix'};
+    if(d<=20) return {cls:'warn',icon:'!',word:'Drifting'};
+    return {cls:'err',icon:'✕',word:'Off mix'};
+  }
+  function barRow(label,actual,target,colour){
+    return '<div class="mixrow"><div class="mhead"><span><b>'+label+'</b></span><span class="tgt">'+actual+'% now · target '+target+'%</span></div>'+
+      '<div class="bar"><div class="fill" style="width:'+Math.min(actual,100)+'%;background:'+colour+'"></div><div class="tick" style="left:'+target+'%"></div></div></div>';
+  }
+
+  function renderStats(){
+    var list = counted();
+    var topic = mixOf(list,'topic');
+    var effort = mixOf(list,'effort');
+    var longform = list.filter(function(e){ return e.type==='Long form video'; }).length;
+
+    var sc = document.getElementById('statcards');
+    sc.innerHTML = '<div class="stat"><div class="k">Pieces shipped</div><div class="v">'+list.length+'</div></div>'+
+      '<div class="stat"><div class="k">Long form</div><div class="v">'+longform+'</div></div>'+
+      '<div class="stat"><div class="k">LinkedIn</div><div class="v">'+list.filter(function(e){return e.platform==='LinkedIn';}).length+'</div></div>';
+
+    var mb = document.getElementById('mixbars');
+    var html = '<div class="h3">Topic mix vs 75/20/5</div>';
+    if(!topic.total){ html += '<p class="note">Nothing shipped in this window yet. Log a piece and the bars fill in.</p>'; }
+    else {
+      ['deep','niche','personal'].forEach(function(k){
+        var a = pct(topic.counts[k]||0, topic.total);
+        var col = k==='deep'?'var(--pink)':(k==='niche'?'var(--aqua)':'var(--purple)');
+        html += barRow(TOPIC_L[k], a, TOPIC_T[k], col);
+      });
+      var vd = verdict(pct(topic.counts.deep||0,topic.total),75);
+      html += '<div style="margin-top:12px"><span class="sgbadge '+vd.cls+'"><span aria-hidden="true">'+vd.icon+'</span>'+vd.word+' on deep content</span></div>';
+    }
+    html += '<div class="h3" style="margin-top:24px">Effort mix vs 70/20/10</div>';
+    if(!effort.total){ html += '<p class="note">No entries with effort set in this window. Effort is optional, set it when you know which bucket a piece was.</p>'; }
+    else {
+      ['proven','iteration','swing'].forEach(function(k){
+        var a = pct(effort.counts[k]||0, effort.total);
+        var col = k==='proven'?'var(--pink)':(k==='iteration'?'var(--aqua)':'var(--purple)');
+        html += barRow(EFFORT_L[k], a, EFFORT_T[k], col);
+      });
+    }
+    mb.innerHTML = html;
+
+    var tm = document.getElementById('today-mix');
+    if(tm){
+      var thtml='';
+      if(!topic.total){ thtml='<p class="note">Nothing shipped in the last 90 days. Log the first piece in the Tracker tab.</p>'; }
+      else {
+        ['deep','niche','personal'].forEach(function(k){
+          var a = pct(topic.counts[k]||0, topic.total);
+          var col = k==='deep'?'var(--pink)':(k==='niche'?'var(--aqua)':'var(--purple)');
+          thtml += barRow(TOPIC_L[k], a, TOPIC_T[k], col);
+        });
+      }
+      tm.innerHTML=thtml;
+    }
+  }
+
+  function renderEntries(){
+    var wrap = document.getElementById('entrylist');
+    wrap.innerHTML='';
+    var list = allEntries().slice().sort(function(a,b){ return b.date<a.date?-1:1; });
+    if(!list.length){ wrap.innerHTML='<p class="note" style="margin-top:12px">No entries yet.</p>'; return; }
+    list.forEach(function(e){
+      var el = document.createElement('div'); el.className='entry';
+      var top = document.createElement('div'); top.className='etop';
+      var t = document.createElement('span'); t.className='etitle'; t.textContent=(e.locked?'🔒 ':'')+e.title; top.appendChild(t);
+      var d = document.createElement('span'); d.className='edate'; d.textContent=e.date + (e.approxDate?' (approx)':''); top.appendChild(d);
+      el.appendChild(top);
+      var pills = document.createElement('div'); pills.className='epills';
+      function pill(txt, cls){ if(!txt) return; var p=document.createElement('span'); p.className='pill '+(cls||''); p.textContent=txt; pills.appendChild(p); }
+      pill(e.platform); pill(e.type);
+      pill(TOPIC_L[e.topic]||e.topic);
+      pill(e.format);
+      if(e.lane) pill(LANE_L[e.lane], e.lane);
+      if(e.effort) pill(EFFORT_L[e.effort]);
+      pill(e.status==='published'?'Published':(e.status==='approved'?'Approved':(e.status==='drafted'?'Drafted':'Idea')));
+      el.appendChild(pills);
+      if(e.notes){ var n=document.createElement('div'); n.className='enotes'; n.textContent=e.notes; el.appendChild(n); }
+      if(!e.locked){
+        var act = document.createElement('div'); act.className='eact';
+        var del = document.createElement('button'); del.type='button'; del.textContent='Delete';
+        del.addEventListener('click', function(){
+          localEntries = localEntries.filter(function(x){ return x.id!==e.id; });
+          saveLocal(localEntries); renderEntries(); renderStats();
+        });
+        act.appendChild(del); el.appendChild(act);
+      }
+      wrap.appendChild(el);
+    });
+  }
+
+  document.getElementById('f-date').value = new Date().toISOString().slice(0,10);
+  document.getElementById('logform').addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var e = {
+      id:'loc-'+Date.now()+'-'+Math.floor(Math.random()*1e6),
+      date:document.getElementById('f-date').value,
+      title:document.getElementById('f-title').value.trim(),
+      platform:document.getElementById('f-platform').value,
+      type:document.getElementById('f-type').value,
+      topic:document.getElementById('f-topic').value,
+      effort:document.getElementById('f-effort').value,
+      format:document.getElementById('f-format').value,
+      lane:document.getElementById('f-lane').value,
+      status:document.getElementById('f-status').value,
+      notes:document.getElementById('f-notes').value.trim()
+    };
+    if(!e.title || !e.date) return;
+    localEntries.push(e); saveLocal(localEntries);
+    document.getElementById('f-title').value=''; document.getElementById('f-notes').value='';
+    var fl = document.getElementById('saveflash');
+    fl.textContent = storageOk ? 'Saved on this device.' : 'Saved for this session only, this browser blocks storage. Export to keep it.';
+    setTimeout(function(){ fl.textContent=''; },4000);
+    renderEntries(); renderStats();
+  });
+
+  document.querySelectorAll('.winbtns button').forEach(function(b){
+    b.addEventListener('click', function(){
+      win=b.dataset.win;
+      document.querySelectorAll('.winbtns button').forEach(function(x){ x.setAttribute('aria-pressed', String(x===b)); });
+      renderStats();
+    });
+  });
+
+  document.getElementById('exportbtn').addEventListener('click', function(){
+    var payload = JSON.stringify({exportedAt:new Date().toISOString(), source:'rt-brand-hub', entries:localEntries}, null, 2);
+    var fn = 'rt-tracker-export.json';
+    if(window.claude && window.claude.downloads && window.claude.downloads.save){
+      window.claude.downloads.save({filename:fn, data:payload}).catch(function(){ copyText(payload, null); });
+    } else {
+      try{
+        var blob = new Blob([payload], {type:'application/json'});
+        var a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=fn; a.click(); URL.revokeObjectURL(a.href);
+      }catch(e){ copyText(payload, null); }
+    }
+  });
+  var importbox = document.getElementById('importbox');
+  document.getElementById('importbtn').addEventListener('click', function(){ importbox.style.display = importbox.style.display==='none'?'block':'none'; });
+  document.getElementById('importgo').addEventListener('click', function(){
+    var fl = document.getElementById('importflash');
+    try{
+      var data = JSON.parse(document.getElementById('importarea').value);
+      var list = data.entries || data;
+      if(!Array.isArray(list)) throw new Error('bad');
+      var have = {}; localEntries.forEach(function(e){ have[e.id]=true; });
+      var added=0;
+      list.forEach(function(e){ if(e && e.id && e.date && e.title && !have[e.id]){ localEntries.push(e); added++; } });
+      saveLocal(localEntries); renderEntries(); renderStats();
+      fl.textContent = added + ' entries loaded.';
+    }catch(err){ fl.textContent='That did not parse. Paste the whole export file.'; }
+  });
+
+  renderEntries(); renderStats();
+})();
+</script>

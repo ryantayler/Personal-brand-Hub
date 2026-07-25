@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Video Build Sheet · Ryan Tayler</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --base:#0A0A0A; --panel:#111111; --panel2:#0d0d0d; --ink:#ECE8E0; --mute:#8A8A8A;
+    --line:#1c1c1c; --rim:#2E2E2E;
+    --purple:#6D28D9; --aqua:#2DE2C3; --pink:#FF2D6B; --warn:#F5B027;
+    --ol-purple:rgba(109,40,217,.5); --ol-aqua:rgba(45,226,195,.5);
+    --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s6:24px; --s8:32px; --s12:48px; --s16:64px;
+    --r-sm:8px; --r:16px; --r-lg:24px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{background:var(--base); -webkit-text-size-adjust:100%}
+  body{color:var(--ink); font-family:'Inter',system-ui,-apple-system,sans-serif; line-height:1.5;
+    font-size:16px; padding:clamp(20px,6vw,44px) clamp(14px,4.5vw,30px) 72px}
+  .wrap{max-width:760px; margin:0 auto}
+
+  .kick{font-family:'Caveat',cursive; font-weight:700; color:var(--ink); font-size:clamp(22px,6vw,28px); line-height:1; margin-bottom:var(--s2)}
+  .eyebrow{font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--mute); margin-bottom:var(--s3)}
+  h1{font-family:'Anton',Impact,sans-serif; font-weight:400; font-size:clamp(36px,11vw,62px); line-height:.9; text-transform:uppercase; letter-spacing:.005em; margin-bottom:var(--s3)}
+  h1 .v{color:var(--purple)}
+  .sub{color:var(--mute); font-size:15px; max-width:56ch}
+  .sub b{color:var(--ink); font-weight:600}
+
+  /* FOUNDATION STRIP */
+  .found{margin-top:var(--s8); border:1px solid var(--rim); border-radius:var(--r); background:var(--panel); overflow:hidden}
+  .found .ftop{display:flex; align-items:center; gap:var(--s2); padding:var(--s3) var(--s4); border-bottom:1px solid var(--line); background:var(--panel2)}
+  .lock{width:12px; height:12px; border:1.5px solid var(--mute); border-radius:3px; position:relative; flex:0 0 auto}
+  .lock:before{content:""; position:absolute; width:6px; height:5px; border:1.5px solid var(--mute); border-bottom:none; border-radius:3px 3px 0 0; top:-5px; left:1px}
+  .found .ftop span{font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--mute); font-weight:600}
+  .fgrid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line)}
+  .fitem{background:var(--panel); padding:var(--s3) var(--s4)}
+  .fitem .fl{font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--mute); font-weight:600; margin-bottom:2px}
+  .fitem .fvv{font-size:13px; color:var(--ink); font-weight:600}
+  .fitem.enemy .fvv{color:var(--pink)}
+
+  /* TOPIC + PROOF PICKER */
+  .section{margin-top:var(--s16); padding-top:var(--s8); border-top:1px solid var(--line)}
+  .stepnum{font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--mute); margin-bottom:var(--s4)}
+  .stepnum b{font-family:'Anton',sans-serif; font-weight:400; color:var(--ink); font-size:15px; letter-spacing:.02em}
+  .h2{font-family:'Anton',sans-serif; font-weight:400; font-size:clamp(22px,6.5vw,32px); line-height:1.02; text-transform:uppercase; margin-bottom:var(--s3)}
+  .note{color:var(--mute); font-size:14px; max-width:60ch; margin-bottom:var(--s6)}
+  .note b{color:var(--ink); font-weight:600}
+
+  .topicbox{border:1px solid var(--ol-purple); border-radius:var(--r); background:var(--panel); padding:var(--s6)}
+  .topicbox .tl{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--mute); font-weight:600; margin-bottom:var(--s3)}
+  .writeline{border-bottom:2px solid var(--rim); min-height:34px; margin-bottom:var(--s2)}
+
+  .ratio{display:flex; height:60px; border-radius:var(--r-sm); overflow:hidden; border:1px solid var(--rim)}
+  .ratio .seg{display:flex; flex-direction:column; justify-content:center; padding:0 var(--s3)}
+  .ratio .seg .p{font-family:'Anton',sans-serif; font-weight:400; font-size:20px; line-height:1}
+  .ratio .seg .l{font-size:9.5px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; opacity:.9}
+  .ratio .seg.opt{background:var(--pink); color:#0A0A0A; flex:75 1 0}
+  .ratio .seg.net{background:var(--aqua); color:#0A0A0A; flex:20 1 0}
+  .ratio .seg.per{background:var(--purple); color:#ECE8E0; flex:5 1 0; min-width:48px; padding:0 var(--s2)}
+
+  .picker{margin-top:var(--s6); border:1px solid var(--rim); border-radius:var(--r); background:var(--panel); overflow:hidden}
+  .picker .ph{padding:var(--s3) var(--s4); border-bottom:1px solid var(--line); font-family:'Anton',sans-serif; font-weight:400; font-size:14px; letter-spacing:.03em; text-transform:uppercase}
+  .prow{display:flex; gap:var(--s3); padding:var(--s3) var(--s4); border-top:1px solid var(--line); align-items:baseline}
+  .prow:first-of-type{border-top:none}
+  .prow .have{font-size:13px; color:var(--mute); flex:1}
+  .prow .have b{color:var(--ink); font-weight:600}
+  .prow .arrow{color:var(--mute); font-size:13px}
+  .prow .goes{font-size:12px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; white-space:nowrap}
+  .goes.a{color:var(--aqua)} .goes.p{color:#C4A9FF} .goes.k{color:var(--pink)} .goes.n{color:var(--ink)}
+
+  /* FORMAT BUILD TABLE */
+  .tag{font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:800; color:#0A0A0A; border-radius:999px; padding:2px var(--s2)}
+  .tag.y{background:var(--aqua)} .tag.c{background:var(--warn)}
+
+  .scroller{border:1px solid var(--rim); border-radius:var(--r); overflow:auto; -webkit-overflow-scrolling:touch; background:var(--panel)}
+  .swipehint{font-size:11px; color:var(--mute); letter-spacing:.04em; margin-bottom:var(--s3); display:flex; align-items:center; gap:var(--s2)}
+  table.build{border-collapse:collapse; min-width:1080px}
+  table.build th, table.build td{border-right:1px solid var(--line); border-bottom:1px solid var(--line); vertical-align:top; text-align:left}
+  table.build thead th{background:var(--panel2); position:sticky; top:0; z-index:2; padding:var(--s3) var(--s4); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); font-weight:700; white-space:nowrap}
+  /* first column: the format label, frozen */
+  table.build th.fmtcol{position:sticky; left:0; z-index:3; background:var(--panel2); min-width:150px; width:150px}
+  table.build tbody th.fmtcol{z-index:1}
+  table.build tbody th.fmtcol{padding:var(--s4); vertical-align:top}
+  table.build thead th.fmtcol{z-index:4}
+  .fmtname{font-family:'Anton',sans-serif; font-weight:400; font-size:17px; text-transform:uppercase; letter-spacing:.02em; color:var(--ink); display:block; margin-bottom:var(--s2)}
+  .fmtcol .tag{margin-bottom:var(--s2); display:inline-block}
+  .fmtcol .uw{font-size:11px; color:var(--mute); line-height:1.4; display:block; margin-top:var(--s1)}
+  .fmtcol .uw b{color:var(--ink); font-weight:600}
+  tr.you th.fmtcol{box-shadow:inset 3px 0 0 var(--aqua)}
+
+  td.cell{padding:var(--s3) var(--s4); min-width:190px; background:var(--panel)}
+  td.cell .tmpl{font-size:13.5px; color:var(--ink); line-height:1.4; font-weight:500}
+  td.cell .tmpl .b{color:var(--pink); font-weight:700}
+  td.cell .beat{font-size:12.5px; color:var(--mute); line-height:1.45}
+  td.cell .beat b{color:var(--ink); font-weight:600}
+  td.cell .fillline{border-bottom:1.5px dashed var(--rim); min-height:26px; margin-top:var(--s2)}
+  td.cell .meatchip{display:inline-block; font-size:11px; font-weight:600; color:var(--ink); border:1px solid var(--rim); border-radius:999px; padding:2px var(--s3)}
+  tr.you td.cell{background:#0f1413}
+  tr.care td.cell{background:#131008}
+
+  /* CHECK */
+  .check{border:1px solid var(--rim); border-radius:var(--r); background:var(--panel); padding:var(--s6)}
+  .check .k{font-family:'Anton',sans-serif; font-weight:400; font-size:15px; letter-spacing:.03em; text-transform:uppercase; margin-bottom:var(--s3)}
+  .check ol{margin:0; padding-left:var(--s6)}
+  .check li{font-size:13.5px; color:var(--mute); margin-bottom:var(--s2)}
+  .check li b{color:var(--ink); font-weight:600}
+  .rule{font-family:'Caveat',cursive; font-weight:700; font-size:clamp(21px,5.5vw,27px); color:var(--ink); text-align:center; margin-top:var(--s6); line-height:1.2}
+
+  .footer{margin-top:var(--s16); padding-top:var(--s6); border-top:1px solid var(--line); color:var(--mute); font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="kick">one sheet, one video</div>
+  <div class="eyebrow">Ryan Tayler · video build sheet</div>
+  <h1>Bring a topic.<br>Build the <span class="v">whole</span> thing.</h1>
+  <p class="sub"><b>One long-form video per sheet.</b> The foundation up top is locked, do not touch it. You bring a topic, your proof picks the format, and that format walks you across the full build. Not just a hook. Everything down to the cuts you Waterfall out.</p>
+
+  <!-- FOUNDATION -->
+  <div class="found">
+    <div class="ftop"><span class="lock"></span><span>Locked · set once · do not fill</span></div>
+    <div class="fgrid">
+      <div class="fitem"><div class="fl">Game</div><div class="fvv">B2B trust, not views</div></div>
+      <div class="fitem"><div class="fl">Territory</div><div class="fvv">Live events &amp; production, AU</div></div>
+      <div class="fitem enemy"><div class="fl">Enemy</div><div class="fvv">In-housing</div></div>
+      <div class="fitem"><div class="fl">Mix over a month</div><div class="fvv">75 optimise / 20 network / 5 you</div></div>
+    </div>
+  </div>
+
+  <!-- STEP 1 TOPIC -->
+  <div class="section">
+    <div class="stepnum"><b>1</b> &middot; the topic</div>
+    <div class="h2">What is this one about?</div>
+    <p class="note">One subject. A problem an owner has, or a belief in the industry. Write it here and keep it in your head as you build.</p>
+    <div class="topicbox">
+      <div class="tl">Topic</div>
+      <div class="writeline"></div>
+      <div class="tl" style="margin-top:var(--s4)">Which lane (circle one)</div>
+      <div class="note" style="margin:var(--s2) 0 var(--s4)">Optimisation &nbsp;·&nbsp; Networks &nbsp;·&nbsp; You</div>
+      <div class="ratio">
+        <div class="seg opt"><div class="p">75</div><div class="l">Optimisation</div></div>
+        <div class="seg net"><div class="p">20</div><div class="l">Networks</div></div>
+        <div class="seg per"><div class="p">5</div><div class="l">You</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 PROOF PICKS FORMAT -->
+  <div class="section">
+    <div class="stepnum"><b>2</b> &middot; proof picks the format</div>
+    <div class="h2">What have you actually got?</div>
+    <p class="note">You do not choose the format by mood. The proof in your hand chooses it for you. Find your row, that is the card you build below.</p>
+    <div class="picker">
+      <div class="ph">If you have this &rarr; make this</div>
+      <div class="prow"><div class="have"><b>A strong opinion</b> the industry would push back on</div><div class="arrow">&rarr;</div><div class="goes k">Contrarian</div></div>
+      <div class="prow"><div class="have"><b>A result or a story</b> from a business, yours or one you saw</div><div class="arrow">&rarr;</div><div class="goes a">Case study</div></div>
+      <div class="prow"><div class="have"><b>A scar</b>, a moment you lived through</div><div class="arrow">&rarr;</div><div class="goes p">Personal</div></div>
+      <div class="prow"><div class="have"><b>A pain</b> owners feel but cannot name</div><div class="arrow">&rarr;</div><div class="goes n">Problem</div></div>
+      <div class="prow"><div class="have"><b>A method</b> you can teach step by step</div><div class="arrow">&rarr;</div><div class="goes n">Education</div></div>
+      <div class="prow"><div class="have"><b>Two ways</b> to do a thing, old vs new</div><div class="arrow">&rarr;</div><div class="goes n">Comparison</div></div>
+    </div>
+  </div>
+
+  <!-- STEP 3 BUILD -->
+  <div class="section">
+    <div class="stepnum"><b>3</b> &middot; build the piece</div>
+    <div class="h2">Read your row across.</div>
+    <p class="note">Find the row your proof picked, then read it across. The whole build for that video lives in one row. Fill the dashed lines by hand. <b>Aqua rows are your strongest.</b> <b>Amber rows fight your voice</b>, use rarely.</p>
+
+    <div class="swipehint">&larr; swipe the table sideways to see every step &rarr;</div>
+    <div class="scroller">
+      <table class="build">
+        <thead>
+          <tr>
+            <th class="fmtcol">Format</th>
+            <th>Hook</th>
+            <th>Beat 1</th>
+            <th>Beat 2</th>
+            <th>Beat 3</th>
+            <th>Proof to drop</th>
+            <th>Meat</th>
+            <th>Cuts to Waterfall</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr class="you">
+            <th class="fmtcol"><span class="fmtname">Contrarian</span><span class="tag y">Yours</span><span class="uw"><b>Use when</b> you hold an opinion the industry would argue with.</span></th>
+            <td class="cell"><div class="tmpl">Most people in live events believe <span class="b">[topic]</span> works one way. Here is why they have it backwards.</div></td>
+            <td class="cell"><div class="beat"><b>Name the belief</b> everyone holds.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat"><b>Show the damage</b> it quietly does.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat"><b>Your counter</b> and what to do instead.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat">The moment or number that earns the take.</div><div class="fillline"></div></td>
+            <td class="cell"><span class="meatchip">Story or steps</span></td>
+            <td class="cell"><div class="beat">The belief. The damage. The flip.</div><div class="fillline"></div></td>
+          </tr>
+
+          <tr class="you">
+            <th class="fmtcol"><span class="fmtname">Case study</span><span class="tag y">Yours</span><span class="uw"><b>Use when</b> you have a result or story from a real business.</span></th>
+            <td class="cell"><div class="tmpl">Here is what happened when a business finally sorted out <span class="b">[topic]</span>.</div></td>
+            <td class="cell"><div class="beat"><b>The before</b> and what it cost.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat"><b>The one move</b> they made.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat"><b>The after</b>, measurable if you can.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat">Real numbers or a named before and after.</div><div class="fillline"></div></td>
+            <td class="cell"><span class="meatchip">A story</span></td>
+            <td class="cell"><div class="beat">The before. The move. The result.</div><div class="fillline"></div></td>
+          </tr>
+
+          <tr class="you">
+            <th class="fmtcol"><span class="fmtname">Personal</span><span class="tag y">Yours</span><span class="uw"><b>Use when</b> you have a scar, a moment you lived through.</span></th>
+            <td class="cell"><div class="tmpl">Early in my career, <span class="b">[topic]</span> taught me something I still use on every event.</div></td>
+            <td class="cell"><div class="beat"><b>The scene.</b> Put us in the room.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat"><b>The moment</b> it went wrong, or clicked.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat"><b>The lesson</b> you carry now.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat">You were there. The detail sells it.</div><div class="fillline"></div></td>
+            <td class="cell"><span class="meatchip">A story</span></td>
+            <td class="cell"><div class="beat">The scene. The turn. The lesson.</div><div class="fillline"></div></td>
+          </tr>
+
+          <tr>
+            <th class="fmtcol"><span class="fmtname">Problem</span><span class="uw"><b>Use when</b> owners feel a pain they cannot name.</span></th>
+            <td class="cell"><div class="tmpl"><span class="b">[topic]</span> is quietly costing event owners money, and most do not see it.</div></td>
+            <td class="cell"><div class="beat"><b>Agitate</b> the specific pain.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat"><b>Show where</b> it hides.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat"><b>The fix</b>, in plain steps.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat">A number that sizes the leak.</div><div class="fillline"></div></td>
+            <td class="cell"><span class="meatchip">Steps</span></td>
+            <td class="cell"><div class="beat">The pain. The hiding spot. The fix.</div><div class="fillline"></div></td>
+          </tr>
+
+          <tr>
+            <th class="fmtcol"><span class="fmtname">Education</span><span class="uw"><b>Use when</b> you can teach a method step by step.</span></th>
+            <td class="cell"><div class="tmpl">This is exactly how I handle <span class="b">[topic]</span>.</div></td>
+            <td class="cell"><div class="beat"><b>The setup</b> and when it applies.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat"><b>The steps</b> in order.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat"><b>The outcome</b> to expect.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat">That you have run this yourself.</div><div class="fillline"></div></td>
+            <td class="cell"><span class="meatchip">Steps</span></td>
+            <td class="cell"><div class="beat">One step per short.</div><div class="fillline"></div></td>
+          </tr>
+
+          <tr>
+            <th class="fmtcol"><span class="fmtname">Comparison</span><span class="uw"><b>Use when</b> there is an old way and a better way.</span></th>
+            <td class="cell"><div class="tmpl">The old way of handling <span class="b">[topic]</span>, versus how the best operators do it now.</div></td>
+            <td class="cell"><div class="beat"><b>The old way</b> and its cost.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat"><b>The new way.</b></div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat"><b>Why new wins.</b></div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat">A case where the switch paid off.</div><div class="fillline"></div></td>
+            <td class="cell"><span class="meatchip">A list</span></td>
+            <td class="cell"><div class="beat">Old. New. The gap.</div><div class="fillline"></div></td>
+          </tr>
+
+          <tr>
+            <th class="fmtcol"><span class="fmtname">List</span><span class="uw"><b>Use when</b> you have several points and no single spine.</span></th>
+            <td class="cell"><div class="tmpl">Three things about <span class="b">[topic]</span> most event owners get wrong.</div></td>
+            <td class="cell"><div class="beat"><b>Set the stakes.</b></div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat"><b>The items</b>, one beat each.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat"><b>The one</b> that matters most.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat">One item backed by something real.</div><div class="fillline"></div></td>
+            <td class="cell"><span class="meatchip">A list</span></td>
+            <td class="cell"><div class="beat">One item per short.</div><div class="fillline"></div></td>
+          </tr>
+
+          <tr class="care">
+            <th class="fmtcol"><span class="fmtname">Secret reveal</span><span class="tag c">Care</span><span class="uw"><b>Only when</b> the inside knowledge is genuinely withheld.</span></th>
+            <td class="cell"><div class="tmpl">What actually goes on behind <span class="b">[topic]</span>, once you are on the inside.</div></td>
+            <td class="cell"><div class="beat"><b>The surface story</b> everyone believes.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat"><b>The hidden reality.</b></div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat"><b>What it means</b> for them.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat">That you have actually seen the inside.</div><div class="fillline"></div></td>
+            <td class="cell"><span class="meatchip">A story</span></td>
+            <td class="cell"><div class="beat">Surface. Reality. Meaning.</div><div class="fillline"></div></td>
+          </tr>
+
+          <tr class="care">
+            <th class="fmtcol"><span class="fmtname">Question</span><span class="tag c">Care</span><span class="uw"><b>Weakest fit.</b> Only if the question is real, not bait.</span></th>
+            <td class="cell"><div class="tmpl">Are you thinking about <span class="b">[topic]</span> the wrong way?</div></td>
+            <td class="cell"><div class="beat"><b>Pose it</b> plainly.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat"><b>The common</b> wrong answer.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat"><b>The better</b> answer.</div><div class="fillline"></div></td>
+            <td class="cell"><div class="beat">Why your answer holds up.</div><div class="fillline"></div></td>
+            <td class="cell"><span class="meatchip">Steps</span></td>
+            <td class="cell"><div class="beat">Question. Wrong. Right.</div><div class="fillline"></div></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- CHECK -->
+  <div class="section">
+    <div class="stepnum"><b>4</b> &middot; before you record</div>
+    <div class="check">
+      <div class="k">Your hook answers four things, fast</div>
+      <ol>
+        <li><b>Who is it for.</b> An owner knows in the first line this is for them.</li>
+        <li><b>Why you.</b> The proof that earns you the right to say it.</li>
+        <li><b>Where it is going.</b> A reason to stay to the end.</li>
+        <li><b>One thing worth knowing.</b> The single takeaway they leave with.</li>
+      </ol>
+    </div>
+    <div class="rule">If the proof is real, it is good enough.</div>
+  </div>
+
+  <div class="footer">Formats and hook rules after Kallaway. Ratio after Ralston. Meats after Hormozi. Colours, type and components per the locked brand system. A tool for building your own content, taught with attribution, never published as original IP.</div>
+
+</div>
+</body>
+</html>

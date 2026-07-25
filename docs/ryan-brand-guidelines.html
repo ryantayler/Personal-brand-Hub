@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brand Guideline · Ryan Tayler</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     DESIGN TOKENS
+     Dark is the canonical theme. Light is a supported adaptation.
+     Every value below is documented in words in the guideline body,
+     so the code and the copy always agree.
+     ============================================================ */
+  :root{
+    /* neutrals (dark) */
+    --base:#0A0A0A;
+    --panel:#111111;
+    --ink:#ECE8E0;
+    --mute:#8A8A8A;      /* secondary text. lightened so it clears WCAG AA on panel and base */
+    --line:#1c1c1c;      /* internal hairline dividers only */
+    --rim:#2E2E2E;       /* grey / panel card outline, one step brighter than the panel */
+    --code:#161616;      /* inline code chip background */
+
+    /* accents: fills (dark) */
+    --purple:#6D28D9;    /* HERO. ownership + identity. holds on both themes */
+    --aqua:#2DE2C3;      /* BUILD. deepens on light */
+    --pink:#FF2D6B;      /* TEACH. fill holds on both themes */
+
+    /* accents: as text or small labels (legible tints) */
+    --purple-ink:#6D28D9; /* purple text uses the true hero on both themes. purple is one colour everywhere */
+    --aqua-ink:#2DE2C3;
+    --pink-ink:#FF2D6B;
+
+    /* outlines = accent at 45% over the base */
+    --ol-purple:rgba(109,40,217,.45);
+    --ol-aqua:rgba(45,226,195,.45);
+    --ol-pink:rgba(255,45,107,.45);
+
+    /* status signals. a functional family that reports state, never a lane. tuned a step calmer than the neon lanes */
+    --ok:#22C55E;   --warn:#F5B027;   --err:#FF4B3E;             /* solid. icon, dot, border, badge */
+    --ok-zone:#0E1A12; --warn-zone:#1C1608; --err-zone:#1E0E0C; /* dark banner tint, ink text sits on it */
+    --ok-hl:#C9F6D9;   --warn-hl:#F8E6BE;   --err-hl:#F9D2CC;   /* highlight tint for marking, dark text */
+    --on-fill:#0A0A0A; /* text on a solid signal fill. black on dark */
+
+    /* spacing scale (multiples of 4). every gap, pad and margin snaps to this */
+    --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s6:24px; --s8:32px; --s12:48px; --s16:64px;
+
+    /* radius. a committed card pair plus one small utility value. nothing else */
+    --r-sm:8px;          /* small. chips, code chips, swatches */
+    --r:16px;            /* default. panels, utility and split cards */
+    --r-lg:24px;         /* large. hero and full colour statement cards */
+
+    /* display face */
+    --display:'Anton';
+  }
+
+  /* LIGHT THEME via a CSS only checkbox, no JavaScript.
+     Aqua deepens on paper. Purple and the pink fill hold. Text tints deepen so they stay legible. */
+  #themeToggle:checked ~ .page{
+    --base:#F0F2F6;
+    --panel:#FFFFFF;
+    --ink:#1A1A1A;
+    --mute:#5F646B;      /* darkened so secondary text clears AA on white and on the base */
+    --line:#E6E9EF;
+    --rim:#DCE0E7;
+    --code:#E8ECF2;
+    --aqua:#0D9488;      /* build fill, deepened for paper */
+    --purple-ink:#6D28D9;/* on white, hero purple reads fine as text */
+    --aqua-ink:#0A7A6E;  /* build as text, deepened past the fill so small labels clear AA */
+    --pink-ink:#C21E58;  /* teach as text, deepened so small labels clear AA */
+    --ol-aqua:rgba(13,148,136,.45);
+    --ok:#14783A; --warn:#9A4B07; --err:#C62B2B;                /* signal solids deepen for paper */
+    --ok-zone:#E4F6EA; --warn-zone:#FBEFD6; --err-zone:#FBE4E2; /* light banner tint, ink text sits on it */
+    --on-fill:#F2F5F8;   /* text on a solid signal fill flips to off white on light */
+    background:#F0F2F6;
+    color:#1A1A1A;
+  }
+  body:has(#themeToggle:checked),html:has(#themeToggle:checked){background:#F0F2F6}
+
+  /* toggle control */
+  .themeinput{position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none}
+  .topbar{position:fixed;top:var(--s4);right:var(--s4);z-index:50;display:flex;gap:var(--s2);align-items:center}
+  .themetoggle{display:flex;gap:var(--s1);background:var(--panel);border:1px solid var(--rim);border-radius:999px;padding:var(--s1);cursor:pointer;user-select:none}
+  .themetoggle .seg{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--mute);border-radius:999px;padding:var(--s2) var(--s3)}
+  .themetoggle .seg.d{background:var(--purple);color:#fff}
+  #themeToggle:checked ~ .page .themetoggle .seg.d{background:transparent;color:var(--mute)}
+  #themeToggle:checked ~ .page .themetoggle .seg.l{background:var(--purple);color:#fff}
+
+  /* theme aware value swap (shows the value for the active theme) */
+  .swap .l{display:none}
+  #themeToggle:checked ~ .page .swap .d{display:none}
+  #themeToggle:checked ~ .page .swap .l{display:inline}
+
+  /* ============================================================ RESET + BASE */
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--base);transition:background .25s ease}
+  body{background:var(--base);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.5}
+  .page{background:var(--base);color:var(--ink);min-height:100vh;padding:clamp(var(--s6),5vw,var(--s16));transition:background .25s ease,color .25s ease}
+  .wrap{max-width:980px;margin:0 auto}
+
+  /* ============================================================ TYPE ROLES
+     Anton  = headers only.
+     Inter  = body and every small utility label.
+     Caveat = one handwritten accent per section. */
+  .eyebrow{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--mute);margin-bottom:var(--s4)}
+  h1{font-family:var(--display),sans-serif;font-weight:400;font-size:clamp(40px,9vw,84px);line-height:.92;text-transform:uppercase;margin-bottom:var(--s2)}
+  h1 .v{color:var(--purple)} /* large display accent. see the accessibility note on purple as large type */
+  .sub{color:var(--mute);font-size:15px;max-width:52ch}
+  .sub b{color:var(--ink);font-weight:600}
+  .lead{color:var(--ink);font-size:15px;max-width:60ch;margin-top:var(--s3)}
+
+  .section{margin-top:var(--s16);padding-top:var(--s8);border-top:1px solid var(--line)}
+  .section-eyebrow{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--mute);margin-bottom:var(--s6)}
+  .section-eyebrow b{color:var(--ink);font-weight:600}
+  .h2row{font-family:var(--display),sans-serif;font-weight:400;font-size:clamp(24px,4vw,34px);line-height:1;text-transform:uppercase;margin-bottom:var(--s4)}
+
+  /* ============================================================ INNER VIGNETTE
+     A dark inset shadow that sinks the edges of a colour fill.
+     It is not an outward glow. blur = 25% of card width, spread = 1.5%. Scales with the card. */
+  .vignette{position:absolute;inset:0;pointer-events:none;
+    box-shadow:inset 0 0 calc(var(--cw,400px)*.25) calc(var(--cw,400px)*.015) rgba(0,0,0,.38)}
+  .swatch{position:relative}
+
+  /* ============================================================ MEANING CARDS */
+  .meaning{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s4)}
+  @media(max-width:720px){.meaning{grid-template-columns:1fr}}
+  /* Full colour cards: each is its own accent top to bottom. Text colour follows the text on fill rule. */
+  .mcard{border-radius:var(--r);overflow:hidden;position:relative;min-height:190px;display:flex;flex-direction:column;justify-content:space-between;padding:var(--s6);--cw:min(300px,88vw)}
+  .mcard > :not(.vignette){position:relative;z-index:1}
+  .mcard .vignette{position:absolute;inset:0;z-index:0}
+  .mcard .word{font-family:var(--display),sans-serif;font-size:34px;line-height:1;text-transform:uppercase;letter-spacing:.02em}
+  .mcard .role{font-family:'Inter',sans-serif;font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;opacity:.8;margin-bottom:var(--s1)}
+  .mcard .desc{font-size:13px;opacity:.92}
+  .mcard.own{background:var(--purple);color:#ECE8E0;border:1px solid var(--ol-purple)}
+  .mcard.build{background:var(--aqua);color:#0A0A0A;border:1px solid var(--ol-aqua)}
+  .mcard.teach{background:var(--pink);color:#0A0A0A;border:1px solid var(--ol-pink)}
+
+  /* ============================================================ PALETTE */
+  .hero{border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--rim)}
+  .hero .swatch{background:var(--purple);height:190px;--cw:min(900px,92vw)}
+  .hero .meta{background:var(--panel);padding:var(--s4) var(--s6);display:flex;justify-content:space-between;align-items:baseline;gap:var(--s4);flex-wrap:wrap}
+  .hero .name{font-family:var(--display),sans-serif;font-weight:400;font-size:26px;text-transform:uppercase;letter-spacing:.02em}
+  .hero .lane{color:var(--mute);font-weight:600;font-size:13px;letter-spacing:.04em}
+  .hex{font-family:ui-monospace,monospace;color:var(--mute);font-size:13px;letter-spacing:.05em}
+
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s4);margin-top:var(--s4)}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .card{border-radius:var(--r);overflow:hidden;border:1px solid var(--rim)}
+  .card .swatch{height:124px;--cw:min(300px,88vw)}
+  .card .meta{background:var(--panel);padding:var(--s3) var(--s4)}
+  .card .name{font-family:var(--display),sans-serif;font-weight:400;font-size:18px;text-transform:uppercase;letter-spacing:.02em;margin-bottom:var(--s1)}
+  .card .lane{font-weight:600;font-size:12px;letter-spacing:.03em;margin-bottom:var(--s2)}
+  .card.pink .lane{color:var(--pink-ink)} .card.pink .swatch{background:var(--pink)}
+  .card.aqua .lane{color:var(--aqua-ink)} .card.aqua .swatch{background:var(--aqua)}
+
+  .neutrals{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s4);margin-top:var(--s4)}
+  @media(max-width:640px){.neutrals{grid-template-columns:1fr}}
+  .nrow{display:flex;align-items:center;gap:var(--s4);border:1px solid var(--rim);border-radius:var(--r);padding:var(--s3) var(--s4);background:var(--panel)}
+  .chip{width:48px;height:48px;border-radius:var(--r-sm);flex:0 0 auto;border:1px solid rgba(120,120,120,.45)}
+  .nrow .name{font-weight:600;font-size:14px}
+
+  /* ============================================================ BUILD SPEC */
+  .spec{border:1px solid var(--rim);border-radius:var(--r);background:var(--panel);overflow:hidden}
+  .spec .row{display:grid;grid-template-columns:170px 1fr;gap:var(--s4);padding:var(--s4) var(--s6);border-top:1px solid var(--line)}
+  .spec .row:first-child{border-top:0}
+  @media(max-width:640px){.spec .row{grid-template-columns:1fr;gap:var(--s2)}}
+  .spec .k{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink)} /* Inter caps, pulled off Anton so small labels stay legible */
+  .spec .v{color:var(--mute);font-size:14px}
+  .spec .v b{color:var(--ink);font-weight:600}
+  .spec .v code{font-family:ui-monospace,monospace;color:var(--ink);font-size:13px;background:var(--code);padding:0 var(--s2);border-radius:var(--r-sm)}
+  .spec .v .li{display:block;margin-top:var(--s1)}
+
+  /* scale strip */
+  .scale{display:flex;align-items:flex-end;gap:var(--s2);flex-wrap:wrap;margin-top:var(--s2)}
+  .scale .u{background:var(--rim);border-radius:var(--r-sm)}
+  .scale .ulab{font-family:ui-monospace,monospace;font-size:11px;color:var(--mute);text-align:center;margin-top:var(--s1)}
+
+  /* ============================================================ TEXT ON COLOUR */
+  .textgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+  @media(max-width:820px){.textgrid{grid-template-columns:1fr}}
+  .tcard{border-radius:var(--r-lg);overflow:hidden;position:relative;min-height:200px;display:flex;flex-direction:column;justify-content:space-between;padding:var(--s6);--cw:min(300px,88vw)}
+  .tcard > :not(.vignette){position:relative;z-index:1} /* never reset the vignette's position, or its inset:0 fill collapses */
+  .tcard .vignette{position:absolute;inset:0;z-index:0}
+  .tcard .tag{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;opacity:.9}
+  .tcard h2{font-family:var(--display),sans-serif;font-weight:400;font-size:clamp(24px,4vw,34px);line-height:.98;text-transform:uppercase}
+  .tcard p{font-size:13px;max-width:32ch;opacity:.92}
+  .tcard .foot{font-family:ui-monospace,monospace;font-size:12px;opacity:.75;letter-spacing:.03em}
+  .tcard.purple{background:var(--purple);color:#ECE8E0;border:1px solid var(--ol-purple)}
+  .tcard.aqua{background:var(--aqua);color:#0A0A0A;border:1px solid var(--ol-aqua)}
+  .tcard.pink{background:var(--pink);color:#0A0A0A;border:1px solid var(--ol-pink)}
+
+  /* ============================================================ RULE BOXES */
+  .rulebox{margin-top:var(--s4);border:1px solid var(--rim);border-radius:var(--r);background:var(--panel);padding:var(--s4) var(--s6);color:var(--mute);font-size:14px;max-width:70ch}
+  .rulebox b{color:var(--ink);font-weight:600}
+  .rulebox .li{display:block;margin-top:var(--s2)}
+  /* Allowed / Banned boxes use the bold label to differentiate, not lane colours, so aqua and pink keep their build / teach meaning */
+
+  /* ============================================================ TYPE + HAND + SIG */
+  .fonts{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s4)}
+  @media(max-width:640px){.fonts{grid-template-columns:1fr}}
+  .fcard{border:1px solid var(--rim);border-radius:var(--r);background:var(--panel);padding:var(--s6)}
+  .fcard .fname{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:var(--s4)}
+  .fcard .samp{font-size:clamp(30px,6vw,46px);line-height:.95;text-transform:uppercase;color:var(--ink)}
+  .fcard .samp.body{font-family:'Inter',sans-serif;text-transform:none;font-size:22px;line-height:1.3;font-weight:500}
+  .fcard .samp.hand{font-family:'Caveat',cursive;text-transform:none;font-weight:700}
+  .fcard .samp .v{color:var(--purple)}
+  .fcard .note{margin-top:var(--s4);color:var(--mute);font-size:13px}
+  .f-anton .samp{font-family:'Anton',sans-serif}
+
+  .sigcard{border:1px solid var(--rim);border-radius:var(--r);background:var(--panel);padding:var(--s12) var(--s6);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s4);min-height:180px}
+  .sig{display:block;width:min(300px,82%);height:auto}
+  .sig.ink{color:var(--ink)}
+  .sigcap{color:var(--mute);font-size:13px;text-align:center;max-width:34ch}
+
+  .handcard{border:1px solid var(--rim);border-radius:var(--r);background:var(--panel);padding:var(--s8) var(--s6);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s3);min-height:150px}
+  .hand{font-family:'Caveat',cursive;font-weight:700;line-height:1.04;font-size:clamp(34px,7vw,50px);text-align:center}
+  .hand.ink{color:var(--ink)}
+  .hand.brand{color:var(--purple-ink)}
+  .hand.aqua{color:var(--aqua-ink)}
+  .hand.pink{color:var(--pink-ink)}
+  .handcap{color:var(--mute);font-size:13px;text-align:center;max-width:34ch}
+  /* purple is a brand colour and is allowed as text on the dark base, so the purple hand is set in purple, the same way the aqua and pink hands take their own colour */
+  .handkicker{font-family:'Caveat',cursive;font-weight:700;color:var(--ink);font-size:clamp(22px,4.2vw,30px);line-height:1;margin-bottom:var(--s1)} /* neutral aside = off white, per the Caveat colour rule */
+  .handpull{font-family:'Caveat',cursive;font-weight:700;color:var(--ink);font-size:clamp(28px,5vw,38px);line-height:1.05;text-align:center;margin:var(--s8) 0 var(--s2)}
+
+  /* ============================================================ STATUS SIGNALS */
+  .sggrid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s4)}
+  @media(max-width:820px){.sggrid{grid-template-columns:1fr}}
+  .sgcard{border:1px solid var(--rim);border-radius:var(--r);background:var(--panel);overflow:hidden}
+  .sgswatch{height:80px;position:relative;--cw:min(300px,88vw);display:flex;align-items:center;justify-content:center}
+  .sgswatch .sgmark{position:relative;z-index:1;font-size:30px;font-weight:700;color:var(--on-fill)}
+  .sgcard.ok .sgswatch{background:var(--ok)}
+  .sgcard.warn .sgswatch{background:var(--warn)}
+  .sgcard.err .sgswatch{background:var(--err)}
+  .sgmeta{padding:var(--s4) var(--s4) var(--s2)}
+  .sgname{font-family:var(--display),sans-serif;font-weight:400;font-size:19px;text-transform:uppercase;letter-spacing:.02em}
+  .sgrole{font-size:12px;font-weight:600;letter-spacing:.04em;margin-top:2px}
+  .sgcard.ok .sgrole{color:var(--ok)} .sgcard.warn .sgrole{color:var(--warn)} .sgcard.err .sgrole{color:var(--err)}
+  .sghex{font-family:ui-monospace,monospace;font-size:12px;color:var(--mute);margin-top:var(--s2)}
+  .sgdemo{padding:0 var(--s4) var(--s4);display:flex;flex-direction:column;gap:var(--s3)}
+  .sgbanner{border-radius:var(--r-sm);padding:var(--s3) var(--s4);display:flex;gap:var(--s3);align-items:flex-start}
+  .sgbanner .sgico{font-weight:700;flex:0 0 auto;line-height:1.3}
+  .sgbanner .sgtxt{font-size:13px;color:var(--ink)}
+  .sgbanner .sgtxt b{font-weight:600}
+  .sgcard.ok .sgbanner{background:var(--ok-zone);border-left:3px solid var(--ok)} .sgcard.ok .sgico{color:var(--ok)}
+  .sgcard.warn .sgbanner{background:var(--warn-zone);border-left:3px solid var(--warn)} .sgcard.warn .sgico{color:var(--warn)}
+  .sgcard.err .sgbanner{background:var(--err-zone);border-left:3px solid var(--err)} .sgcard.err .sgico{color:var(--err)}
+  .sgbadge{align-self:flex-start;border-radius:999px;padding:var(--s1) var(--s3);font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--on-fill)}
+  .sgcard.ok .sgbadge{background:var(--ok)} .sgcard.warn .sgbadge{background:var(--warn)} .sgcard.err .sgbadge{background:var(--err)}
+  .sgmrk{font-size:13px;color:var(--mute)}
+  .sgmrk mark{color:#1A1A1A;padding:1px var(--s1);border-radius:var(--r-sm)}
+  .sgcard.ok mark{background:var(--ok-hl)} .sgcard.warn mark{background:var(--warn-hl)} .sgcard.err mark{background:var(--err-hl)}
+
+  /* ============================================================ DEPRECATED (collapsed) */
+  .deprecated{margin-top:var(--s16);border:1px dashed var(--rim);border-radius:var(--r);background:var(--panel);overflow:hidden}
+  .deprecated summary{list-style:none;cursor:pointer;padding:var(--s4) var(--s6);font-family:'Inter',sans-serif;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);display:flex;align-items:center;gap:var(--s2)}
+  .deprecated summary::-webkit-details-marker{display:none}
+  .deprecated summary::before{content:'▸';font-size:14px;line-height:1;color:var(--mute)}
+  .deprecated[open] summary::before{content:'▾'}
+  .deprecated .dbody{padding:0 var(--s6) var(--s6);color:var(--mute);font-size:14px}
+  .deprecated .dbody .li{display:block;margin-top:var(--s2)}
+  .deprecated .dbody code{font-family:ui-monospace,monospace;color:var(--ink);font-size:13px;background:var(--code);padding:0 var(--s2);border-radius:var(--r-sm)}
+  .deprecated .dswatch{display:inline-block;width:16px;height:16px;border-radius:var(--r-sm);background:#22D3EE;vertical-align:-3px;margin-right:var(--s2);border:1px solid rgba(120,120,120,.45)}
+
+  .footer{margin-top:var(--s16);padding-top:var(--s6);border-top:1px solid var(--line);color:var(--mute);font-size:13px}
+  code.inl{font-family:ui-monospace,monospace;color:var(--ink);font-size:13px;background:var(--code);padding:0 var(--s2);border-radius:var(--r-sm)}
+</style>
+</head>
+<body>
+<input type="checkbox" id="themeToggle" class="themeinput" aria-label="Switch to light theme">
+<div class="page">
+<div class="topbar">
+  <label class="themetoggle" for="themeToggle">
+    <span class="seg d">Dark</span>
+    <span class="seg l">Light</span>
+  </label>
+</div>
+<div class="wrap">
+
+  <!-- COVER -->
+  <div class="eyebrow">Brand guideline · v1.0 · one hero, two lanes</div>
+  <div class="handkicker">the whole system, on one page</div>
+  <h1>One <span class="v">hero</span>.<br>Two lanes.</h1>
+  <p class="sub"><b>Purple is you.</b> Aqua is what you build. Pink is what you teach. One accent per piece, never more than one.</p>
+  <p class="lead">This is the reference for anyone representing the brand. Read it top to bottom and you will know which colour to reach for, which font to set, how to build a card, and what never to do. <b>Dark is the real theme.</b> Light is a supported adaptation for paper and bright screens. Design dark first, then check it holds on light using the toggle at the top.</p>
+
+  <!-- MEANING SYSTEM -->
+  <div class="section">
+    <div class="section-eyebrow">Section · <b>The meaning system</b> · what each colour stands for</div>
+    <div class="h2row">Three colours. One noun. Two verbs.</div>
+    <p class="sub">The brand runs on your two drivers in life, <b>build</b> and <b>teach</b>. Two loves, two lane colours. Purple sits above them as the hero. It is you, and everything you own.</p>
+
+    <div class="meaning">
+      <div class="mcard own"><div class="vignette"></div><div class="word">Own</div><div class="txt"><div class="role">Purple · hero · the spine</div><div class="desc">You, and everything you own. Your IP, your frameworks, the equity thesis. The default when a piece has no clear verb. Purple is the noun.</div></div></div>
+      <div class="mcard build"><div class="vignette"></div><div class="word">Build</div><div class="txt"><div class="role">Aqua · lane one</div><div class="desc">Anything you make. Ventures, businesses, systems, live events and production. The first verb.</div></div></div>
+      <div class="mcard teach"><div class="vignette"></div><div class="word">Teach</div><div class="txt"><div class="role">Pink · lane two</div><div class="desc">Anything you share to change how someone thinks. Content, point of view, hot takes, frameworks explained in public. The second verb.</div></div></div>
+    </div>
+
+    <div class="rulebox"><b>The logic in one line.</b> Purple is the noun (what you own and who you are). Aqua and pink are the two verbs (what you do with it). Build and teach are the two arms. Where they meet is your IP, and your IP is purple. The spine is what you own, and it never changes.</div>
+
+    <div class="rulebox"><b>Which colour do I use?</b>
+      <span class="li"><b>Is the piece about you or your owned IP?</b> Purple.</span>
+      <span class="li"><b>Are you making something?</b> Aqua. Build.</span>
+      <span class="li"><b>Are you sharing a lesson or a take?</b> Pink. Teach.</span>
+      <span class="li"><b>No clear verb?</b> Default to purple. It stays rare, which keeps it premium.</span>
+    </div>
+
+    <div class="rulebox"><b>Say the word, not just the colour.</b> Colour alone is not enough. Some readers cannot tell the lanes apart, and colour drops out in greyscale and small sizes. So every coloured piece also carries its word: <b>Own</b>, <b>Build</b>, or <b>Teach</b>. The label is the meaning. The colour is the reinforcement.</div>
+  </div>
+
+  <!-- PALETTE -->
+  <div class="section">
+    <div class="section-eyebrow">Section · <b>Palette</b> · the exact values</div>
+    <div class="hero">
+      <div class="swatch"><div class="vignette"></div></div>
+      <div class="meta"><div><div class="name">Hero Purple</div><div class="lane">Own · you · your IP</div></div><div class="hex">#6D28D9 &nbsp;·&nbsp; holds on both themes</div></div>
+    </div>
+    <div class="grid">
+      <div class="card aqua"><div class="swatch"><div class="vignette"></div></div><div class="meta"><div class="name">Aqua</div><div class="lane">Build · ventures · production</div><div class="hex swap"><span class="d">#2DE2C3 &nbsp;·&nbsp; dark</span><span class="l">#0D9488 &nbsp;·&nbsp; deepened on light</span></div></div></div>
+      <div class="card pink"><div class="swatch"><div class="vignette"></div></div><div class="meta"><div class="name">Pink</div><div class="lane">Teach · point of view · hot takes</div><div class="hex">#FF2D6B &nbsp;·&nbsp; fill holds on both themes</div></div></div>
+    </div>
+    <div class="neutrals">
+      <div class="nrow"><span class="chip" style="background:var(--base)"></span><div><div class="name">Base</div><div class="hex swap"><span class="d">#0A0A0A</span><span class="l">#F0F2F6</span></div></div></div>
+      <div class="nrow"><span class="chip" style="background:var(--ink)"></span><div><div class="name">Text</div><div class="hex swap"><span class="d">#ECE8E0</span><span class="l">#1A1A1A</span></div></div></div>
+      <div class="nrow"><span class="chip" style="background:var(--panel)"></span><div><div class="name">Panel</div><div class="hex swap"><span class="d">#111111</span><span class="l">#FFFFFF</span></div></div></div>
+      <div class="nrow"><span class="chip" style="background:var(--mute)"></span><div><div class="name">Mute (secondary text)</div><div class="hex swap"><span class="d">#8A8A8A</span><span class="l">#5F646B</span></div></div></div>
+      <div class="nrow"><span class="chip" style="background:var(--line)"></span><div><div class="name">Divider</div><div class="hex swap"><span class="d">#1c1c1c</span><span class="l">#E6E9EF</span></div></div></div>
+      <div class="nrow"><span class="chip" style="background:var(--rim)"></span><div><div class="name">Rim</div><div class="hex swap"><span class="d">#2E2E2E</span><span class="l">#DCE0E7</span></div></div></div>
+    </div>
+    <div class="rulebox"><b>Why aqua and pink behave differently on light.</b> A colour's punch depends on its background. Aqua is very light, so on a white page it washes out, which is why it deepens to <code>#0D9488</code>. Pink sits at a middle brightness, so it holds its punch on white and the fill stays <code>#FF2D6B</code>. Purple is dark, so it holds on both themes with no change. That is why the hero never shifts.</div>
+  </div>
+
+  <div class="handpull">one accent. one voice.</div>
+
+  <!-- CARD BUILD SPEC -->
+  <div class="section">
+    <div class="section-eyebrow">Section · <b>Card build spec</b> · zero guesswork</div>
+    <div class="spec">
+
+      <div class="row">
+        <div class="k">Surfaces</div>
+        <div class="v">The neutral surfaces for the active theme. Dark is canonical, light is the adaptation.
+          <span class="li"><b>Base</b> <code class="swap"><span class="d">#0A0A0A</span><span class="l">#F0F2F6</span></code> the page behind everything.</span>
+          <span class="li"><b>Panel</b> <code class="swap"><span class="d">#111111</span><span class="l">#FFFFFF</span></code> every card, panel and meta strip. One value, not two.</span>
+          <span class="li"><b>Divider</b> <code class="swap"><span class="d">#1c1c1c</span><span class="l">#E6E9EF</span></code> internal hairlines only.</span>
+          <span class="li"><b>Rim</b> <code class="swap"><span class="d">#2E2E2E</span><span class="l">#DCE0E7</span></code> grey card outlines.</span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="k">Fill</div>
+        <div class="v">One flat hex, no gradient. Pure black and pure white are never used as a fill, only as text or as the base.</div>
+      </div>
+
+      <div class="row">
+        <div class="k">Inner vignette</div>
+        <div class="v">A dark inset shadow that sinks the edges of a colour fill. It reads as depth, not as a light bloom.
+          <span class="li">Colour <code>#000000</code>, opacity <b>38%</b>, offset <code>x0 y0</code>.</span>
+          <span class="li">Blur = <b>25% of card width</b>. Spread = <b>1.5% of card width</b>.</span>
+          <span class="li">It scales with the card, so the ring keeps the same proportion at any size. It is not a fixed pixel value.</span>
+          <span class="li"><b>Colour fills only.</b> Grey and panel cards stay flat.</span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="k">Vignette stacking</div>
+        <div class="v">The shadow is <b>inset</b>, so it is clipped inside the border and never darkens the outline. All text sits <b>above</b> the vignette in the bright centre, so nothing loses legibility.</div>
+      </div>
+
+      <div class="row">
+        <div class="k">Outline</div>
+        <div class="v"><b>1px</b> solid, fixed width. A card's rim follows its <b>outer surface</b>, so a rim never runs colour over grey.
+          <span class="li"><b>Full colour cards</b> (the whole card is one accent, like the statement cards below) use the accent hex at <b>45% over the base</b>. A tint, not the fill, so it reads as a lit rim.</span>
+          <span class="li"><b>Split cards</b> (colour swatch plus grey panel) and <b>grey or panel cards</b> take the grey rim around the whole container. On a split card the colour lives in the fill and vignette, not the rim.</span>
+          <span class="li"><b>Internal hairlines</b> (between rows, section tops) stay the divider grey, darker than any rim.</span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="k">Outline solids</div>
+        <div class="v">If a tool needs a flat hex instead of the 45% tint, these match on black:
+          <span class="li">Purple <code>#371867</code> · Aqua <code>#1A6B5D</code> · Pink <code>#781A36</code></span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="k">Radius</div>
+        <div class="v">A committed card pair, one small utility value, nothing else.
+          <span class="li"><b>16px</b> default. Panels, utility and split cards.</span>
+          <span class="li"><b>24px</b> large. The hero and full colour statement cards.</span>
+          <span class="li"><b>8px</b> small. Chips, code chips and swatches.</span>
+          <span class="li">Toggles and pills are fully round. Radius is fixed and does not scale.</span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="k">Spacing scale</div>
+        <div class="v">Every gap, pad and margin snaps to one scale, in pixels. Border widths stay at 1px and sit outside it. No off scale values.
+          <div class="scale">
+            <div><div class="u" style="width:22px;height:4px"></div><div class="ulab">4</div></div>
+            <div><div class="u" style="width:22px;height:8px"></div><div class="ulab">8</div></div>
+            <div><div class="u" style="width:22px;height:12px"></div><div class="ulab">12</div></div>
+            <div><div class="u" style="width:22px;height:16px"></div><div class="ulab">16</div></div>
+            <div><div class="u" style="width:22px;height:24px"></div><div class="ulab">24</div></div>
+            <div><div class="u" style="width:22px;height:32px"></div><div class="ulab">32</div></div>
+            <div><div class="u" style="width:22px;height:48px"></div><div class="ulab">48</div></div>
+            <div><div class="u" style="width:22px;height:64px"></div><div class="ulab">64</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="k">Text on fill</div>
+        <div class="v">Fixed per accent, chosen by contrast, never by taste. Same on both themes.
+          <span class="li"><b>Purple fill.</b> Off white text <code>#ECE8E0</code>. The only white text card.</span>
+          <span class="li"><b>Aqua fill.</b> Black text <code>#0A0A0A</code>.</span>
+          <span class="li"><b>Pink fill.</b> Black text <code>#0A0A0A</code>.</span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="k">Derived tones</div>
+        <div class="v">Each accent has two extra tones in the same hue, both flat, no vignette.
+          <span class="li"><b>Dark zone</b> (near black tinted background, off white text): purple <code>#161021</code> · aqua <code>#10211E</code> · pink <code>#211015</code>.</span>
+          <span class="li"><b>Highlight</b> (marking and emphasis, dark text): purple <code>#DBCBF6</code> · aqua <code>#C9F6EE</code> · pink <code>#F9CDDA</code>.</span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="k">One accent rule</div>
+        <div class="v">One accent per piece. Never two lanes in the same frame. Purple is the default when a piece has no lane.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TEXT ON COLOUR -->
+  <div class="section">
+    <div class="section-eyebrow">Section · <b>Statement cards</b> · the text on fill rule, live</div>
+    <div class="textgrid">
+      <div class="tcard purple"><div class="vignette"></div><div class="tag">Own · your IP</div><h2>Build the<br>system once.</h2><p>Off white text on purple. The card for your frameworks and your voice. The only white text card.</p><div class="foot swap"><span class="d">#6D28D9 · white text</span><span class="l">#6D28D9 · white text</span></div></div>
+      <div class="tcard aqua"><div class="vignette"></div><div class="tag">Build · ventures</div><h2>Own the<br>upside.</h2><p>Black text on aqua. The fill deepens on light so it stays saturated on paper.</p><div class="foot swap"><span class="d">#2DE2C3 · black text</span><span class="l">#0D9488 · black text</span></div></div>
+      <div class="tcard pink"><div class="vignette"></div><div class="tag">Teach · hot take</div><h2>Most events<br>waste the room.</h2><p>Black text on pink. For a point of view that draws a line.</p><div class="foot">#FF2D6B · black text</div></div>
+    </div>
+    <div class="rulebox"><b>Read the tags.</b> Own, Build, Teach. The word on each card is the second cue that carries the meaning when colour cannot. It is part of the card, not decoration.</div>
+  </div>
+
+  <!-- TYPE -->
+  <div class="section">
+    <div class="section-eyebrow">Section · <b>Type</b> · three faces, locked</div>
+    <div class="fonts">
+      <div class="fcard f-anton"><div class="fname">Anton · headers</div><div class="samp">One <span class="v">hero</span>.<br>Two lanes.</div><div class="note">Your header face. Ultra condensed, heavy, uppercase. Maximum punch. Headlines and card titles only.</div></div>
+      <div class="fcard"><div class="fname">Inter · body and labels</div><div class="samp body">The quick brown fox reads clean at every size, from paragraphs down to the smallest label.</div><div class="note">All reading text and every small utility label. Weights 400, 500, 600. Never competes with the headline.</div></div>
+    </div>
+    <div class="rulebox"><b>Anton for headers.</b> Every headline and card title. Uppercase, ultra condensed, one face, no alternates.</div>
+    <div class="rulebox"><b>Inter for body and small labels.</b> Paragraphs, captions, eyebrows, tags, spec keys, hex values. Anton is condensed and turns cramped at small sizes, so anything small is set in Inter caps, not Anton. Weights loaded are 400 regular, 500 medium, 600 semibold.</div>
+    <div class="rulebox"><b>Caveat for the handwritten accent.</b> Your personal voice. One handwritten moment per section, never body, never headlines. It carries the lane colour of whatever you are speaking into. Full rules below.</div>
+  </div>
+
+  <!-- HANDWRITTEN ACCENT -->
+  <div class="section">
+    <div class="section-eyebrow">Section · <b>Handwritten accent</b> · Caveat</div>
+    <div class="fonts">
+      <div class="handcard"><div class="hand brand">you and your IP</div><div class="handcap">Purple. The default when you speak as yourself.</div></div>
+      <div class="handcard"><div class="hand aqua">betting on this build</div><div class="handcap">Aqua. A personal note on something you are making.</div></div>
+      <div class="handcard"><div class="hand pink">events waste the room</div><div class="handcap">Pink. A personal belief or hot take you are teaching.</div></div>
+      <div class="handcard"><div class="hand ink">the one human aside</div><div class="handcap">Off white. A neutral aside with no lane attached.</div></div>
+    </div>
+    <div class="rulebox"><b>Role.</b> A third register beside Anton and Inter. The human touch. Accent only, never a headline, never body. One handwritten moment per view, never two. If the handwriting is everywhere, it is nowhere.</div>
+    <div class="rulebox"><b>Allowed.</b>
+      <span class="li">A short belief line or pull quote, one sentence at most.</span>
+      <span class="li">A handwritten kicker sitting over a bold headline.</span>
+      <span class="li">Small captions or callouts.</span>
+      <span class="li">Through a long layout, one handwritten moment per section, spaced out, never stacked.</span>
+    </div>
+    <div class="rulebox"><b>Banned.</b>
+      <span class="li">Body or paragraph copy.</span>
+      <span class="li">Headlines, which stay on Anton.</span>
+      <span class="li">Anything past one short line.</span>
+      <span class="li">More than one handwritten element in a single view.</span>
+      <span class="li">Your name as a sign off. The signature mark is the only sign off, always.</span>
+    </div>
+    <div class="rulebox"><b>Colour is the bridge.</b> The hand says it is you, personally. The colour says which lane you are speaking into. Purple is you and your IP. Aqua is a note on something you build. Pink is a belief you teach. Off white is a neutral aside. It is still one accent per piece. The hand takes the piece's lane colour, it never adds a second. Purple belongs here too. On the dark base the purple hand is set in purple, the same way the aqua and pink hands take their own colour. Web embed. Set <code class="inl">family=Caveat:wght@400..700</code>, then <code class="inl">font-family:'Caveat',cursive</code>.</div>
+    <div class="rulebox"><b>Caveat is not your signature.</b> Your signature is connected cursive. Caveat is a casual print hand. Cousins, not twins. Caveat never stands in for the signature mark.</div>
+  </div>
+
+  <!-- SIGNATURE -->
+  <div class="section">
+    <div class="section-eyebrow">Section · <b>Signature</b> · your sign off mark</div>
+    <div class="fonts">
+      <div class="sigcard">
+        <svg class="sig ink" viewBox="0 0 601.04 273.69" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Ryan Tayler signature">
+          <path d="M394.25,46.02c32.82.56,65.41,1.12,97.93,1.68.55-2.98,1-5.46,1.47-8.05,6.11,1.13,6.02,5.62,6.52,10.1,4.97,0,9.74.2,14.49-.05,5.58-.29,9.47,2.55,12.68,6.47,1.02,1.25,1.33,3.37,1.35,5.1.04,2.69-1.29,4.69-3.79,1.98-6.56-7.09-15.54-4.8-23.51-6.34-1.04-.2-3.15,1.45-3.63,2.68-6.12,15.73-11.35,31.84-18.19,47.24-6.12,13.79-13.8,26.92-21.18,40.12-1.1,1.98-4.36,2.75-6.62,4.08l-1.19-1.02c.64-2.21.8-4.73,2.01-6.57,8.7-13.24,16.1-27.13,21.86-41.91,5.65-14.52,11.38-29,17.56-44.72-6.9-.81-12.64-2.02-18.38-2.06-28.76-.19-57.52-.14-86.28.11-2.12.02-5.25,1.81-6.18,3.65-12.6,25.01-25.31,49.98-37.1,75.37-7.93,17.06-14.45,34.78-21.23,51.29-2.73-.29-4.63-.49-7.51-.8.2-2.64.47-6.06.72-9.49.31-4.31,1.14-8.65.82-12.91-1.41-19-6.87-36.27-22.12-49.15-10.1-8.53-21.47-14.71-33.84-19.23-9.74-3.56-19.52-7.05-29.13-10.93-2.19-.88-5.35-3.28-5.3-4.89.08-2.58,2.03-5.53,4.01-7.5,1.75-1.74,4.53-2.74,7.03-3.38,12.55-3.19,25.11-6.41,37.77-9.12,10.92-2.34,21.95-4.18,32.99-5.9,5.93-.93,11.98-1.13,17.97-1.69,9.24-.86,18.46-1.92,27.71-2.53,5.34-.35,10.73-.1,16.09.13,5.91.26,10.39-1.93,14.01-6.6,1.22-1.58,3.98-3.6,5.21-3.15,1.89.69,3.12,3.29,4.48,5.19.4.56.3,1.5.51,2.78ZM373.24,55.73c-46.61,1.06-92.54,8.58-137.92,20.46.71.88,1.4,1.22,2.12,1.47,23.34,8.13,46.84,15.94,65.22,33.68,9.73,9.39,16.05,20.68,19.22,33.73,1.13,4.64,1.8,9.38,2.68,14.12,16.33-34.71,32.45-68.96,48.68-103.46Z"/>
+          <path d="M131.29,176.82c11.1-14.62,21.78-28.67,32.73-43.1-5.7-1.03-10.34-3.16-10.78-9.02-.48-6.44-1.27-13.29,5.13-17.99,2.81,2.95,5.86,5.35,2.89,10.05-1.12,1.78-.49,4.66-.71,7.71,12.73-3.86,19.39-14.44,28.61-21.48,4.99,3.58,5,5.85,1.1,10.86-17.49,22.41-34.87,44.91-52.65,67.85,7.33,5.22,14.52,10.12,21.47,15.33,19.32,14.48,38.54,29.1,57.83,43.62,4.6,3.46,9.47,6.56,13.94,10.16,1.37,1.11,1.84,3.33,2.72,5.04-2.2-.04-4.99.78-6.5-.26-8.31-5.69-16.24-11.93-24.42-17.81-21.05-15.11-42.42-29.78-63.17-45.29-16.3-12.18-31.92-25.29-47.72-38.13-2.53-2.06-4.65-4.74-6.54-7.42-6.27-8.88-4.43-16.06,5.8-20.42,6.73-2.87,14.18-4.08,20.92-6.93,15.29-6.46,31.26-11.74,44.39-22.4,3.27-2.66,6.49-5.91,8.43-9.58,5-9.46-.5-17.61-12.67-21.06-15.93-4.51-31.67-2.62-47.66-.52-15.85,2.09-29.86,8.08-42.29,17.69-4.19,3.25-7.61,7.79-10.53,12.29-3.12,4.81-1.59,8.85,3.11,12.37,2.66,1.98,5.14,4.25,7.41,6.66.64.68.79,2.71.24,3.37-.55.67-2.37.84-3.4.51-14.91-4.79-17.55-23.64-9.8-32.39,8.14-9.18,17.15-16.8,29.39-20.18,6.87-1.9,13.24-5.82,20.16-7.23,8.77-1.79,17.91-1.72,26.82-2.9,9.51-1.27,18.7.22,27.79,2.56,10.84,2.79,21.33,12.69,19.57,23.26-.68,4.1-3.03,8.23-5.55,11.65-13.77,18.68-34.49,26.22-55.19,33.74-6.19,2.25-12.38,4.49-18.48,6.96-5.5,2.22-6.34,5.1-1.98,9.05,10.77,9.74,21.88,19.1,32.91,28.55,1.98,1.69,4.22,3.08,6.68,4.86Z"/>
+          <path d="M431.94,124.6c12.34-4.7,19.77-14.08,28.36-21.8,4.93,3.56,5.41,5.22,1.97,9.7-14.59,19.01-29.29,37.93-43.97,56.88-3.95,5.1-8.03,10.1-11.92,15.25-1.35,1.78-2.35,4.1-4.91,1.79-2.1-1.9-3.34-4.06-1.12-6.91,5.48-7.04,10.83-14.18,16.23-21.28,6.09-8.01,12.17-16.01,18.32-24.09-12.21-4.63-15.04-18.99-5.62-27.23,3.38,2.84,6.09,5.6,2.81,10.51-.97,1.45-.15,4.1-.15,7.2Z"/>
+          <path d="M219.18,130.17c-1.39.94-2.82,1.83-4.18,2.83-5.77,4.23-11.35,8.73-17.32,12.65-3.56,2.34-8.8,3.7-11.36.19-1.62-2.22-.61-7.89,1.19-10.78,7.77-12.47,17.54-23.11,31.58-28.91,1.22-.5,2.38-1.22,3.64-1.52,2.07-.48,5.8-1.45,6.05-.91,1.5,3.19,4.9,4.66,4.82,9.71-.17,10.81-6.25,18.88-9.71,28.14-.34.92-.61,2.19-1.32,2.59-2.23,1.26-4.65,2.19-6.99,3.24-.13-2.14-.87-4.47-.26-6.38,1.11-3.5,3.02-6.74,4.59-10.09-.25-.25-.49-.51-.74-.76ZM196.05,135.61l1.06,1.17c9.47-7.07,18.97-14.1,28.37-21.27.92-.7,1.2-2.22,1.78-3.37l-1.25-1.01c-11.1,6.78-22.83,12.77-29.95,24.48Z"/>
+          <path d="M382.41,136.72c8.58-6.36,17.53-12.29,25.59-19.26,4.02-3.47,6.05.83,9.03.5.08,2.2.9,4.71.12,6.53-2.79,6.47-5.83,12.88-9.42,18.93-1.28,2.16-4.42,3.21-6.72,4.76-.66-.48-1.31-.95-1.97-1.43,1.88-5.34,3.75-10.67,6.12-17.4-2.61,1.88-4.14,2.96-5.64,4.07-5.74,4.26-11.47,8.55-17.23,12.78-.51.37-1.26.63-1.87.59-3.15-.24-6.84.24-9.21-1.28-1.18-.76-.74-5.63.34-8.02,4.31-9.54,11.61-16.89,19.69-23.19,5.22-4.07,11.49-6.84,17.44-9.92,1.56-.81,5.04-1.23,5.26-.75,1.4,3.09,7.09,4.44,3.78,10.07-8.03-5.24-13.18,1.27-18.71,5.27-5.55,4.01-10.47,8.91-15.58,13.51-.89.8-1.37,2.07-2.04,3.12l1.03,1.11Z"/>
+          <path d="M105.43,76.5c3.34,4.73,2.94,8.07.12,12.3-17.26,25.79-34.13,51.83-51.22,77.73-.76,1.16-2.37,1.76-3.58,2.62-.33-1.94-1.55-4.34-.83-5.74,3-5.85,6.46-11.48,9.99-17.04,13.62-21.4,27.33-42.75,41.04-64.09,1.22-1.89,2.76-3.57,4.48-5.79Z"/>
+          <path d="M480.33,125.74c.43-.37,1.35-1.85,2.36-1.91,8.73-.52,12.99-7.61,18.89-12.34,4.35-3.49,8.89-7.02,13.91-9.29,1.92-.86,5.71,1.33,8,3.02.77.56.2,4.4-.93,5.82-5.91,7.45-14.35,11.38-22.71,15.35-.45.21-1.02.22-1.39.5-1.96,1.47-6.32.64-5.21,5.04.92,3.66,6.06,6,9.97,4.85,2.99-.88,5.97-2.06,9.02-2.35,1.7-.17,3.55,1.2,5.34,1.87-.86,1.52-1.34,3.77-2.64,4.43-5.6,2.88-11.82,4.06-17.65,1.48-3.39-1.5-6.01-4.86-8.78-7.58-2.66-2.62-5.08-5.49-8.19-8.9Z"/>
+          <path d="M239.68,138.14c-.65-7.2,8.02-27.88,13.23-32.48,5.41,2.44,4.48,6.28,2.61,11.09,1.94-.99,3.85-2.03,5.81-2.95,7.94-3.73,14.38.27,13.54,9-.59,6.14-2.65,12.12-3.95,18.2-.75,3.5-1.01,7.14-2.07,10.53-.61,1.95-2.37,4.95-3.67,4.98-2.74.06-5.02-2.21-4.25-5.41,1.87-7.78,4.04-15.5,6.12-23.23.62-2.29,1.35-4.55,2.22-7.48-7.63-.43-12.1,4.1-16.94,7.4-3.26,2.22-5.92,5.28-8.93,7.88-1.02.89-2.27,1.52-3.71,2.46Z"/>
+          <path d="M527.69,144.84c-3.08-1.21-4.62-3.9-3.22-7.44,4.02-10.2,8.33-20.3,12.56-30.42.17-.41.72-.66,1.64-1.47,1.58,2.81,3.06,5.46,4.8,8.55,2.45-1.21,5.76-2.78,9-4.46,4.33-2.24,7.89-.88,10.89,2.39.71.77,1.24,2.65.79,3.33-.77,1.18-2.61,2.78-3.57,2.53-8.9-2.31-13.91,3.76-18.84,8.97-5.04,5.34-9.12,11.58-14.06,18.01Z"/>
+        </svg>
+        <div class="sigcap">Ink only. Black on light, off white on dark. The mark on any clean surface.</div>
+      </div>
+    </div>
+    <div class="rulebox"><b>Signature rule (locked).</b> Ink only, clean grounds only. Black on light, off white on dark. Never tinted, never on a colour fill, never on a neon, never on a busy photo. Colour is the handwriting font's job, not the signature's. The signature mark is the only sign off, always. Keep clear space around it of at least the height of the capital R. Flat, no vignette. If a hero piece needs a sign off, sign in ink on a clean panel beside it, or let Caveat carry the colour.</div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="section">
+    <div class="section-eyebrow">Section · <b>Accessibility</b> · why the values are what they are</div>
+    <div class="rulebox"><b>Contrast targets.</b> Reading text clears WCAG AA. That means a ratio of at least 4.5 to 1 for normal text and 3 to 1 for large headlines.
+      <span class="li"><b>Mute text</b> is set to <code>#8A8A8A</code> on dark and <code>#5F646B</code> on light so secondary copy clears AA on both the panel and the base. The older grey sat on the fail line, so it was lightened.</span>
+      <span class="li"><b>Text on fill</b> is fixed by contrast: white on purple, black on aqua, black on pink. All clear AA on both themes.</span>
+      <span class="li"><b>Accents as text</b> shift by theme so labels stay legible. On light, aqua text deepens to <code>#0A7A6E</code> and pink text deepens to <code>#C21E58</code>. Purple is a brand colour and is used as text on both themes. On the dark base its contrast sits below the AA reading threshold, so it carries the most punch as display and accent type rather than long body copy, and where it carries meaning the label word carries it too. On light, hero purple <code>#6D28D9</code> reads strongly as text and is used directly.</span>
+    </div>
+    <div class="rulebox"><b>Purple display type.</b> Hero purple as a large display word on the dark base is a deliberate brand accent. Where it carries meaning, that meaning is also written in the ink coloured words around it, so nothing is lost if the colour reads faint.</div>
+    <div class="rulebox"><b>Never rely on colour alone.</b> Roughly one in twelve men cannot separate the lanes by colour, and colour drops out in greyscale. That is why every coloured piece also carries its word: Own, Build, Teach.</div>
+  </div>
+
+  <!-- STATUS SIGNALS -->
+  <div class="section">
+    <div class="section-eyebrow">Section · <b>Status signals</b> · state, not lane</div>
+    <div class="h2row">Go. Caution. Stop.</div>
+    <div class="rulebox"><b>A separate layer.</b> Three colours that report a state, approved, warning, error. They are not lanes and never carry lane meaning. Because they live on their own layer, a signal can sit on a lane piece without breaking one accent per piece. A build card can still show a green tick. They are tuned a step calmer than the neon lanes, and amber is warm on purpose, so a signal never reads as brand voice.</div>
+
+    <div class="sggrid">
+
+      <div class="sgcard ok">
+        <div class="sgswatch"><div class="vignette"></div><div class="sgmark">&#10003;</div></div>
+        <div class="sgmeta">
+          <div class="sgname">Approved</div>
+          <div class="sgrole">Success · go</div>
+          <div class="sghex swap"><span class="d">solid #22C55E</span><span class="l">solid #14783A</span></div>
+        </div>
+        <div class="sgdemo">
+          <div class="sgbanner"><span class="sgico">&#10003;</span><span class="sgtxt"><b>Deal cleared.</b> Diligence passed, ready to sign.</span></div>
+          <span class="sgbadge">Approved</span>
+          <div class="sgmrk">Marker <mark>on track this quarter</mark></div>
+        </div>
+      </div>
+
+      <div class="sgcard warn">
+        <div class="sgswatch"><div class="vignette"></div><div class="sgmark">!</div></div>
+        <div class="sgmeta">
+          <div class="sgname">Warning</div>
+          <div class="sgrole">Caution · check</div>
+          <div class="sghex swap"><span class="d">solid #F5B027</span><span class="l">solid #9A4B07</span></div>
+        </div>
+        <div class="sgdemo">
+          <div class="sgbanner"><span class="sgico">!</span><span class="sgtxt"><b>Needs a look.</b> One number is missing before this moves.</span></div>
+          <span class="sgbadge">Warning</span>
+          <div class="sgmrk">Marker <mark>review before sending</mark></div>
+        </div>
+      </div>
+
+      <div class="sgcard err">
+        <div class="sgswatch"><div class="vignette"></div><div class="sgmark">&#10005;</div></div>
+        <div class="sgmeta">
+          <div class="sgname">Error</div>
+          <div class="sgrole">Stop · blocked</div>
+          <div class="sghex swap"><span class="d">solid #FF4B3E</span><span class="l">solid #C62B2B</span></div>
+        </div>
+        <div class="sgdemo">
+          <div class="sgbanner"><span class="sgico">&#10005;</span><span class="sgtxt"><b>Blocked.</b> This cannot proceed until it is fixed.</span></div>
+          <span class="sgbadge">Error</span>
+          <div class="sgmrk">Marker <mark>this figure is wrong</mark></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="rulebox"><b>Colour never alone.</b> Same rule as the lanes. Every signal ships with an icon and a word, a tick for approved, an exclamation for warning, a cross for error. Colourblind readers and greyscale still get the message.</div>
+    <div class="rulebox"><b>Text on the fill.</b>
+      <span class="li">On dark, black text on the solid.</span>
+      <span class="li">On light, the solid deepens and text flips to off white, so buttons and badges stay legible on paper.</span>
+      <span class="li">Banners use the zone tint with the standard ink colour, and the solid as the icon and the left edge.</span>
+    </div>
+    <div class="rulebox"><b>Keep them small.</b> Ticks, dots, borders, badges, banners. Never fill a whole content card with a signal colour. A signal marks a state, it does not become the piece.</div>
+    <div class="rulebox"><b>Two guard rails, because two signals sit near a lane.</b> Green is close to aqua and red is the closest of all to pink. Aqua is a cool teal and green is a warm grass. Pink is a magenta and red is a scarlet. To keep them apart in the eye:
+      <span class="li">Never place an error control right beside a pink teach element. Give them air.</span>
+      <span class="li">Keep green out of build lane content. In a build piece, approval shows as a small tick or badge, not a green fill competing with the aqua.</span>
+    </div>
+  </div>
+
+  <!-- DEPRECATED -->
+  <details class="deprecated">
+    <summary>Deprecated ideas (retired, kept for reference)</summary>
+    <div class="dbody">
+      <b><span class="dswatch"></span>Cyan · retired</b>
+      <span class="li">Cyan was a fourth accent meaning events and production. It has been retired. Aqua now carries build, which includes events and production, so nothing is lost from the system.</span>
+      <span class="li"><b>Why it went.</b> Cyan sat too close to aqua in hue. The two were hard to tell apart, and they collapsed into one colour for readers who are colourblind or viewing in greyscale.</span>
+      <span class="li"><b>Values, for reference.</b> Fill <code>#22D3EE</code> (dark) and <code>#0891B2</code> (deepened on light). Small label on light deepened to <code>#0891B2</code>.</span>
+      <span class="li"><b>Outline.</b> Tint <code>rgba(34,211,238,.45)</code>, flat solid <code>#156471</code>.</span>
+      <span class="li"><b>Tones.</b> Dark zone <code>#101E21</code>, highlight <code>#C9F1F7</code>.</span>
+      <span class="li">Do not use cyan in new work. It lives here only so the history is not lost.</span>
+    </div>
+  </details>
+
+  <div class="footer">Ryan Tayler · brand guideline v1.0 · dark is canonical, light is a supported adaptation · one accent per piece, never more than one.</div>
+
+</div>
+</div>
+</body>
+</html>

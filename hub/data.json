@@ -1,0 +1,314 @@
+{
+  "segments": [
+    {
+      "name": "LinkedIn bio (short)",
+      "locked": true,
+      "text": "I'm an entrepreneur partnering with founders in live events & production, growing businesses through new ventures, partnerships, products, and I give you the option to exit",
+      "note": "Locked. Reproduce exactly, never paraphrase, edit only when Ryan explicitly asks."
+    },
+    {
+      "name": "Instagram bio",
+      "locked": true,
+      "text": "💵 Entrepreneur & Investor\n🫱🏻‍🫲🏼 Partnering with Founders in Live Events & Production\n🎫 115+ Live Events\n👥 56,000+ Attendees",
+      "note": "Handle @ryan_a_tayler. The ampersands, emoji, and the word Investor are locked calls."
+    },
+    {
+      "name": "LinkedIn About (long bio)",
+      "locked": true,
+      "text": "I've spent my career in live events and production. Straight out of uni I joined the top end of the Australian industry as a junior video editor, and five years later I was General Manager. I've delivered over 115 live events for more than 56,000 attendees, and I've managed multimillion dollar budgets.\n\nIn five years with Aaron Sansoni, I learned how to grow businesses. Now I partner with founders in live events and production. I help grow businesses through new ventures, partnerships, products and optimisation. Partnering or investing, and giving you the option to exit.\n\nRelationships carry this industry. I've built mine across every discipline, project managers, AV providers, manufacturers, venues, and talent. When something needs to happen fast, I'm calling someone I know.\n\nMy goal is to be in business with, or partnered into, every area of live events and production.\n\nIf you own a live events or production business and want to talk about what's next, reach out.",
+      "note": "Approved July 2026. The reference for all long bios. Ryan wrote the final structure himself."
+    },
+    {
+      "name": "Banner headline",
+      "locked": true,
+      "text": "Helping founders in live events and production grow through partnerships",
+      "note": "The Anton headline on the locked banner. Partnerships plural, founders stays."
+    },
+    {
+      "name": "Official statement (said in every video)",
+      "locked": true,
+      "text": "Most event businesses try to do everything themselves. Their own AV, their own crew, their own venue if they can swing it. It protects the margin and caps everything else, because nobody is the best at all of it. I believe you grow faster by partnering with people who are the best at their piece. You give up a clip of the ticket. You get back quality, reputation, and the time to be great at the thing you're actually great at.",
+      "note": "The Partnership Belief System opener. Reintroduce it every video, word for word."
+    },
+    {
+      "name": "The keeper line",
+      "locked": true,
+      "text": "A supplier is someone you swap out when it's inconvenient. A partner is someone you stick with even when it is.",
+      "note": "Never chained with the emergency line in the same piece. One punch per piece, pick one."
+    },
+    {
+      "name": "The emergency line",
+      "locked": true,
+      "text": "In an emergency a supplier says no when it's inconvenient and a partner says yes to help you.",
+      "note": "The causality is deliberate. Never shorten it to a supplier says no, a partner says yes. Never chained with the keeper line."
+    },
+    {
+      "name": "The mission sentence",
+      "locked": true,
+      "text": "That's why my goal is to be in business with, or partnered into, every area of live events and production in Australia.",
+      "note": "The public declared mission. It carries the ambition alone, hustle narration stays banned around it."
+    },
+    {
+      "name": "Proof numbers",
+      "locked": true,
+      "text": "115+ live events · 56,000+ attendees",
+      "note": "The only approved figure set. Never mix with other numbers, never invent new ones."
+    },
+    {
+      "name": "Career facts (approved raw material)",
+      "locked": false,
+      "text": "Junior video editor straight out of uni, General Manager five years later.\nDelivered over 115 live events for more than 56,000 attendees.\nManaged multimillion dollar budgets.\nFive years with Aaron Sansoni (backstory framing only, past tense lessons).",
+      "note": "Building blocks for bios and speaker blurbs. Aaron appears only as past tense backstory."
+    },
+    {
+      "name": "Instagram short format exemplars",
+      "locked": false,
+      "text": "Reel caption. \"This is how you do a product showcase in 🇨🇳China\"\nStory reshare. \"They get it…\"",
+      "note": "One or two punchy lines that lean on the visual. Story reshares get three or four words."
+    }
+  ],
+  "gold": [
+    {
+      "name": "China Post 1 · the network",
+      "meta": "LinkedIn · July 2026",
+      "text": "I'm in 🇨🇳China this week, visiting the factories that manufacture the equipment we use in live events and production.\n\nEverything I came here to purchase, I could've ordered from Alibaba or direct from a distributor in Aus.\n\nBut the gear was only half the reason for the trip. I wanted to meet the people behind the businesses.\n\nSo far I've walked the production lines, watched gear get assembled and QC tested, and sat down for lunch with the teams I could be working with for the rest of my life. We talked holidays, hobbies, nerdy shit we like. Not just products and specs.\n\nA few of these factories manufacture for the biggest brands in our industry, and for Aussie distributors I already work with. So every relationship I build here strengthens my connections across the industry.\n\nThe play is the network. I'm building direct relationships across every discipline of production and events. Staging, Truss, Lighting, LED, Audio. So when I, someone I work with, or a future venture needs good equipment, I'm not starting from scratch. I'm calling someone I've had lunch with.\n\nThis is exactly how I operate in Australia. Equipment rental, contractors, emergency situations! The people I call first are the ones I've got relationships with, and it never lets me down. No reason that stops at the border. So I'm extending it to the manufacturers themselves.\n\nWorth every hour.",
+      "why": "In the moment narration, contrast set early with Alibaba, a long Provost sentence carrying real detail, the principle lands after the story proves it, one dry punch close."
+    },
+    {
+      "name": "China Post 2 · the masterclass",
+      "meta": "LinkedIn · July 2026",
+      "text": "I walked into a factory in 🇨🇳China last week as a brand new lead. No orders, and no history.\n\nThey spent over 8 hours with us, and never pushed a sale or contract.\n\nA welcome tea, demo show, product walk thoughts, a catered lunch with their team, full factory tour, and a project meeting to meet our needs not theirs (and in one case a guided tour through their very own lighting museum). Never any rush, and no pressure.\n\nIn live production the job IS the experience we create for people. So I notice when someone does it well. This was a masterclass in how to treat a potential customer, they literally turned a sales meeting into a live experience.\n\nAnd it works I walked out thinking about long term business with them.\n\nPlenty of businesses in Australia could take notes.",
+      "why": "Tension in two lines, the detail list is the story, one principle paragraph connecting to craft identity, dry Australian punch close. The flag emoji is the only sanctioned emoji use, one functional visual flag."
+    },
+    {
+      "name": "The angle of a table · Personal",
+      "meta": "Approved · July 2026",
+      "text": "Early in my career, Aaron Sansoni taught me something over the angle of a table that I still use on every event.\n\nI was still a junior. We were about 30 minutes from doors, and the room was 95% there. I'd looked at this wing of tables, thought it wasn't quite perfect, but decided it was close enough, and moved on.\n\nAaron walked the room and stopped at it. He told me why it mattered, and made it clear that holding the standard was my job no matter how small the thing was. With nowhere near enough time, we adjusted just about the whole room.\n\nWhat I learned that day was to hold my own standard even when it's inconvenient, for me or for the team. The little things are the first to drop when bigger things are going wrong. Drop them once and that becomes the standard next time. I see it all over our industry, people getting by on putting an event on instead of putting on the best experience they possibly can.\n\nSince then there have been plenty of times I've pulled up something small and been told it isn't the priority right now, or told myself the same thing. Now I think, who's going to trust me with something bigger if I let this slip because it's easy and close enough?",
+      "why": "The reference Personal post. One small physical object carries the whole piece, exact numbers, a real admission, Aaron in past tense lesson framing only, and a callback close that turns a discipline story into a partner room signal without pitching."
+    }
+  ],
+  "slides": [
+    {
+      "file": "1-cover-v3-2.webp",
+      "cap": "1 · Cover"
+    },
+    {
+      "file": "2-capture.webp",
+      "cap": "2 · Capture"
+    },
+    {
+      "file": "3-refine.webp",
+      "cap": "3 · Refine"
+    },
+    {
+      "file": "4-assess.webp",
+      "cap": "4 · Assess"
+    },
+    {
+      "file": "5-finalize.webp",
+      "cap": "5 · Finalise"
+    },
+    {
+      "file": "6-transfer.webp",
+      "cap": "6 · Transfer"
+    },
+    {
+      "file": "7-system-v7-3.webp",
+      "cap": "7 · The full system"
+    },
+    {
+      "file": "8-dictionary.webp",
+      "cap": "8 · The language"
+    }
+  ],
+  "formats": [
+    {
+      "id": "contrarian",
+      "name": "Contrarian",
+      "tier": "you",
+      "when": "Use when you hold an opinion the industry would argue with.",
+      "have": "A strong opinion the industry would push back on",
+      "hook": "Most people in live events believe [topic] works one way. Here is why they have it backwards.",
+      "b1": "Name the belief everyone holds.",
+      "b2": "Show the damage it quietly does.",
+      "b3": "Your counter and what to do instead.",
+      "proof": "The moment or number that earns the take.",
+      "meat": "Story or steps",
+      "cuts": "The belief. The damage. The flip."
+    },
+    {
+      "id": "case",
+      "name": "Case study",
+      "tier": "you",
+      "when": "Use when you have a result or story from a real business.",
+      "have": "A result or a story from a business, yours or one you saw",
+      "hook": "Here is what happened when a business finally sorted out [topic].",
+      "b1": "The before and what it cost.",
+      "b2": "The one move they made.",
+      "b3": "The after, measurable if you can.",
+      "proof": "Real numbers or a named before and after.",
+      "meat": "A story",
+      "cuts": "The before. The move. The result."
+    },
+    {
+      "id": "personal",
+      "name": "Personal",
+      "tier": "you",
+      "when": "Use when you have a scar, a moment you lived through.",
+      "have": "A scar, a moment you lived through",
+      "hook": "Early in my career, [topic] taught me something I still use on every event.",
+      "b1": "The scene. Put us in the room.",
+      "b2": "The moment it went wrong, or clicked.",
+      "b3": "The lesson you carry now.",
+      "proof": "You were there. The detail sells it.",
+      "meat": "A story",
+      "cuts": "The scene. The turn. The lesson."
+    },
+    {
+      "id": "problem",
+      "name": "Problem",
+      "tier": "",
+      "when": "Use when owners feel a pain they cannot name.",
+      "have": "A pain owners feel but cannot name",
+      "hook": "[topic] is quietly costing event owners money, and most do not see it.",
+      "b1": "Agitate the specific pain.",
+      "b2": "Show where it hides.",
+      "b3": "The fix, in plain steps.",
+      "proof": "A number that sizes the leak.",
+      "meat": "Steps",
+      "cuts": "The pain. The hiding spot. The fix."
+    },
+    {
+      "id": "education",
+      "name": "Education",
+      "tier": "",
+      "when": "Use when you can teach a method step by step.",
+      "have": "A method you can teach step by step",
+      "hook": "This is exactly how I handle [topic].",
+      "b1": "The setup and when it applies.",
+      "b2": "The steps in order.",
+      "b3": "The outcome to expect.",
+      "proof": "That you have run this yourself.",
+      "meat": "Steps",
+      "cuts": "One step per short."
+    },
+    {
+      "id": "comparison",
+      "name": "Comparison",
+      "tier": "",
+      "when": "Use when there is an old way and a better way.",
+      "have": "Two ways to do a thing, old vs new",
+      "hook": "The old way of handling [topic], versus how the best operators do it now.",
+      "b1": "The old way and its cost.",
+      "b2": "The new way.",
+      "b3": "Why new wins.",
+      "proof": "A case where the switch paid off.",
+      "meat": "A list",
+      "cuts": "Old. New. The gap."
+    },
+    {
+      "id": "list",
+      "name": "List",
+      "tier": "",
+      "when": "Use when you have several points and no single spine.",
+      "have": "Several points and no single spine",
+      "hook": "Three things about [topic] most event owners get wrong.",
+      "b1": "Set the stakes.",
+      "b2": "The items, one beat each.",
+      "b3": "The one that matters most.",
+      "proof": "One item backed by something real.",
+      "meat": "A list",
+      "cuts": "One item per short."
+    },
+    {
+      "id": "secret",
+      "name": "Secret reveal",
+      "tier": "care",
+      "when": "Only when the inside knowledge is genuinely withheld.",
+      "have": "Inside knowledge that is genuinely withheld",
+      "hook": "What actually goes on behind [topic], once you are on the inside.",
+      "b1": "The surface story everyone believes.",
+      "b2": "The hidden reality.",
+      "b3": "What it means for them.",
+      "proof": "That you have actually seen the inside.",
+      "meat": "A story",
+      "cuts": "Surface. Reality. Meaning."
+    },
+    {
+      "id": "question",
+      "name": "Question",
+      "tier": "care",
+      "when": "Weakest fit. Only if the question is real, not bait.",
+      "have": "A real question, not bait",
+      "hook": "Are you thinking about [topic] the wrong way?",
+      "b1": "Pose it plainly.",
+      "b2": "The common wrong answer.",
+      "b3": "The better answer.",
+      "proof": "Why your answer holds up.",
+      "meat": "Steps",
+      "cuts": "Question. Wrong. Right."
+    }
+  ],
+  "entries": [
+    {
+      "id": "seed-1",
+      "date": "2026-07-15",
+      "approxDate": true,
+      "locked": true,
+      "title": "China trip, the play is the network",
+      "platform": "LinkedIn",
+      "type": "Text post",
+      "topic": "deep",
+      "effort": "",
+      "format": "Personal",
+      "lane": "build",
+      "status": "published",
+      "notes": "Gold standard 1. Also ran as the Instagram feed post. Date approximate, tell Claude the real one."
+    },
+    {
+      "id": "seed-2",
+      "date": "2026-07-18",
+      "approxDate": true,
+      "locked": true,
+      "title": "Factory visit, a masterclass in treating a customer",
+      "platform": "LinkedIn",
+      "type": "Text post",
+      "topic": "niche",
+      "effort": "",
+      "format": "Case study",
+      "lane": "teach",
+      "status": "published",
+      "notes": "Gold standard 2. Date approximate."
+    },
+    {
+      "id": "seed-3",
+      "date": "2026-07-22",
+      "approxDate": true,
+      "locked": true,
+      "title": "The angle of a table",
+      "platform": "LinkedIn",
+      "type": "Text post",
+      "topic": "personal",
+      "effort": "",
+      "format": "Personal",
+      "lane": "teach",
+      "status": "approved",
+      "notes": "Gold standard 4. The reference Personal post, works as text and script."
+    },
+    {
+      "id": "seed-4",
+      "date": "2026-07-22",
+      "approxDate": true,
+      "locked": true,
+      "title": "The CRAFT Method™ carousel",
+      "platform": "Instagram feed",
+      "type": "Carousel",
+      "topic": "niche",
+      "effort": "",
+      "format": "Education",
+      "lane": "own",
+      "status": "approved",
+      "notes": "8 slides. Flagship IP asset, full resolution in the repo."
+    }
+  ]
+}
