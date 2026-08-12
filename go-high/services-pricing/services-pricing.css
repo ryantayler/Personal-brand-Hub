@@ -229,8 +229,10 @@ body {
   background-color: var(--bg-white);
   width: 100%;
   /* Extra top padding equal to the fixed nav's height, so content
-     doesn't load in underneath it. */
-  padding: calc(var(--nav-clearance) + 96px) 0 96px;
+     doesn't load in underneath it — plus a modest gap down to the
+     intro note (tighter than the main pricing page's 96px; this
+     page opens with a line of text, not a controls row). */
+  padding: calc(var(--nav-clearance) + 40px) 0 96px;
 }
 
 .pricing-inner {
