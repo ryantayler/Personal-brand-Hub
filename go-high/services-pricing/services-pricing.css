@@ -242,6 +242,24 @@ body {
   align-items: center;
 }
 
+/* ---------- Intro note ---------- */
+/* One line above the table framing everything on it as opt-in,
+   done-for-you work — not fees baked into the plans. */
+.services-note {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  text-align: center;
+  max-width: 560px;
+  margin: 0 0 28px;
+}
+
+.services-note-accent {
+  font-weight: 600;
+  color: var(--brand-on-light);
+}
+
 /* ---------- Services fee table ---------- */
 /* Same shell as the main pricing page's feature comparison table —
    this page IS that table, promoted to the whole show: services
@@ -352,6 +370,35 @@ body {
   color: #D1D5DB;
 }
 
+/* ---------- Standout row (Initial setup & implementation) ----------
+   The big one — black like the pricing cards and the main table's
+   "Our price" row, so it reads as the headline service before the
+   grouped bands below. The white/gray on-dark colors mirror that
+   row's treatment. */
+.pricing-table-row--standout {
+  background-color: var(--bg-black);
+}
+
+.pricing-table-row--standout .pricing-table-feature {
+  color: #FFFFFF;
+}
+
+.pricing-table-row--standout .service-sub {
+  color: #9CA3AF;
+}
+
+.pricing-table-row--standout .fee-amount {
+  color: #FFFFFF;
+}
+
+.pricing-table-row--standout .fee-note {
+  color: #9CA3AF;
+}
+
+.pricing-table-row--standout .pricing-table-dash {
+  color: #4B5563;
+}
+
 /* ---------- Group divider rows ---------- */
 /* Two pricing models, two labeled bands: "Managed [for life]" for
    setup-plus-monthly services, "Build [& alter]" for one-off builds.
@@ -408,6 +455,12 @@ body {
   margin-left: 1px;
   /* Rides the amount's baseline like the cards' "/mo". */
   padding-bottom: 1px;
+}
+
+/* Worded amounts ("Per scenario") — smaller than the dollar figures
+   so the words don't shout louder than the prices. */
+.fee-amount--text {
+  font-size: 0.75rem;
 }
 
 /* Footnote-sized and muted — clearly subordinate to the dollar
