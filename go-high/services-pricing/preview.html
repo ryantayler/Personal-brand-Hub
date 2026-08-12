@@ -1,0 +1,721 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Additional Services [Pricing] — BusinessOS</title><style>
+/* ==========================================================
+   BusinessOS — Additional services pricing page
+   Standalone stylesheet. Independent of the homepage's styles.css
+   and the main pricing page's stylesheet — do not import or share
+   rules between pages.
+   ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-white: #FFFFFF;
+  --bg-black: #0F0F0F;
+  /* Raw terminal green — decorative/on-dark use only. On white, use
+     --brand-on-light instead; it's the WCAG-passing value for
+     text/icons read directly against #FFFFFF. */
+  --accent-green: #22C55E;
+  --brand-on-light: #15803D;
+  --cta-amber: #FFB000;
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+  --border-light: #E5E7EB;
+  --radius: 8px;
+  --font-heading: 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  /* Header's real height — used both to keep this section's content
+     clear of the fixed nav and to size the footer bar. Matches the
+     homepage's own measured nav height (see home/styles.css). */
+  --nav-clearance: 64px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-mono);
+  background-color: var(--bg-white);
+}
+
+/* ==========================================================
+   Business[OS] logo component
+   Duplicated from home/styles.css intentionally — this page's CSS
+   stays fully independent, nothing is shared/imported between
+   pages. Keep all copies in sync if the lockup ever changes.
+   ========================================================== */
+.bos-logo {
+  --bos-size: 72px;
+  --bos-ratio: 0.667;
+  --bos-word: #E5E5E5;
+  --bos-accent: var(--accent-green);
+
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+  text-decoration: none;
+}
+
+.bos-logo__word {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--bos-size);
+  color: var(--bos-word);
+  letter-spacing: -0.01em;
+}
+
+.bos-logo__os,
+.bos-logo__cursor {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: calc(var(--bos-size) * var(--bos-ratio));
+  color: var(--bos-accent);
+}
+
+.bos-logo:focus-visible {
+  outline: 2px solid var(--brand-accent, var(--accent-green));
+  outline-offset: 3px;
+}
+
+.bos-logo__cursor {
+  animation: bos-blink 1s step-end infinite;
+}
+
+@keyframes bos-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bos-logo__cursor { animation: none; }
+}
+
+.bos-logo--nav  { --bos-size: 32px; }
+.bos-logo--mini { --bos-size: 26px; }
+
+/* ---------- Header ---------- */
+#nav.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: var(--bg-black);
+  --brand-accent: var(--accent-green);
+}
+
+#nav .nav-inner {
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 14px 24px;
+}
+
+/* The page's title, centered in the black header bar between the
+   logo (left) and Login (right). Absolutely centered on the bar
+   rather than flexed, so it lands dead-center regardless of the
+   different widths flanking it. The bracketed word borrows the
+   Business[OS] logo's motif — mono face, terminal green, square
+   brackets — so the title reads unmistakably as brand. */
+.nav-page-heading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.375rem;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.nav-page-heading-accent {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 1.1875rem;
+  color: var(--accent-green);
+}
+
+.nav-login {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  border-radius: var(--radius);
+  padding: 8px 18px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-login:hover {
+  background-color: #FFFFFF;
+  color: var(--bg-black);
+}
+
+.nav-login:active {
+  transform: scale(0.97);
+}
+
+.nav-login:focus-visible {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Site footer ---------- */
+.site-footer {
+  background-color: var(--bg-black);
+  min-height: calc(var(--nav-clearance) * 2);
+  display: flex;
+  align-items: center;
+  --brand-accent: var(--accent-green);
+}
+
+.site-footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+}
+
+.footer-brand {
+  justify-self: start;
+  min-width: 0;
+}
+
+.footer-tagline {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #6B7280;
+  margin: 4px 0 0;
+}
+
+.footer-copyright {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #6B7280;
+  white-space: nowrap;
+}
+
+.footer-copyright-dot {
+  width: 4px;
+  height: 4px;
+  flex-shrink: 0;
+  background-color: #4B5563;
+}
+
+/* ---------- Section shell ---------- */
+.pricing-section {
+  background-color: var(--bg-white);
+  width: 100%;
+  /* Extra top padding equal to the fixed nav's height, so content
+     doesn't load in underneath it. */
+  padding: calc(var(--nav-clearance) + 96px) 0 96px;
+}
+
+.pricing-inner {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---------- Services fee table ---------- */
+/* Same shell as the main pricing page's feature comparison table —
+   this page IS that table, promoted to the whole show: services
+   down the side, the three fee types across the top. */
+.pricing-table-wrap {
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.pricing-table {
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+/* Sized to match the rows' own scrollable width, so content scrolls
+   as one unit on narrow screens. Three fixed fee columns plus a
+   usable service column. */
+.pricing-table-scroll {
+  min-width: 640px;
+}
+
+.pricing-table-body {
+  position: relative;
+}
+
+.pricing-table-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px;
+  border-top: 1px solid var(--border-light);
+}
+
+.pricing-table-row:first-child {
+  border-top: none;
+}
+
+.pricing-table-row--head {
+  background-color: #F9FAFB;
+}
+
+.pricing-table-feature {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+
+.pricing-table-row--head .pricing-table-feature {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+/* Services with a clarifying sub-line (Widgets, AI agents) stack
+   name over description instead of the single centered line. */
+.pricing-table-feature .service-name {
+  display: block;
+}
+
+.pricing-table-feature .service-sub {
+  display: block;
+  font-size: 0.625rem;
+  line-height: 1.3;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.pricing-table-feature:has(.service-sub) {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.pricing-table-values {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.pricing-table-plan,
+.pricing-table-cell {
+  /* Wider than the main pricing table's 96px — "Alteration fee" and
+     the noted amounts need the extra room. */
+  width: 118px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.pricing-table-plan {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+
+.pricing-table-dash {
+  font-family: var(--font-mono);
+  color: #D1D5DB;
+}
+
+/* ---------- Group divider rows ---------- */
+/* Two pricing models, two labeled bands: "Managed [for life]" for
+   setup-plus-monthly services, "Build [& alter]" for one-off builds.
+   The bracketed word reuses the logo/title motif. */
+.pricing-table-row--group {
+  background-color: #F9FAFB;
+  border-top: 2px solid var(--border-light);
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.group-label {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+}
+
+.group-accent {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: var(--brand-on-light);
+}
+
+.group-note {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  text-align: right;
+}
+
+/* ---------- Fee display (amount + footnote, stacked) ---------- */
+.fee {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.fee-amount {
+  display: inline-flex;
+  align-items: flex-end;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+}
+
+.fee-suffix {
+  font-weight: 400;
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  margin-left: 1px;
+  /* Rides the amount's baseline like the cards' "/mo". */
+  padding-bottom: 1px;
+}
+
+/* Footnote-sized and muted — clearly subordinate to the dollar
+   amount above it. */
+.fee-note {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1.3;
+  color: var(--text-secondary);
+  max-width: 118px;
+}
+
+/* ---------- Slashed fee (Automations setup: $50 → Free) ----------
+   The main pricing page's discounted-price reveal, replayed here as
+   a one-shot on load: a red slash draws across the old fee while
+   "Free" slides out from behind it. JS stamps .is-discounted on the
+   .fee--slashed wrapper shortly after load; everything below just
+   reacts to that class. */
+.fee-was {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-end;
+  transition: color 0.45s ease;
+}
+
+.fee-strike {
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  top: 50%;
+  height: 2px;
+  border-radius: 2px;
+  background: #EF4444;
+  transform: rotate(-11deg) scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.45s ease;
+  pointer-events: none;
+}
+
+.fee--slashed.is-discounted .fee-strike {
+  transform: rotate(-11deg) scaleX(1);
+}
+
+.fee--slashed.is-discounted .fee-was {
+  color: #9CA3AF;
+}
+
+/* The slide-out window: overflow-hidden, max-width animates open
+   while the inner content untranslates — same mechanic as the main
+   page's .price-annual reveal. */
+.fee-free {
+  display: inline-block;
+  overflow: hidden;
+  max-width: 0;
+  transition: max-width 0.45s ease;
+}
+
+.fee-free-inner {
+  display: inline-block;
+  padding-left: 6px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  /* On-light green — this table sits on white, so it takes the
+     WCAG-passing on-light value, not raw --accent-green. */
+  color: var(--brand-on-light);
+  transform: translateX(-105%);
+  transition: transform 0.45s ease;
+}
+
+.fee--slashed.is-discounted .fee-free {
+  /* Comfortably wider than "Free"; overflow only clips, max-width
+     just needs to clear the content. */
+  max-width: 60px;
+}
+
+.fee--slashed.is-discounted .fee-free-inner {
+  transform: translateX(0);
+}
+
+/* ---------- Responsive (nav + footer) ---------- */
+@media (max-width: 768px) {
+  #nav .nav-inner {
+    padding: 12px 20px;
+  }
+
+  .nav-page-heading {
+    font-size: 1.0625rem;
+  }
+
+  .nav-page-heading-accent {
+    font-size: 0.9375rem;
+  }
+
+  /* Stacks logo+tagline / copyright into centered rows instead of
+     the desktop grid, which has no sensible single-column fallback
+     of its own. */
+  .site-footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .footer-brand {
+    justify-self: unset;
+  }
+
+  .footer-copyright {
+    justify-self: unset;
+  }
+}
+
+@media (max-width: 640px) {
+  .pricing-section {
+    padding: calc(var(--nav-clearance) + 40px) 0 64px;
+  }
+
+  /* Not enough bar left between the logo and Login on phones — the
+     centered title would overlap both. */
+  .nav-page-heading {
+    display: none;
+  }
+}
+
+/* ---------- Accessibility ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .fee-was,
+  .fee-strike,
+  .fee-free,
+  .fee-free-inner {
+    transition: none;
+  }
+}
+</style></head><body>
+<header id="nav" class="site-header">
+  <div class="nav-inner">
+    <a href="/" class="bos-logo bos-logo--nav" aria-label="Business[OS] home"><span class="bos-logo__word">Business</span><span class="bos-logo__os">[OS]</span><span class="bos-logo__cursor" aria-hidden="true">&#9612;</span></a>
+
+    <h1 class="nav-page-heading">Additional Services <span class="nav-page-heading-accent">[Pricing]</span></h1>
+
+    <a href="https://app.businessos.au" class="nav-login">Login</a>
+  </div>
+</header>
+
+<section id="services-page" class="pricing-section">
+  <div class="pricing-inner">
+
+    <div class="pricing-table-wrap">
+      <div class="pricing-table">
+        <div class="pricing-table-scroll">
+
+        <div class="pricing-table-row pricing-table-row--head">
+          <div class="pricing-table-feature">Services</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-plan">Setup fee</div>
+            <div class="pricing-table-plan">Alteration fee</div>
+            <div class="pricing-table-plan">Monthly fee</div>
+          </div>
+        </div>
+
+        <div class="pricing-table-body">
+
+        <div class="pricing-table-row pricing-table-row--group">
+          <div class="pricing-table-feature"><span class="group-label">Managed <span class="group-accent">[for life]</span></span></div>
+          <div class="group-note">One setup fee, then managed for you every month</div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">Automations</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell">
+              <span class="fee fee--slashed">
+                <span class="fee-amount"><span class="fee-was" aria-hidden="true">$50<span class="fee-strike" aria-hidden="true"></span></span><span class="fee-free"><span class="fee-free-inner">Free</span></span></span>
+              </span>
+            </div>
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+            <div class="pricing-table-cell">
+              <span class="fee"><span class="fee-amount">$5<span class="fee-suffix">/mo</span></span><span class="fee-note">per automation &middot; managed for life</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">
+            <span class="service-name">AI agents</span>
+            <span class="service-sub">Voice, conversation &amp; web chat agents</span>
+          </div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="fee"><span class="fee-amount">$500</span></span></div>
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+            <div class="pricing-table-cell">
+              <span class="fee"><span class="fee-amount">$50<span class="fee-suffix">/mo</span></span><span class="fee-note">managed for life</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">Websites</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="fee"><span class="fee-amount">$500</span></span></div>
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+            <div class="pricing-table-cell">
+              <span class="fee"><span class="fee-amount">$50<span class="fee-suffix">/mo</span></span><span class="fee-note">managed for life</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">
+            <span class="service-name">Widgets</span>
+            <span class="service-sub">Forms, surveys, QR codes, documents &amp; more</span>
+          </div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="fee"><span class="fee-amount">$50</span></span></div>
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+            <div class="pricing-table-cell">
+              <span class="fee"><span class="fee-amount">$5<span class="fee-suffix">/mo</span></span><span class="fee-note">managed for life</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pricing-table-row pricing-table-row--group">
+          <div class="pricing-table-feature"><span class="group-label">Build <span class="group-accent">[&amp; alter]</span></span></div>
+          <div class="group-note">One-off builds &mdash; no monthly fee</div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">Sales pipelines</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="fee"><span class="fee-amount">$50</span></span></div>
+            <div class="pricing-table-cell"><span class="fee"><span class="fee-amount">$25</span><span class="fee-note">per alteration</span></span></div>
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+          </div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">Products &amp; payment links</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="fee"><span class="fee-amount">$50</span></span></div>
+            <div class="pricing-table-cell"><span class="fee"><span class="fee-amount">$25</span><span class="fee-note">per alteration</span></span></div>
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+          </div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">Reports</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="fee"><span class="fee-amount">$50</span></span></div>
+            <div class="pricing-table-cell"><span class="fee"><span class="fee-amount">$25</span><span class="fee-note">per alteration</span></span></div>
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+          </div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">Dashboards</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="fee"><span class="fee-amount">$50</span></span></div>
+            <div class="pricing-table-cell"><span class="fee"><span class="fee-amount">$25</span><span class="fee-note">per alteration</span></span></div>
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+          </div>
+        </div>
+
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="site-footer" class="site-footer">
+  <div class="site-footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="bos-logo bos-logo--mini" aria-label="Business[OS] home"><span class="bos-logo__word">Business</span><span class="bos-logo__os">[OS]</span><span class="bos-logo__cursor" aria-hidden="true">&#9612;</span></a>
+      <p class="footer-tagline">The operating system behind your growth.</p>
+    </div>
+
+    <div class="footer-copyright">
+      <span>&copy; 2026 BusinessOS.</span>
+      <span class="footer-copyright-dot" aria-hidden="true"></span>
+      <span>All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+<script>
+/* ==========================================================
+   BusinessOS — Additional services pricing page
+   Standalone script. Independent of the homepage's footer.js and
+   the main pricing page's script — do not import or share logic
+   between pages.
+   ========================================================== */
+(function () {
+  var slashedFees = document.querySelectorAll('.fee--slashed');
+  if (!slashedFees.length) return;
+
+  // One-shot replay of the main pricing page's discounted-price
+  // reveal: a beat after load, the red slash draws across the old
+  // $50 setup fee while "Free" slides out from behind it. Delayed
+  // (rather than fired instantly) so the visitor actually sees the
+  // fee get slashed instead of loading in already-crossed-out —
+  // the CSS transitions on .is-discounted do all the drawing.
+  window.setTimeout(function () {
+    Array.prototype.forEach.call(slashedFees, function (fee) {
+      fee.classList.add('is-discounted');
+    });
+  }, 700);
+})();
+</script>
+</body></html>
