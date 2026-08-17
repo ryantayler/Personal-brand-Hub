@@ -1,0 +1,598 @@
+/* ==========================================================================
+   Ryan Tayler · personal site, version 2
+   ==========================================================================
+
+   DESIGN PLAN
+
+   Concept. The bill. Headliner Group takes its name from top billing on a
+   poster, so the site is built like a tour poster crossed with a production
+   run sheet. Sections are cues on a running order, numbered down a fixed left
+   rail. Type is set at poster scale and is allowed to collide with
+   photography rather than sit politely beside it. The hero puts the cutout
+   figure between two layers of the same headline, so the type passes behind
+   the head and in front of the chest.
+
+   Colour. Brand tokens, pink as the spine.
+     --base   #0A0A0A  the ground
+     --stage  #150409  a near black biased toward pink, for the deep bands
+     --ink    #ECE8E0  reading text
+     --pink   #FF2D6B  the spine
+     --aqua   #2DE2C3  build, the group and the ventures
+     --purple #6D28D9  own, kept rare for the mission and the IP
+
+   Type. Anton at poster scale with negative tracking and sub one leading.
+   Inter for everything readable. A 10px Inter caps voice at .3em tracking
+   carries the cue numbers and timecodes, which is the run sheet register.
+   Caveat once per cue, never twice.
+
+   Motion. The brand doc bans parallax and calls restraint the whole trick.
+   Ryan has explicitly overridden that for this version. Motion here is
+   theatrical and on subject, lights coming up rather than decoration. Every
+   effect is gated behind prefers-reduced-motion.
+   ========================================================================== */
+
+/* --- fonts ---------------------------------------------------------------- */
+
+@font-face{font-family:'Anton';src:url('../fonts/anton-400.woff2') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../fonts/inter-400.woff2') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../fonts/inter-600.woff2') format('woff2');
+  font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Caveat';src:url('../fonts/caveat-700.woff2') format('woff2');
+  font-weight:700;font-style:normal;font-display:swap}
+
+/* --- tokens --------------------------------------------------------------- */
+
+:root{
+  --base:#0A0A0A;
+  --stage:#150409;      /* pink biased near black. the deep band ground */
+  --panel:#111111;
+  --line:#1c1c1c;
+  --rim:#2E2E2E;
+  --ink:#ECE8E0;
+  --mute:#8A8A8A;
+
+  --purple:#6D28D9;
+  --aqua:#2DE2C3;
+  --pink:#FF2D6B;
+
+  --pink-text:#FF2D6B;
+  --aqua-text:#2DE2C3;
+  --purple-text:#8B5CF6;
+
+  --ol-purple:rgba(109,40,217,.45);
+  --ol-aqua:rgba(45,226,195,.45);
+  --ol-pink:rgba(255,45,107,.45);
+
+  --ghost:#2B0812;
+  --slot:#141014;
+  --slot-line:#2A1D24;
+
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px;
+  --wrap:1240px;
+  --rail:64px;          /* the cue rail gutter on desktop */
+
+  --ease:cubic-bezier(.16,.84,.28,1);
+}
+
+.light{
+  --base:#F0F2F6;
+  --stage:#E7EAF1;
+  --panel:#FFFFFF;
+  --line:#E6E9EF;
+  --rim:#DCE0E7;
+  --ink:#1A1A1A;
+  --mute:#5F646B;
+
+  --purple:#5B20B7;
+  --aqua:#0D9488;
+  --pink:#FF2D6B;
+
+  --pink-text:#C21E58;
+  --aqua-text:#0A7A6E;
+  --purple-text:#5B20B7;
+
+  --ol-purple:rgba(91,32,183,.45);
+  --ol-aqua:rgba(13,148,136,.45);
+  --ol-pink:rgba(255,45,107,.45);
+
+  --ghost:#E7EAF1;
+  --slot:#E4E7EE;
+  --slot-line:#D2D7E0;
+}
+
+/* --- reset ---------------------------------------------------------------- */
+
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+
+body{
+  background:var(--base);
+  color:var(--ink);
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:17px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+::selection{background:var(--pink);color:#0A0A0A}
+
+/* --- type ----------------------------------------------------------------- */
+
+h1,h2,h3,.anton{
+  font-family:'Anton',Impact,sans-serif;font-weight:400;
+  text-transform:uppercase;line-height:.86;letter-spacing:-.015em;
+}
+
+/* poster scale. the display face is the personality of this build. */
+.t-mega{font-size:clamp(44px,9.1vw,132px)}
+.t-xl{font-size:clamp(40px,7.4vw,104px)}
+.t-lg{font-size:clamp(32px,5vw,68px)}
+.t-md{font-size:clamp(24px,3vw,38px)}
+
+p{max-width:62ch}
+p + p{margin-top:var(--s4)}
+.lede{font-size:clamp(18px,2.1vw,22px);line-height:1.5}
+.mute{color:var(--mute)}
+strong{font-weight:600}
+
+/* the run sheet voice. cue numbers, timecodes, labels. */
+.cue,.eyebrow{
+  max-width:none;
+  font-family:'Inter',sans-serif;font-size:10px;font-weight:600;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--mute);line-height:1.6;
+}
+.eyebrow{font-size:11px;letter-spacing:.24em}
+.eyebrow .on,.cue .on{color:var(--pink-text)}
+
+.tag{font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;opacity:.85}
+
+.kicker{
+  font-family:'Caveat',cursive;font-weight:700;
+  font-size:clamp(24px,3.6vw,38px);line-height:1.1;color:var(--pink-text);
+}
+.kicker.build{color:var(--aqua-text)}
+.kicker.own{color:var(--purple-text)}
+
+/* --- layout --------------------------------------------------------------- */
+
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 var(--s5)}
+@media (min-width:720px){.wrap{padding:0 var(--s7)}}
+@media (min-width:1200px){.wrap{padding-left:calc(var(--rail) + var(--s7))}}
+
+section{background:var(--base);color:var(--ink);position:relative}
+.cueband{padding:var(--s8) 0}
+@media (min-width:900px){.cueband{padding:120px 0}}
+.deep{background:var(--stage)}
+
+.stack{display:flex;flex-direction:column;gap:var(--s5)}
+.stack.lg{gap:var(--s6)}
+.stack.xl{gap:var(--s7)}
+
+.grid{display:grid;gap:var(--s5)}
+@media (min-width:720px){
+  .grid.two{grid-template-columns:repeat(2,1fr)}
+  .grid.three{grid-template-columns:repeat(3,1fr)}
+  .grid.four{grid-template-columns:repeat(2,1fr)}
+}
+@media (min-width:1040px){.grid.four{grid-template-columns:repeat(4,1fr)}}
+
+.split{display:grid;gap:var(--s6)}
+@media (min-width:900px){
+  .split{grid-template-columns:1fr 1fr;gap:var(--s8);align-items:center}
+  .split.wide-text{grid-template-columns:1.2fr .8fr}
+  .split.wide-photo{grid-template-columns:.8fr 1.2fr}
+  .split.flip .split-text{order:2}
+}
+
+/* --- the cue rail --------------------------------------------------------- */
+/* a fixed running order down the left edge. desktop only, decorative for
+   screen readers since the same labels are in the sections themselves. */
+
+.rail{display:none}
+@media (min-width:1200px){
+  .rail{
+    display:flex;position:fixed;left:0;top:0;bottom:0;width:var(--rail);
+    z-index:80;flex-direction:column;align-items:center;justify-content:center;
+    gap:var(--s4);pointer-events:none;
+  }
+  .rail-line{width:1px;flex:1;background:var(--rim)}
+  .rail-now{
+    writing-mode:vertical-rl;text-orientation:mixed;
+    font-size:10px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--mute);white-space:nowrap;
+  }
+  .rail-now .n{color:var(--pink-text)}
+}
+
+/* --- nav. a set list, not a header ---------------------------------------- */
+
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:120;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:var(--s4) var(--s5);pointer-events:none;mix-blend-mode:normal;
+}
+@media (min-width:720px){.topbar{padding:var(--s5) var(--s7)}}
+.topbar > *{pointer-events:auto}
+
+.mark{text-decoration:none;display:flex;flex-direction:column;gap:1px}
+.mark-name{font-family:'Anton',Impact,sans-serif;font-size:17px;letter-spacing:.04em;
+  text-transform:uppercase;line-height:1;color:#ECE8E0}
+.mark-role{font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:#8A8A8A;line-height:1}
+
+.menu-btn{
+  display:inline-flex;align-items:center;gap:var(--s3);cursor:pointer;
+  background:rgba(10,10,10,.6);backdrop-filter:blur(8px);
+  border:1px solid var(--rim);border-radius:999px;padding:10px var(--s4);
+  font-size:10px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:#ECE8E0;
+}
+.menu-btn:hover{border-color:var(--ol-pink)}
+.menu-bars{display:inline-flex;flex-direction:column;gap:3px;width:14px}
+.menu-bars i{display:block;height:1.5px;background:#FF2D6B;transition:transform .3s var(--ease)}
+
+/* the set list takeover */
+.setlist{
+  position:fixed;inset:0;z-index:200;background:#0A0A0A;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:var(--s8) var(--s5);overflow-y:auto;
+  opacity:0;visibility:hidden;transition:opacity .34s var(--ease),visibility .34s;
+}
+@media (min-width:720px){.setlist{padding:var(--s8) var(--s7)}}
+.setlist.open{opacity:1;visibility:visible}
+.setlist ol{list-style:none;max-width:var(--wrap);margin:0 auto;width:100%}
+.setlist li{border-top:1px solid var(--line)}
+.setlist li:last-child{border-bottom:1px solid var(--line)}
+.setlist ol a{
+  display:flex;align-items:baseline;gap:var(--s5);text-decoration:none;
+  padding:clamp(8px,1.4vw,16px) 0;color:#ECE8E0;
+  font-family:'Anton',Impact,sans-serif;text-transform:uppercase;
+  font-size:clamp(26px,5.2vw,62px);line-height:1;letter-spacing:-.01em;
+  transition:color .25s var(--ease),padding-left .35s var(--ease);
+}
+.setlist ol a .n{
+  font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:.24em;
+  color:#8A8A8A;flex-shrink:0;width:3.5ch;
+}
+.setlist ol a:hover,.setlist ol a:focus-visible{color:#FF2D6B;padding-left:var(--s5)}
+.setlist ol a[aria-current="page"]{color:#FF2D6B}
+.setlist-foot{
+  max-width:var(--wrap);margin:var(--s7) auto 0;width:100%;
+  display:flex;flex-wrap:wrap;gap:var(--s5);justify-content:space-between;
+  font-size:13px;color:#8A8A8A;
+}
+.setlist-foot a{text-decoration:none;color:#ECE8E0}
+.setlist-close{
+  position:absolute;top:var(--s5);right:var(--s5);cursor:pointer;background:none;
+  border:1px solid var(--rim);border-radius:999px;padding:10px var(--s4);color:#ECE8E0;
+  font-size:10px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;
+}
+@media (min-width:720px){.setlist-close{top:var(--s5);right:var(--s7)}}
+.setlist-close:hover{border-color:var(--ol-pink)}
+
+/* --- the bill. the hero. -------------------------------------------------- */
+
+.bill{
+  position:relative;overflow:hidden;background:var(--base);
+  padding:clamp(104px,14vh,150px) 0 var(--s7);
+}
+.bill-stage{position:relative}
+
+/* the headline sits behind the figure. no z-index here on purpose, so the
+   front layer inside it can still rise above the cutout. */
+/* the padding reserves the last line, which the front layer then occupies.
+   without it the payoff word lands on top of the line above and the
+   sentence stops reading. */
+.bill-head{position:relative;letter-spacing:-.02em;padding-bottom:.87em}
+/* the mask only works on a single line, so a bill line never wraps. the
+   clamp on .t-mega is what keeps it inside the measure at every width. */
+.bill-head .l{display:block;overflow:hidden}
+.bill-head .l > i{display:block;font-style:normal;white-space:nowrap}
+.bill-head .on{color:var(--pink-text)}
+
+/* the cutout. sits between the two type layers. */
+.cutout{
+  position:absolute;z-index:2;pointer-events:none;
+  right:-1%;bottom:0;width:min(42%,470px);
+}
+.cutout img{width:100%;height:auto;filter:drop-shadow(0 30px 60px rgba(0,0,0,.6))}
+
+/* the front layer. the payoff word crosses in front of the chest. */
+.bill-front{
+  position:absolute;z-index:3;left:0;bottom:0;
+  color:var(--pink-text);letter-spacing:-.02em;pointer-events:none;
+}
+.bill-front .l{display:block;overflow:hidden}
+.bill-front .l > i{display:block;font-style:normal;white-space:nowrap}
+
+.bill-meta{
+  position:relative;z-index:4;margin-top:var(--s7);
+  display:flex;flex-wrap:wrap;gap:var(--s5) var(--s7);align-items:flex-end;
+}
+.bill-sub{max-width:44ch;color:var(--mute);font-size:16px}
+
+/* on narrow screens the figure stops overlapping and sits under the type,
+   because a 40 percent wide cutout on a phone is unreadable. */
+@media (min-width:900px){
+  /* push the payoff across the figure instead of stopping short of it */
+  .bill-front{left:20%}
+}
+@media (max-width:899px){
+  .cutout{position:relative;right:auto;bottom:auto;width:min(74%,340px);
+    margin:var(--s6) 0 0 auto}
+  .bill-front{position:relative;left:auto;bottom:auto;margin-top:0}
+}
+
+/* --- the marquee. a venue LED strip. -------------------------------------- */
+
+.marquee{
+  position:relative;overflow:hidden;border-top:1px solid var(--rim);
+  border-bottom:1px solid var(--rim);background:var(--base);
+  padding:var(--s5) 0;
+}
+.marquee.on-pink{background:var(--pink);border-color:var(--ol-pink)}
+.marquee-track{display:flex;width:max-content;will-change:transform}
+.marquee-track > span{
+  display:inline-flex;align-items:center;gap:var(--s6);padding-right:var(--s6);
+  font-family:'Anton',Impact,sans-serif;text-transform:uppercase;
+  font-size:clamp(22px,3.4vw,42px);line-height:1;white-space:nowrap;letter-spacing:-.01em;
+}
+.marquee.on-pink .marquee-track > span{color:#0A0A0A}
+.marquee-track .dot{color:var(--pink-text);font-size:.7em}
+.marquee.on-pink .marquee-track .dot{color:#0A0A0A;opacity:.55}
+@keyframes marquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+.marquee-track{animation:marquee var(--dur,38s) linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+
+/* --- type that collides with photography ---------------------------------- */
+/* the headline overhangs the image instead of sitting above it. */
+
+.collide{position:relative}
+.collide .collide-photo{position:relative;z-index:0}
+.collide .collide-head{
+  position:relative;z-index:2;
+  margin-bottom:clamp(-96px,-7vw,-32px);
+  padding-right:8%;
+  text-shadow:0 10px 40px rgba(0,0,0,.45);
+}
+.light .collide .collide-head{text-shadow:0 10px 40px rgba(240,242,246,.55)}
+.collide.from-below .collide-head{
+  margin-bottom:0;margin-top:clamp(-96px,-7vw,-32px);
+}
+/* a big numeral hung off the corner of an image */
+.numeral{
+  position:absolute;z-index:2;right:-2%;top:-8%;
+  font-family:'Anton',Impact,sans-serif;line-height:.8;
+  font-size:clamp(80px,13vw,190px);color:var(--pink-text);
+  letter-spacing:-.03em;pointer-events:none;
+  text-shadow:0 10px 40px rgba(0,0,0,.5);
+}
+
+/* --- ghost letterform ----------------------------------------------------- */
+
+.ghosted{position:relative;overflow:hidden;isolation:isolate}
+.ghost{
+  position:absolute;z-index:0;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Anton',Impact,sans-serif;text-transform:uppercase;
+  font-size:clamp(180px,34vw,440px);line-height:.8;letter-spacing:-.03em;
+  color:var(--ghost);white-space:nowrap;pointer-events:none;user-select:none;
+  will-change:transform;
+}
+.ghosted > .wrap{position:relative;z-index:1}
+
+/* --- buttons -------------------------------------------------------------- */
+
+.btn{
+  display:inline-flex;align-items:center;gap:var(--s2);position:relative;
+  font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  text-decoration:none;padding:var(--s4) var(--s6);border-radius:999px;
+  border:1px solid transparent;cursor:pointer;overflow:hidden;
+  transition:color .3s var(--ease),border-color .3s var(--ease);
+}
+.btn-pink{background:var(--pink);color:#0A0A0A}
+.btn-pink:hover{filter:brightness(1.08)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--rim)}
+.btn-ghost:hover{border-color:var(--pink);color:var(--pink-text)}
+.btn-row{display:flex;flex-wrap:wrap;gap:var(--s3)}
+
+/* --- cards ---------------------------------------------------------------- */
+
+.panel{background:var(--panel);border:1px solid var(--rim);border-radius:16px;padding:var(--s5)}
+@media (min-width:720px){.panel{padding:var(--s6)}}
+
+.card{
+  position:relative;overflow:hidden;border-radius:24px;padding:var(--s6);
+  display:flex;flex-direction:column;gap:var(--s5);--cw:min(1100px,92vw);
+}
+@media (min-width:720px){.card{padding:var(--s7)}}
+.card > *{position:relative;z-index:1}
+.glow{position:absolute;inset:0;z-index:0;pointer-events:none;
+  box-shadow:inset 0 0 calc(var(--cw)*.25) calc(var(--cw)*.015) rgba(0,0,0,.38)}
+.card.pink{background:var(--pink);color:#0A0A0A;border:1px solid var(--ol-pink)}
+.card.aqua{background:var(--aqua);color:#0A0A0A;border:1px solid var(--ol-aqua)}
+.card.purple{background:var(--purple);color:#ECE8E0;border:1px solid var(--ol-purple)}
+.card p{max-width:52ch}
+
+/* a cue card that reveals its rule on hover, like a set list line */
+.cuecard{
+  position:relative;border-top:1px solid var(--rim);padding:var(--s5) 0;
+  display:grid;gap:var(--s3);
+}
+@media (min-width:760px){
+  .cuecard{grid-template-columns:5ch 1fr 1.3fr;gap:var(--s5);align-items:start}
+}
+.cuecard .n{font-family:'Anton',Impact,sans-serif;font-size:20px;color:var(--pink-text);line-height:1.1}
+.cuecard.build .n{color:var(--aqua-text)}
+.cuecard.own .n{color:var(--purple-text)}
+.cuecard h3{font-size:clamp(20px,2.4vw,30px)}
+.cuecard p{color:var(--mute);font-size:15px;max-width:52ch}
+.cuecard::after{
+  content:"";position:absolute;left:0;top:-1px;height:1px;width:0;background:var(--pink);
+  transition:width .5s var(--ease);
+}
+.cuecard:hover::after{width:100%}
+.cuecard.build::after{background:var(--aqua)}
+.cuecard.own::after{background:var(--purple)}
+
+.stat{display:flex;flex-direction:column;gap:var(--s2)}
+.stat-num{font-family:'Anton',Impact,sans-serif;font-size:clamp(44px,6.4vw,86px);
+  line-height:.86;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat-label{font-size:12px;color:var(--mute);letter-spacing:.18em;text-transform:uppercase;
+  font-weight:600}
+
+.pills{display:flex;flex-wrap:wrap;gap:var(--s2)}
+.pill{border:1px solid var(--rim);border-radius:999px;padding:var(--s2) var(--s4);
+  font-size:13px;font-weight:500;background:var(--panel);
+  transition:border-color .3s var(--ease),color .3s var(--ease)}
+.pill:hover{border-color:var(--pink);color:var(--pink-text)}
+
+.quote{font-family:'Caveat',cursive;font-weight:700;
+  font-size:clamp(30px,5.4vw,62px);line-height:1.1;color:var(--pink-text);max-width:20ch}
+.quote.build{color:var(--aqua-text)}
+
+.statement{font-family:'Anton',Impact,sans-serif;text-transform:uppercase;
+  font-size:clamp(26px,4.2vw,52px);line-height:.94;letter-spacing:-.015em;max-width:22ch}
+
+/* --- photo slots ---------------------------------------------------------- */
+
+.photo{position:relative;overflow:hidden;border-radius:16px;
+  background:var(--slot);border:1px solid var(--rim);display:block}
+.photo img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s var(--ease)}
+.photo.is-filled img{opacity:1}
+.photo::after{
+  content:attr(data-slot) " · " attr(data-shot);
+  position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;padding:var(--s4);
+  font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);
+  background:repeating-linear-gradient(135deg,transparent 0 14px,var(--slot-line) 14px 15px);
+}
+.photo.is-filled::after{display:none}
+.photo.portrait{aspect-ratio:4/5}
+.photo.tall{aspect-ratio:3/4}
+.photo.square{aspect-ratio:1/1}
+.photo.wide{aspect-ratio:3/2}
+.photo.cinema{aspect-ratio:16/9}
+.photo.banner{aspect-ratio:21/9}
+
+/* the cutout slot is a transparent PNG, so it gets no frame */
+.cutout .photo{background:transparent;border:0;border-radius:0;aspect-ratio:4/5}
+.cutout .photo::after{
+  background:repeating-linear-gradient(135deg,transparent 0 14px,var(--slot-line) 14px 15px);
+  border-radius:200px 200px 24px 24px;border:1px dashed var(--rim);
+  align-items:center;justify-content:center;text-align:center;
+}
+
+/* the mosaic. a fixed row unit does the tiling, so the spans stay
+   predictable instead of fighting each tile's own aspect ratio. */
+.gallery{display:grid;gap:var(--s3);grid-template-columns:repeat(2,1fr)}
+.gallery .photo{aspect-ratio:1/1}
+@media (min-width:760px){
+  .gallery{grid-template-columns:repeat(6,1fr);grid-auto-rows:104px;gap:var(--s4)}
+  .gallery .photo{aspect-ratio:auto;height:100%}
+  .gallery .g-sq{grid-column:span 2;grid-row:span 3}
+  .gallery .g-wide{grid-column:span 3;grid-row:span 3}
+  .gallery .g-tall{grid-column:span 2;grid-row:span 5}
+}
+
+/* --- signature ------------------------------------------------------------ */
+
+.sign-panel{background:var(--panel);border:1px solid var(--rim);border-radius:16px;
+  padding:var(--s6);display:flex;flex-direction:column;gap:var(--s4);align-items:flex-start}
+.sign{width:190px;height:auto;color:var(--ink)}
+
+.email-link{
+  font-family:'Anton',Impact,sans-serif;text-transform:uppercase;
+  font-size:clamp(26px,6.4vw,84px);line-height:.9;letter-spacing:-.02em;
+  color:var(--pink-text);text-decoration:none;word-break:break-word;display:inline-block;
+  transition:transform .4s var(--ease);
+}
+.email-link:hover{transform:translateX(10px)}
+
+/* --- forms ---------------------------------------------------------------- */
+
+.signup{display:flex;flex-wrap:wrap;gap:var(--s3);max-width:520px}
+.signup input{flex:1 1 240px;background:var(--panel);border:1px solid var(--rim);
+  border-radius:999px;padding:var(--s4) var(--s5);font-size:15px;color:var(--ink)}
+.signup input::placeholder{color:var(--mute)}
+.signup input:focus{outline:2px solid var(--ol-pink);outline-offset:2px;border-color:var(--pink)}
+.form-note{font-size:13px;color:var(--mute)}
+.form-msg{font-size:14px;font-weight:600}
+
+/* --- footer --------------------------------------------------------------- */
+
+.foot{background:#0A0A0A;color:#ECE8E0;border-top:1px solid #1c1c1c;padding:var(--s8) 0 var(--s6)}
+.foot a{color:#ECE8E0}
+.foot-grid{display:grid;gap:var(--s6)}
+@media (min-width:760px){.foot-grid{grid-template-columns:1.5fr 1fr 1fr}}
+.foot h3{font-size:10px;color:#8A8A8A;font-weight:600;letter-spacing:.3em;
+  text-transform:uppercase;margin-bottom:var(--s4)}
+.foot ul{list-style:none;display:flex;flex-direction:column;gap:var(--s3)}
+.foot ul a{text-decoration:none;font-size:15px}
+.foot ul a:hover{color:#FF2D6B}
+.foot-mission{font-size:15px;color:#8A8A8A;max-width:40ch}
+.foot-base{margin-top:var(--s7);padding-top:var(--s5);border-top:1px solid #1c1c1c;
+  display:flex;flex-wrap:wrap;gap:var(--s4);justify-content:space-between;
+  font-size:12px;color:#8A8A8A}
+
+/* --- craft rail ----------------------------------------------------------- */
+
+.craft-rail{display:grid;gap:var(--s4);grid-auto-flow:column;
+  grid-auto-columns:minmax(230px,1fr);align-items:start;
+  overflow-x:auto;padding-bottom:var(--s4);scroll-snap-type:x mandatory}
+.craft-rail img{border-radius:16px;border:1px solid var(--rim);scroll-snap-align:start;
+  width:100%;height:auto}
+
+/* ==========================================================================
+   MOTION
+   Lights coming up, not decoration. All of it is opt in through the .js hook
+   and all of it collapses under prefers-reduced-motion.
+   ========================================================================== */
+
+/* line reveal. the mask sits on .l, the type rises inside it. */
+.js .rise > i,.js .bill-head .l > i,.js .bill-front .l > i{
+  transform:translateY(115%);transition:transform .95s var(--ease)}
+.js .in .rise > i,.js .bill-head.in .l > i,.js .bill-front.in .l > i{transform:translateY(0)}
+.js .bill-head.in .l:nth-child(2) > i{transition-delay:.07s}
+.js .bill-head.in .l:nth-child(3) > i{transition-delay:.14s}
+.js .bill-head.in .l:nth-child(4) > i{transition-delay:.21s}
+.js .bill-front.in .l > i{transition-delay:.3s}
+
+/* the stage light wipe. images come up from the floor. */
+.js .wipe{clip-path:inset(0 0 100% 0);transition:clip-path 1.05s var(--ease)}
+.js .wipe.in{clip-path:inset(0 0 0 0)}
+
+/* the plain fade, for supporting copy */
+.js .fade{opacity:0;transform:translateY(14px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.js .fade.in{opacity:1;transform:none}
+.js .fade.d1{transition-delay:.08s}
+.js .fade.d2{transition-delay:.16s}
+.js .fade.d3{transition-delay:.24s}
+
+/* the cutout settles a beat after the type */
+.js .cutout{opacity:0;transform:translateY(28px) scale(.985);
+  transition:opacity 1s var(--ease) .18s,transform 1.1s var(--ease) .18s}
+.js .cutout.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  .js .rise > i,.js .bill-head .l > i,.js .bill-front .l > i{transform:none;transition:none}
+  .js .wipe{clip-path:none;transition:none}
+  .js .fade{opacity:1;transform:none;transition:none}
+  .js .cutout{opacity:1;transform:none;transition:none}
+  .marquee-track{animation:none}
+  .ghost{transform:translate(-50%,-50%) !important}
+  html{scroll-behavior:auto}
+}
+
+/* --- focus and skip ------------------------------------------------------- */
+
+a:focus-visible,button:focus-visible,input:focus-visible{
+  outline:2px solid var(--pink);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:-9999px;top:0;background:#FF2D6B;color:#0A0A0A;
+  padding:var(--s3) var(--s4);z-index:300;font-weight:600}
+.skip:focus{left:var(--s4);top:var(--s4)}

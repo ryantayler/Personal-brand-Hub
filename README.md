@@ -15,15 +15,23 @@ The source of truth for Ryan's personal brand hub. The hub itself is a single pa
 
 ## The public site
 
-`site/` holds the public personal brand website, a six page static build.
-Home, About, Headliner Group, Work, Ideas, Contact. Pink is the spine on that
-surface, purple is kept rare for Ryan and his IP, and light and dark alternate
-section by section. See `site/README.md` for the rulings it was built against
-and the list of new copy still needing approval.
+Two versions, both six pages. Home, About, Headliner Group, Work, Ideas,
+Contact. Pink is the spine on both, purple stays rare for Ryan and his IP.
+
+- **`site-v2/`** is the current direction. The site built as a show bill,
+  taking its cue from Headliner Group meaning top billing on a poster. The
+  cutout figure passes through the headline, sections are numbered cues on a
+  running order, and reveals wipe up like a stage light. See
+  `site-v2/README.md`.
+- **`site/`** is version 1, kept as the conservative option. Cleaner, calmer,
+  closer to the letter of the brand doc. Tagged `v1-site`. See `site/README.md`
+  for the rulings both versions were built against and the list of new copy
+  still needing approval.
 
 ## Layout
 
-- `site/` · the public website. Six pages, no build step.
+- `site-v2/` · the public website, version 2. Six pages, no build step.
+- `site/` · version 1 of the website. Six pages, no build step.
 - `hub/index.html` · the built artifact page, fully self contained (fonts and images inlined).
 - `hub/hub-template.html` · the page source with asset placeholders.
 - `hub/data.json` · all hub content. Segments, gold standard posts, formats, slides, and baked tracker entries. Edit this to add approved posts or entries.
