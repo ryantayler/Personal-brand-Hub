@@ -13,8 +13,17 @@ The source of truth for Ryan's personal brand hub. The hub itself is a single pa
 - **Library.** Locked bios and quotes with copy buttons, the gold standard posts, The CRAFT Method™ carousel, and the IP register.
 - **Tracker.** Post logging with topic mix (75/20/5) and effort mix (70/20/10) tracking against targets.
 
+## The public site
+
+`site/` holds the public personal brand website, a six page static build.
+Home, About, Headliner Group, Work, Ideas, Contact. Pink is the spine on that
+surface, purple is kept rare for Ryan and his IP, and light and dark alternate
+section by section. See `site/README.md` for the rulings it was built against
+and the list of new copy still needing approval.
+
 ## Layout
 
+- `site/` · the public website. Six pages, no build step.
 - `hub/index.html` · the built artifact page, fully self contained (fonts and images inlined).
 - `hub/hub-template.html` · the page source with asset placeholders.
 - `hub/data.json` · all hub content. Segments, gold standard posts, formats, slides, and baked tracker entries. Edit this to add approved posts or entries.

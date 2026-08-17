@@ -1,0 +1,542 @@
+/* ==========================================================================
+   Ryan Tayler · personal site
+   Brand system v1.0. Pink is the spine on this surface, purple is reserved
+   for owned IP, aqua carries Headliner Group and the ventures.
+   Dark and light alternate section by section. Add class="light" to a
+   section and every token flips inside it.
+   ========================================================================== */
+
+/* --- fonts ---------------------------------------------------------------- */
+
+@font-face{font-family:'Anton';src:url('../fonts/anton-400.woff2') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../fonts/inter-400.woff2') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../fonts/inter-600.woff2') format('woff2');
+  font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Caveat';src:url('../fonts/caveat-700.woff2') format('woff2');
+  font-weight:700;font-style:normal;font-display:swap}
+
+/* --- tokens --------------------------------------------------------------- */
+
+:root{
+  /* neutrals, dark, canonical */
+  --base:#0A0A0A;
+  --panel:#111111;
+  --line:#1c1c1c;
+  --rim:#2E2E2E;
+  --ink:#ECE8E0;
+  --mute:#8A8A8A;
+
+  /* accents, dark */
+  --purple:#6D28D9;   /* OWN   · him and his IP. rare on this surface */
+  --aqua:#2DE2C3;     /* BUILD · Headliner Group, ventures, production */
+  --pink:#FF2D6B;     /* TEACH · point of view, and the spine of this site */
+
+  /* accent as text. deepens on light so it holds contrast */
+  --pink-text:#FF2D6B;
+  --aqua-text:#2DE2C3;
+  --purple-text:#8B5CF6;
+
+  /* outlines, accent at 45 percent over base */
+  --ol-purple:rgba(109,40,217,.45);
+  --ol-aqua:rgba(45,226,195,.45);
+  --ol-pink:rgba(255,45,107,.45);
+
+  /* the ghosted display letterform behind statement sections.
+     kept well below the copy that sits on it. it is texture, not a headline. */
+  --ghost:#2B0812;
+
+  /* photo slot placeholder ground */
+  --slot:#141014;
+  --slot-line:#2A1D24;
+
+  /* spacing scale. 4 8 12 16 24 32 48 64 */
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px;
+
+  /* measure */
+  --wrap:1180px;
+  --read:62ch;
+}
+
+.light{
+  --base:#F0F2F6;
+  --panel:#FFFFFF;
+  --line:#E6E9EF;
+  --rim:#DCE0E7;
+  --ink:#1A1A1A;
+  --mute:#5F646B;
+
+  --purple:#5B20B7;
+  --aqua:#0D9488;
+  --pink:#FF2D6B;          /* pink holds as a fill on both themes */
+
+  --pink-text:#C21E58;
+  --aqua-text:#0A7A6E;
+  --purple-text:#5B20B7;
+
+  --ol-purple:rgba(91,32,183,.45);
+  --ol-aqua:rgba(13,148,136,.45);
+  --ol-pink:rgba(255,45,107,.45);
+
+  --ghost:#E7EAF1;
+  --slot:#E4E7EE;
+  --slot-line:#D2D7E0;
+}
+
+/* --- reset ---------------------------------------------------------------- */
+
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+body{
+  background:var(--base);
+  color:var(--ink);
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+
+::selection{background:var(--pink);color:#0A0A0A}
+
+/* --- type ----------------------------------------------------------------- */
+
+h1,h2,h3,.anton{
+  font-family:'Anton',Impact,sans-serif;
+  font-weight:400;
+  text-transform:uppercase;
+  letter-spacing:.005em;
+  line-height:.92;
+}
+
+h1{font-size:clamp(40px,9vw,84px)}
+h2{font-size:clamp(32px,6vw,60px);line-height:.94}
+h3{font-size:clamp(20px,3vw,28px);line-height:1.02}
+
+p{max-width:var(--read)}
+p + p{margin-top:var(--s4)}
+
+.lede{font-size:clamp(18px,2.2vw,21px);line-height:1.55}
+.mute{color:var(--mute)}
+strong{font-weight:600}
+
+/* the eyebrow lockup, Inter caps, never Anton at small sizes */
+.eyebrow{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--mute);
+  line-height:1.5;
+}
+.eyebrow .on{color:var(--pink-text)}
+
+/* the lane tag that rides on every coloured card. the word carries the
+   meaning, the colour only reinforces it. */
+.tag{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  opacity:.85;
+}
+
+/* the handwriting bridge. one moment per section, never two. */
+.kicker{
+  font-family:'Caveat',cursive;
+  font-weight:700;
+  font-size:clamp(22px,3.4vw,32px);
+  line-height:1.1;
+  color:var(--pink-text);
+  margin-bottom:var(--s2);
+}
+.kicker.own{color:var(--purple-text)}
+.kicker.build{color:var(--aqua-text)}
+.kicker.neutral{color:var(--ink)}
+
+/* --- layout --------------------------------------------------------------- */
+
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 var(--s5)}
+@media (min-width:720px){.wrap{padding:0 var(--s6)}}
+
+section{background:var(--base);color:var(--ink);position:relative}
+.band{padding:var(--s8) 0}
+@media (min-width:720px){.band{padding:96px 0}}
+.band.tight{padding:var(--s7) 0}
+
+.stack{display:flex;flex-direction:column;gap:var(--s5)}
+.stack.lg{gap:var(--s6)}
+
+.grid{display:grid;gap:var(--s5)}
+@media (min-width:720px){
+  .grid.two{grid-template-columns:repeat(2,1fr)}
+  .grid.three{grid-template-columns:repeat(3,1fr)}
+  .grid.four{grid-template-columns:repeat(2,1fr)}
+}
+@media (min-width:1000px){.grid.four{grid-template-columns:repeat(4,1fr)}}
+
+/* a text column plus a photo column */
+.split{display:grid;gap:var(--s6);align-items:center}
+@media (min-width:900px){
+  .split{grid-template-columns:1fr 1fr;gap:var(--s8)}
+  .split.wide-text{grid-template-columns:1.15fr .85fr}
+  .split.wide-photo{grid-template-columns:.85fr 1.15fr}
+  .split.flip .split-text{order:2}
+}
+
+/* --- the ghosted letterform ---------------------------------------------- */
+/* the motif from the CRAFT carousels. a huge Anton word sunk into the
+   background behind the content. decorative only, hidden from screen
+   readers, never carries information. */
+
+.ghosted{position:relative;overflow:hidden;isolation:isolate}
+.ghost{
+  position:absolute;
+  z-index:0;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Anton',Impact,sans-serif;
+  text-transform:uppercase;
+  font-size:clamp(180px,34vw,420px);
+  line-height:.8;
+  letter-spacing:-.02em;
+  color:var(--ghost);
+  white-space:nowrap;
+  pointer-events:none;
+  user-select:none;
+}
+.ghost.left{left:0;transform:translate(-6%,-50%)}
+.ghost.right{left:auto;right:0;transform:translate(6%,-50%)}
+.ghosted > .wrap{position:relative;z-index:1}
+
+/* --- nav ------------------------------------------------------------------ */
+
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,10,10,.92);
+  backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--line);
+  color:#ECE8E0;
+}
+.nav-in{
+  max-width:var(--wrap);margin:0 auto;padding:var(--s3) var(--s5);
+  display:flex;align-items:center;justify-content:space-between;gap:var(--s5);
+}
+@media (min-width:720px){.nav-in{padding:var(--s3) var(--s6)}}
+
+.brand{display:flex;flex-direction:column;gap:2px;text-decoration:none;flex-shrink:0}
+.brand-name{font-family:'Anton',Impact,sans-serif;font-size:19px;text-transform:uppercase;
+  letter-spacing:.03em;line-height:1}
+.brand-role{font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:#8A8A8A;line-height:1}
+
+.nav-links{display:none;gap:var(--s5);align-items:center;list-style:none}
+@media (min-width:940px){.nav-links{display:flex}}
+.nav-links a{
+  text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:#ECE8E0;padding:var(--s2) 0;
+  border-bottom:2px solid transparent;
+}
+.nav-links a:hover{border-bottom-color:var(--ol-pink)}
+.nav-links a[aria-current="page"]{border-bottom-color:#FF2D6B}
+
+.nav-cta{
+  display:none;text-decoration:none;background:#FF2D6B;color:#0A0A0A;
+  font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  padding:var(--s3) var(--s4);border-radius:999px;flex-shrink:0;
+}
+@media (min-width:940px){.nav-cta{display:inline-block}}
+.nav-cta:hover{filter:brightness(1.08)}
+
+.nav-toggle{
+  display:inline-flex;align-items:center;gap:var(--s2);background:none;border:1px solid var(--rim);
+  border-radius:999px;padding:var(--s2) var(--s3);cursor:pointer;color:#ECE8E0;
+  font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+}
+@media (min-width:940px){.nav-toggle{display:none}}
+
+.nav-drawer{display:none;border-top:1px solid var(--line);background:#0A0A0A}
+.nav-drawer.open{display:block}
+@media (min-width:940px){.nav-drawer{display:none !important}}
+.nav-drawer ul{list-style:none;padding:var(--s4) var(--s5) var(--s6)}
+.nav-drawer a{
+  display:block;text-decoration:none;padding:var(--s3) 0;font-family:'Anton',Impact,sans-serif;
+  font-size:26px;text-transform:uppercase;color:#ECE8E0;border-bottom:1px solid #1c1c1c;
+}
+.nav-drawer a[aria-current="page"]{color:#FF2D6B}
+
+/* --- buttons -------------------------------------------------------------- */
+
+.btn{
+  display:inline-flex;align-items:center;gap:var(--s2);
+  font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  text-decoration:none;padding:var(--s4) var(--s5);border-radius:999px;
+  border:1px solid transparent;cursor:pointer;
+}
+.btn-pink{background:var(--pink);color:#0A0A0A}
+.btn-pink:hover{filter:brightness(1.08)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--rim)}
+.btn-ghost:hover{border-color:var(--ol-pink)}
+.btn-row{display:flex;flex-wrap:wrap;gap:var(--s3)}
+
+/* --- cards ---------------------------------------------------------------- */
+
+/* neutral panel. grey rim, flat, never a glow. */
+.panel{
+  background:var(--panel);
+  border:1px solid var(--rim);
+  border-radius:16px;
+  padding:var(--s5);
+}
+@media (min-width:720px){.panel{padding:var(--s6)}}
+
+/* full colour statement card. one flat fill, inset vignette, accent rim. */
+.card{
+  position:relative;overflow:hidden;border-radius:24px;
+  padding:var(--s6);display:flex;flex-direction:column;gap:var(--s5);
+  --cw:min(1100px,92vw);
+}
+@media (min-width:720px){.card{padding:var(--s7)}}
+.card > *{position:relative;z-index:1}
+.glow{
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  box-shadow:inset 0 0 calc(var(--cw) * .25) calc(var(--cw) * .015) rgba(0,0,0,.38);
+}
+.card.pink{background:var(--pink);color:#0A0A0A;border:1px solid var(--ol-pink)}
+.card.aqua{background:var(--aqua);color:#0A0A0A;border:1px solid var(--ol-aqua)}
+.card.purple{background:var(--purple);color:#ECE8E0;border:1px solid var(--ol-purple)}
+.card p{max-width:46ch}
+.card.wide p{max-width:64ch}
+
+/* small stat and list cards, neutral surface */
+.stat{
+  background:var(--panel);border:1px solid var(--rim);border-radius:16px;
+  padding:var(--s5);display:flex;flex-direction:column;gap:var(--s2);
+}
+.stat-num{font-family:'Anton',Impact,sans-serif;font-size:clamp(34px,5vw,48px);line-height:.9;
+  text-transform:uppercase}
+.stat-label{font-size:13px;color:var(--mute);letter-spacing:.04em}
+
+/* a bordered feature card that takes a hairline accent, not a fill */
+.feature{
+  background:var(--panel);border:1px solid var(--rim);border-radius:16px;
+  padding:var(--s5);display:flex;flex-direction:column;gap:var(--s3);height:100%;
+}
+.feature .tag{color:var(--aqua-text)}
+.feature.teach .tag{color:var(--pink-text)}
+.feature.own .tag{color:var(--purple-text)}
+.feature h3{font-size:22px}
+.feature p{font-size:15px;color:var(--mute);max-width:none}
+
+/* --- pull quote ----------------------------------------------------------- */
+
+.quote{
+  font-family:'Caveat',cursive;font-weight:700;
+  font-size:clamp(28px,5.2vw,54px);line-height:1.14;
+  color:var(--pink-text);max-width:22ch;
+}
+.quote.build{color:var(--aqua-text)}
+.quote.own{color:var(--purple-text)}
+
+.statement{
+  font-family:'Anton',Impact,sans-serif;text-transform:uppercase;
+  font-size:clamp(26px,4.4vw,46px);line-height:.98;max-width:20ch;
+}
+
+/* --- photo slots ---------------------------------------------------------- */
+/* every image is a named slot. drop a file into assets/img with the slot
+   name and it appears. until then the frame shows what belongs there. */
+
+.photo{
+  position:relative;overflow:hidden;border-radius:16px;
+  background:var(--slot);border:1px solid var(--rim);
+  display:block;
+}
+.photo img{
+  width:100%;height:100%;object-fit:cover;opacity:0;
+  transition:opacity .4s ease;
+}
+.photo.is-filled img{opacity:1}
+.photo.is-filled{border-color:var(--rim)}
+
+.photo::after{
+  content:attr(data-slot) " · " attr(data-shot);
+  position:absolute;inset:0;z-index:2;
+  display:flex;align-items:flex-end;
+  padding:var(--s4);
+  font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--mute);
+  background:
+    repeating-linear-gradient(135deg,transparent 0 14px,var(--slot-line) 14px 15px);
+}
+.photo.is-filled::after{display:none}
+
+.photo.portrait{aspect-ratio:4/5}
+.photo.tall{aspect-ratio:3/4}
+.photo.square{aspect-ratio:1/1}
+.photo.wide{aspect-ratio:3/2}
+.photo.cinema{aspect-ratio:16/9}
+.photo.banner{aspect-ratio:21/9}
+.photo.round{border-radius:24px}
+
+.gallery{display:grid;gap:var(--s4);grid-template-columns:repeat(2,1fr)}
+@media (min-width:760px){.gallery{grid-template-columns:repeat(3,1fr);gap:var(--s5)}}
+@media (min-width:1100px){.gallery{grid-template-columns:repeat(4,1fr)}}
+.gallery .photo.span2{grid-column:span 2}
+
+/* --- hero ----------------------------------------------------------------- */
+
+.hero{
+  background:var(--base);
+  padding:var(--s8) 0 var(--s8);
+  position:relative;overflow:hidden;
+}
+@media (min-width:900px){.hero{padding:96px 0 96px}}
+.hero-grid{display:grid;gap:var(--s7);align-items:center}
+@media (min-width:900px){.hero-grid{grid-template-columns:1.05fr .95fr;gap:var(--s8)}}
+.hero h1 .on{color:var(--pink-text)}
+.hero .sub{max-width:46ch;color:var(--mute);font-size:17px;margin-top:var(--s5)}
+
+/* the small identity lockup above the hero headline */
+.lockup{display:flex;flex-direction:column;gap:var(--s1);margin-bottom:var(--s4)}
+
+/* page hero for the secondary pages, no photo */
+.page-head{padding:var(--s8) 0 var(--s7)}
+@media (min-width:720px){.page-head{padding:96px 0 var(--s8)}}
+.page-head h1{max-width:16ch}
+.page-head .sub{max-width:56ch;color:var(--mute);margin-top:var(--s5)}
+
+/* --- proof strip ---------------------------------------------------------- */
+
+.proof{display:grid;gap:var(--s4);grid-template-columns:1fr}
+@media (min-width:640px){.proof{grid-template-columns:repeat(3,1fr);gap:var(--s5)}}
+
+/* --- list ----------------------------------------------------------------- */
+
+.rules{list-style:none;display:flex;flex-direction:column;gap:var(--s4)}
+.rules li{
+  display:flex;gap:var(--s4);align-items:flex-start;
+  padding-bottom:var(--s4);border-bottom:1px solid var(--line);
+}
+.rules li:last-child{border-bottom:0;padding-bottom:0}
+.rules .n{
+  font-family:'Anton',Impact,sans-serif;font-size:20px;line-height:1.1;
+  color:var(--pink-text);flex-shrink:0;width:2.2ch;
+}
+.rules.build .n{color:var(--aqua-text)}
+.rules h3{font-size:19px;margin-bottom:var(--s1)}
+.rules p{font-size:15px;color:var(--mute);max-width:58ch}
+
+/* pill row, for the disciplines and areas */
+.pills{display:flex;flex-wrap:wrap;gap:var(--s2)}
+.pill{
+  border:1px solid var(--rim);border-radius:999px;padding:var(--s2) var(--s4);
+  font-size:13px;font-weight:500;color:var(--ink);background:var(--panel);
+}
+
+/* --- timeline ------------------------------------------------------------- */
+
+.timeline{list-style:none;display:flex;flex-direction:column;gap:var(--s6);
+  border-left:1px solid var(--rim);padding-left:var(--s5)}
+.timeline li{position:relative}
+.timeline li::before{
+  content:"";position:absolute;left:calc(var(--s5) * -1 - 4px);top:9px;
+  width:7px;height:7px;border-radius:50%;background:var(--pink);
+}
+.timeline h3{font-size:20px;margin-bottom:var(--s2)}
+.timeline p{font-size:15px;color:var(--mute)}
+
+/* --- forms ---------------------------------------------------------------- */
+
+.signup{display:flex;flex-wrap:wrap;gap:var(--s3);max-width:520px;margin-top:var(--s5)}
+.signup input{
+  flex:1 1 240px;background:var(--panel);border:1px solid var(--rim);border-radius:999px;
+  padding:var(--s4) var(--s5);font-size:15px;color:var(--ink);
+}
+.signup input::placeholder{color:var(--mute)}
+.signup input:focus{outline:2px solid var(--ol-pink);outline-offset:2px;border-color:var(--pink)}
+.form-note{font-size:13px;color:var(--mute);margin-top:var(--s3)}
+.form-msg{font-size:14px;margin-top:var(--s3);font-weight:600}
+.form-msg.ok{color:var(--ok,#22C55E)}
+
+/* --- signature ------------------------------------------------------------ */
+/* ink only, clean grounds only, never on a colour or a photo. */
+
+.sign-panel{
+  background:var(--panel);border:1px solid var(--rim);border-radius:16px;
+  padding:var(--s6);display:flex;flex-direction:column;gap:var(--s4);
+  align-items:flex-start;
+}
+/* the mark is inlined in the pages that sign, so it inherits currentColor
+   directly. ink only, never tinted, never on a colour or a photo. */
+.sign{width:190px;height:auto;color:var(--ink)}
+
+/* --- contact -------------------------------------------------------------- */
+
+.email-link{
+  font-family:'Anton',Impact,sans-serif;text-transform:uppercase;
+  font-size:clamp(24px,4.6vw,46px);line-height:1;
+  color:var(--pink-text);text-decoration:none;word-break:break-word;
+}
+.email-link:hover{text-decoration:underline;text-underline-offset:6px}
+
+/* --- footer --------------------------------------------------------------- */
+
+.foot{background:#0A0A0A;color:#ECE8E0;border-top:1px solid #1c1c1c;padding:var(--s8) 0 var(--s6)}
+.foot a{color:#ECE8E0}
+.foot-grid{display:grid;gap:var(--s6)}
+@media (min-width:760px){.foot-grid{grid-template-columns:1.4fr 1fr 1fr}}
+.foot h3{font-size:16px;margin-bottom:var(--s4);color:#8A8A8A;font-family:'Inter',sans-serif;
+  font-weight:600;letter-spacing:.18em;text-transform:uppercase;font-size:11px}
+.foot ul{list-style:none;display:flex;flex-direction:column;gap:var(--s3)}
+.foot ul a{text-decoration:none;font-size:15px;color:#ECE8E0}
+.foot ul a:hover{color:#FF2D6B}
+.foot-mission{font-size:15px;color:#8A8A8A;max-width:40ch}
+.foot-base{
+  margin-top:var(--s7);padding-top:var(--s5);border-top:1px solid #1c1c1c;
+  display:flex;flex-wrap:wrap;gap:var(--s4);justify-content:space-between;
+  font-size:12px;color:#8A8A8A;
+}
+
+/* --- craft carousel ------------------------------------------------------- */
+
+.craft-rail{
+  display:grid;gap:var(--s4);grid-auto-flow:column;
+  grid-auto-columns:minmax(230px,1fr);
+  align-items:start;            /* keep the slides at their intrinsic height */
+  overflow-x:auto;padding-bottom:var(--s4);
+  scroll-snap-type:x mandatory;
+}
+.craft-rail img{
+  border-radius:16px;border:1px solid var(--rim);scroll-snap-align:start;width:100%;height:auto;
+}
+
+/* --- reveal --------------------------------------------------------------- */
+
+/* progressive enhancement. content is visible by default, and only starts
+   hidden when the .js class confirms scripting is running. no JS, no blank
+   page. */
+.js .rev{opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease}
+.js .rev.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .js .rev{opacity:1;transform:none;transition:none}
+}
+
+/* --- focus and skip ------------------------------------------------------- */
+
+a:focus-visible,button:focus-visible,input:focus-visible{
+  outline:2px solid var(--pink);outline-offset:3px;border-radius:4px;
+}
+.skip{
+  position:absolute;left:-9999px;top:0;background:#FF2D6B;color:#0A0A0A;
+  padding:var(--s3) var(--s4);z-index:200;font-weight:600;
+}
+.skip:focus{left:var(--s4);top:var(--s4)}
