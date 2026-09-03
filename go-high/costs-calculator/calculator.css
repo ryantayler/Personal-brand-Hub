@@ -1,0 +1,1430 @@
+/* ==========================================================
+   BusinessOS — Pricing page
+   Standalone stylesheet. Independent of the homepage's styles.css —
+   do not import or share rules between the two pages.
+   ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-white: #FFFFFF;
+  --bg-black: #0F0F0F;
+  /* Raw terminal green — decorative/on-dark use only (checkmarks and
+     the toggle's on-state live on dark or saturated surfaces here).
+     On white, use --brand-on-light instead; it's the WCAG-passing
+     value for text/icons read directly against #FFFFFF. */
+  --accent-green: #22C55E;
+  --brand-on-light: #15803D;
+  --cta-amber: #FFB000;
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+  --border-light: #E5E7EB;
+  /* Card body surface — a few tones up from --bg-black, used only for
+     the feature-list section of a pricing card so it reads as a
+     distinct zone from the black header above it. Still dark enough
+     that the existing light-gray/green on-dark text and icon colors
+     keep their contrast without needing their own adjustment. */
+  --card-body-bg: #1C1C1E;
+  --radius: 8px;
+  --font-heading: 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  /* Header's real height — used both to keep this section's content
+     clear of the fixed nav and to size the footer bar. Matches the
+     homepage's own measured nav height (see home/styles.css). */
+--nav-clearance: 64px;
+}
+
+*, *::before, *::after {
+box-sizing: border-box;
+}
+
+html, body {
+margin: 0;
+}
+
+body {
+font-family: var(--font-mono);
+background-color: var(--bg-white);
+}
+
+/* ==========================================================
+   Business[OS] logo component
+   Duplicated from home/styles.css intentionally — this page's CSS
+   stays fully independent, nothing is shared/imported between the
+   two pages. Keep both copies in sync if the lockup ever changes.
+   ========================================================== */
+.bos-logo {
+  --bos-size: 72px;
+  --bos-ratio: 0.667;
+  --bos-word: #E5E5E5;
+  --bos-accent: var(--accent-green);
+
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+  text-decoration: none;
+}
+
+.bos-logo__word {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--bos-size);
+  color: var(--bos-word);
+  letter-spacing: -0.01em;
+}
+
+.bos-logo__os,
+.bos-logo__cursor {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: calc(var(--bos-size) * var(--bos-ratio));
+  color: var(--bos-accent);
+}
+
+.bos-logo:focus-visible {
+  outline: 2px solid var(--brand-accent, var(--accent-green));
+  outline-offset: 3px;
+}
+
+.bos-logo__cursor {
+  animation: bos-blink 1s step-end infinite;
+}
+
+@keyframes bos-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bos-logo__cursor { animation: none; }
+}
+
+.bos-logo--nav  { --bos-size: 32px; }
+.bos-logo--mini { --bos-size: 26px; }
+
+/* ---------- Header ---------- */
+#nav.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: var(--bg-black);
+  --brand-accent: var(--accent-green);
+}
+
+#nav .nav-inner {
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 14px 24px;
+}
+
+/* The page's title, centered in the black header bar between the
+   logo (left) and Login (right). Absolutely centered on the bar
+   rather than flexed, so it lands dead-center regardless of the
+   different widths flanking it. The bracketed word borrows the
+   Business[OS] logo's motif — mono face, terminal green, square
+   brackets — so the title reads unmistakably as brand. */
+.nav-page-heading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.375rem;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.nav-page-heading-accent {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 1.1875rem;
+  color: var(--accent-green);
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+}
+
+.nav-link {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: #E5E7EB;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+  color: var(--brand-accent);
+}
+
+.nav-link:active {
+  color: #16A34A;
+}
+
+.nav-link:focus-visible {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.nav-login {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  border-radius: var(--radius);
+  padding: 8px 18px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-login:hover {
+  background-color: #FFFFFF;
+  color: var(--bg-black);
+}
+
+.nav-login:active {
+  transform: scale(0.97);
+}
+
+.nav-login:focus-visible {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Site footer ---------- */
+.site-footer {
+  background-color: var(--bg-black);
+  min-height: calc(var(--nav-clearance) * 2);
+  display: flex;
+  align-items: center;
+  --brand-accent: var(--accent-green);
+}
+
+.site-footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+}
+
+.footer-brand {
+  justify-self: start;
+  min-width: 0;
+}
+
+.footer-tagline {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #6B7280;
+  margin: 4px 0 0;
+}
+
+.footer-links {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.footer-link {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: #9CA3AF;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover,
+.footer-link:focus-visible {
+  color: var(--brand-accent);
+}
+
+.footer-copyright {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #6B7280;
+  white-space: nowrap;
+}
+
+.footer-copyright-dot {
+  width: 4px;
+  height: 4px;
+  flex-shrink: 0;
+  background-color: #4B5563;
+}
+
+/* ---------- Section shell ---------- */
+.pricing-section {
+  background-color: var(--bg-white);
+  width: 100%;
+  /* Extra top padding equal to the fixed nav's height, so content
+     doesn't load in underneath it. */
+  padding: calc(var(--nav-clearance) + 96px) 0 96px;
+}
+
+.pricing-inner {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* ---------- Controls row ---------- */
+/* Mirrors the cards' own 3-column grid so each control lines up with
+   a card column: plan selector over Essentials, billing toggle over
+   Growth, spend input over Intelligence. */
+.pricing-controls {
+position: relative;
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+align-items: center;
+gap: 24px;
+width: 100%;
+margin-bottom: 28px;
+}
+
+/* ---------- Red annotation callouts ---------- */
+/* Handwritten-note-style pointers floating above the controls row:
+   text plus a curved arrow aiming down at the center of the control
+   it explains. Absolutely positioned (out of the grid flow) and
+   anchored so the arrow TIP lands on the target column's center —
+   the left note's right edge and the right note's left edge both
+   sit at their column's midline (100%/6 and 5*100%/6 of the row).
+   Hovering the control they point at fades them away. */
+.controls-callout {
+position: absolute;
+bottom: calc(100% + 4px);
+display: flex;
+align-items: flex-start;
+gap: 4px;
+color: #EF4444;
+pointer-events: none;
+opacity: 1;
+transition: opacity 0.25s ease;
+}
+
+.controls-callout-text {
+font-family: var(--font-mono);
+font-size: 0.75rem;
+line-height: 1.45;
+max-width: 200px;
+}
+
+.controls-callout-arrow {
+flex-shrink: 0;
+margin-top: 12px;
+}
+
+.controls-callout--left {
+right: calc(100% - (100% / 6));
+text-align: right;
+}
+
+.controls-callout--right {
+left: calc(100% - (100% / 6));
+text-align: left;
+}
+
+/* Dismissal is one-way: JS stamps this class on the note's first
+   hover of its control, and nothing ever removes it — the note only
+   returns on a page refresh. */
+.controls-callout.is-dismissed {
+  opacity: 0;
+}
+
+.pricing-controls .price-calc-toggle {
+  grid-column: 1;
+  justify-self: center;
+}
+
+.pricing-controls .pricing-toggle {
+  grid-column: 2;
+  justify-self: center;
+}
+
+.pricing-controls .price-input-row {
+  grid-column: 3;
+  justify-self: center;
+}
+
+/* Input plus the percent-off pill share the footprint the input
+   alone used to have — the input gives up a little width, the pill
+   takes it, and together they extend no further than before. */
+.price-input-row {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  width: 100%;
+  max-width: 290px;
+}
+
+.price-input-wrap {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* The spend input's visual twin, but read-only display: shows the
+   calculated percentage saved. Fixed width so it never resizes —
+   sized to hold the widest possible readout ("88.88% off"), showing
+   a dimmed "% off" label while there's nothing calculated. */
+.price-percent-pill {
+  flex: 0 0 96px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #B45309;
+  background-color: #FEF3C7;
+  border: 1.5px solid #FDE68A;
+  border-radius: 999px;
+  padding: 10px 6px;
+  white-space: nowrap;
+  transition: border-color 0.25s ease, background-color 0.25s ease,
+              color 0.25s ease;
+}
+
+/* While it's only a label (no calculated value), it rests gray like
+   the input beside it, waking to the dimmed gold on hover. */
+.price-percent-pill.is-placeholder {
+color: var(--text-secondary);
+background-color: #F3F4F6;
+border-color: var(--border-light);
+}
+
+.price-percent-pill.is-placeholder:hover {
+color: rgba(180, 83, 9, 0.55);
+background-color: #FEF3C7;
+border-color: #FDE68A;
+}
+
+/* Rests gray like the toggles beside it; the yellow-and-gold
+   treatment (the gold pairing for light surfaces — raw --cta-amber
+   stays dark-theme-only) only wakes up on hover, focus, or once a
+   value is in the field. Left padding leaves room for the "$"
+   prefix, and relaxes back while the placeholder is showing (no
+   number, no dollar sign). */
+.price-calculator-input {
+font-family: var(--font-mono);
+font-size: 0.875rem;
+color: var(--text-primary);
+caret-color: #B45309;
+background-color: #F3F4F6;
+border: 1.5px solid var(--border-light);
+border-radius: 999px;
+padding: 10px 16px 10px 26px;
+width: 100%;
+outline: none;
+transition: border-color 0.25s ease, background-color 0.25s ease,
+              color 0.25s ease;
+  /* Hide the number input's up/down spinner arrows. */
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.price-calculator-input:hover,
+.price-calculator-input:focus,
+.price-calculator-input:not(:placeholder-shown) {
+  color: #B45309;
+  background-color: #FEF3C7;
+  border-color: #FDE68A;
+}
+
+.price-calculator-input::-webkit-outer-spin-button,
+.price-calculator-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.price-calculator-input:placeholder-shown {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.price-calculator-input::placeholder {
+  color: var(--text-secondary);
+  /* Smaller than the entered digits — the full "Current monthly
+     spend" has to fit the narrowed field beside a full-size pill. */
+  font-size: 0.75rem;
+}
+
+.price-calculator-input:hover::placeholder,
+.price-calculator-input:focus::placeholder {
+  color: rgba(180, 83, 9, 0.55);
+}
+
+.price-calculator-input:focus-visible {
+  border-color: #B45309;
+}
+
+/* "$" sits inside the field, in front of the typed number; the
+   sibling selector hides it whenever the field is empty (placeholder
+   showing). Markup order is input-then-prefix for exactly this rule,
+   with the prefix absolutely positioned back over the left edge. */
+.price-input-prefix {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: #B45309;
+  pointer-events: none;
+}
+
+.price-calculator-input:placeholder-shown + .price-input-prefix {
+  display: none;
+}
+
+/* Same segmented-pill mechanic as .pricing-toggle, three positions
+   instead of two. Rests in the same quiet gray-and-black scheme as
+   the billing toggle; the green identity only comes out on hover. */
+.price-calc-toggle {
+  position: relative;
+  display: inline-flex;
+  background-color: #F3F4F6;
+  border-radius: 999px;
+  padding: 3px;
+}
+
+.price-calc-toggle-indicator {
+  position: absolute;
+  top: 3px;
+  /* Anchored at the track's left edge; JS owns the pill's actual
+     width and translateX, measured from the active button's rendered
+     box (the three labels are different lengths, so a fixed
+     third-of-the-track width can't fit them all). The width here is
+     only a pre-JS fallback. */
+  left: 0;
+  width: calc(33.333% - 2px);
+  height: calc(100% - 6px);
+  background-color: var(--bg-black);
+  border-radius: 999px;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background-color 0.25s ease;
+}
+
+.price-calc-toggle:hover .price-calc-toggle-indicator {
+  background-color: var(--brand-on-light);
+}
+
+.calc-tier-option {
+  position: relative;
+  z-index: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.calc-tier-option:hover:not(.is-active) {
+  color: var(--brand-on-light);
+}
+
+/* White works on both indicator fills — resting black and hover
+   green. */
+.calc-tier-option.is-active {
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.calc-tier-option:focus-visible {
+  outline: 2px solid var(--brand-on-light);
+  outline-offset: 2px;
+}
+
+/* ---------- Toggle ---------- */
+/* Segmented pill control — two tab-like buttons on a track, with a
+   solid indicator that slides behind whichever is active. Stands in
+   for the reference's FrequencyToggle. */
+.pricing-toggle {
+  position: relative;
+display: inline-flex;
+background-color: #F3F4F6;
+border-radius: 999px;
+padding: 4px;
+}
+
+.pricing-toggle-indicator {
+position: absolute;
+top: 4px;
+left: 4px;
+width: calc(50% - 4px);
+height: calc(100% - 8px);
+background-color: var(--bg-black);
+border-radius: 999px;
+transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toggle-option {
+position: relative;
+z-index: 1;
+border: none;
+background: transparent;
+font-family: var(--font-mono);
+font-weight: 500;
+font-size: 0.875rem;
+color: var(--text-secondary);
+padding: 9px 24px;
+border-radius: 999px;
+cursor: pointer;
+transition: color 0.2s ease;
+}
+
+.toggle-option.is-active {
+color: #FFFFFF;
+}
+
+.toggle-option:focus-visible {
+outline: 2px solid var(--brand-on-light);
+outline-offset: 2px;
+}
+
+/* Little "2 months free" tag hanging off the top-right corner of the
+   Annually option — tilted clockwise so it reads as a tag rather
+   than a second line of the button label. */
+.toggle-annual-tag {
+position: absolute;
+top: -13px;
+right: -20px;
+font-family: var(--font-mono);
+font-weight: 600;
+font-size: 0.625rem;
+line-height: 1;
+color: var(--bg-black);
+background-color: var(--accent-green);
+padding: 4px 8px;
+border-radius: 999px;
+transform: rotate(7deg);
+white-space: nowrap;
+pointer-events: none;
+transition: background-color 0.3s ease;
+}
+
+/* Tag goes gold while annual billing is selected, back to green on
+   monthly. Same amber as the card badges so the two "2 months free"
+   mentions read as one system. */
+.toggle-option.is-active .toggle-annual-tag {
+background-color: var(--cta-amber);
+}
+
+/* Replayed on every monthly/annually switch — JS removes and re-adds
+   the class to restart it. Keyframes swing around the resting 7deg
+   tilt so the wiggle settles back where the tag normally hangs. */
+.toggle-annual-tag.is-wiggling {
+animation: tag-wiggle 0.5s ease;
+}
+
+@keyframes tag-wiggle {
+0%, 100% {
+    transform: rotate(7deg);
+}
+
+25% {
+    transform: rotate(14deg);
+}
+
+50% {
+    transform: rotate(1deg);
+}
+
+75% {
+    transform: rotate(10deg);
+}
+}
+
+/* ---------- Cards ---------- */
+.pricing-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: stretch;
+    gap: 24px;
+    width: 100%;
+}
+
+/* All three tiers share the same black card treatment now — nothing
+   distinguishes Growth's colors from its siblings anymore (its
+   "Popular" badge is gone too), only its scale/shadow below. Text/
+   icon colors that used to be conditional on .pricing-card--featured
+   are now just the base rule, since every card is dark. */
+.pricing-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-black);
+  /* Invisible self-colored border (matches the fill) — definition
+     against the white section comes from the box-shadow below, not
+     a visible edge. */
+  border: 1px solid var(--bg-black);
+  border-radius: 12px;
+  /* Visible (not hidden) so the banner pill can straddle the top
+     edge — the bottom corners are rounded on the footer itself
+     instead, which is the only child with its own background that
+     reaches them. */
+  overflow: visible;
+  box-shadow: 0 8px 24px -14px rgba(15, 15, 15, 0.3);
+}
+
+.pricing-card--featured {
+  /* Scaled + elevated above its siblings so Growth still reads as
+     the central/recommended plan at a glance. */
+  transform: scale(1.05);
+  z-index: 1;
+}
+
+/* The soft plan-colored glow behind each featured card — green for
+   Growth, gold for Intelligence — layered under the shared dark
+   elevation shadow. Kept faint on purpose. */
+.pricing-card--featured[data-plan="growth"] {
+  box-shadow: 0 24px 48px -16px rgba(0, 0, 0, 0.35),
+              0 0 44px 4px rgba(34, 197, 94, 0.18);
+}
+
+.pricing-card--featured[data-plan="intelligence"] {
+  box-shadow: 0 24px 48px -16px rgba(0, 0, 0, 0.35),
+              0 0 44px 4px rgba(255, 176, 0, 0.18);
+}
+
+/* Essentials is deliberately the smaller card (its siblings scale up
+   1.05 from center), so it sits vertically centered between their
+   visual top and bottom edges — an even small gap on both ends. */
+
+/* Banner pill straddling a card's top edge, centered. */
+.pricing-card-banner {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 0.6875rem;
+    letter-spacing: 0.02em;
+    padding: 5px 14px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.pricing-card-banner--popular {
+    background-color: var(--accent-green);
+    color: var(--bg-black);
+}
+
+.pricing-card-banner--value {
+    background-color: var(--cta-amber);
+    color: #1A1200;
+}
+
+/* ---------- Card header (name, info, price) ---------- */
+.pricing-card-header {
+    position: relative;
+    padding: 20px;
+  /* Light-on-black divider — a light-mode border color would read as
+     an invisible near-black line against this card's background. */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.pricing-card-name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+  margin: 0 0 4px;
+}
+
+.pricing-card-info {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: #9CA3AF;
+  margin: 0;
+}
+
+.pricing-card-price {
+  /* inline-flex, not flex — shrinks the box to the price text's own
+     width rather than stretching full-width like a block div. */
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    margin: 22px 0 2px;
+}
+
+/* Nested inside .price-suffix (not a sibling) and positioned relative
+   to it specifically, so "left: 0" always lands on the leftmost edge
+   of "/mo" itself — independent of how many digits the price has,
+   which a right-aligned offset from the whole price row wouldn't be. */
+.price-annual-badge {
+  position: absolute;
+  top: -14px;
+  left: 0;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.6875rem;
+  color: var(--cta-amber);
+  white-space: nowrap;
+}
+
+.price-annual-badge[hidden] {
+  display: none;
+}
+
+.price-currency {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: #FFFFFF;
+}
+
+.price-figure {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.875rem;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+  transition: transform 0.2s ease;
+}
+
+.price-suffix {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  color: #9CA3AF;
+  margin-left: 2px;
+}
+
+.price-billed-note {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #9CA3AF;
+  margin: 4px 0 0;
+}
+
+:is(.pricing-card-price, .pricing-table-price).is-updating .price-figure {
+  transform: scale(1.1);
+}
+
+/* ---------- Discounted price reveal ----------
+   Fires whenever the shown price is below the default monthly price:
+   on annual billing, on a calculator discount, or both. A red slash
+   draws across the default price while the effective price slides
+   out from behind it. The slide is an overflow-hidden window
+   (.price-annual) whose inner content starts fully translated left —
+   tucked "behind" the default figure — and both the window's
+   max-width and the inner transform animate together on toggle. */
+.price-original {
+    position: relative;
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.price-strike {
+    position: absolute;
+    left: -5%;
+    right: -5%;
+    top: 50%;
+    height: 3px;
+    border-radius: 2px;
+    background: #ef4444;
+    transform: rotate(-11deg) scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.45s ease;
+    pointer-events: none;
+}
+
+:is(.pricing-card-price, .pricing-table-price).is-discounted .price-strike {
+    transform: rotate(-11deg) scaleX(1);
+}
+
+:is(.pricing-card-price, .pricing-table-price).is-discounted .price-original .price-currency,
+:is(.pricing-card-price, .pricing-table-price).is-discounted .price-original .price-figure {
+    color: #9CA3AF;
+}
+
+.price-original .price-currency,
+.price-original .price-figure {
+    transition: transform 0.2s ease, color 0.45s ease;
+}
+
+.price-annual {
+    display: inline-block;
+    overflow: hidden;
+    max-width: 0;
+    transition: max-width 0.45s ease;
+}
+
+.price-annual-inner {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    transform: translateX(-105%);
+    transition: transform 0.45s ease;
+}
+
+:is(.pricing-card-price, .pricing-table-price).is-discounted .price-annual {
+  /* Comfortably wider than any 3-digit price; the window collapses to
+     the inner content's natural width visually because overflow only
+     clips, max-width just needs to clear it. */
+  max-width: 90px;
+}
+
+:is(.pricing-card-price, .pricing-table-price).is-discounted .price-annual-inner {
+  transform: translateX(0);
+}
+
+/* ---------- Card feature list ---------- */
+.pricing-card-features {
+  /* Grows to fill the stretched card height (align-items: stretch on
+     .pricing-cards), so the footer button row lines up at the same
+     height across all three cards regardless of feature-list length —
+     the vanilla equivalent of the reference's mt-auto footer. */
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  /* Extra bottom padding (~two blank lines) beyond the 20px used on
+     the other three sides, so the last feature line gets some
+     breathing room above the footer instead of sitting right against
+     the divider — applies to every card, not just the tallest one. */
+    padding: 20px 20px 60px;
+  /* A step up from the card's own black header/footer, so this
+     section reads as its own zone rather than one flat black card. */
+  background-color: var(--card-body-bg);
+}
+
+.feature-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.feature-row p {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: #D1D5DB;
+}
+
+.pricing-check {
+  flex-shrink: 0;
+  /* Terminal green — the correct on-dark accent value, since every
+     card is now a black surface. */
+  color: var(--accent-green);
+}
+
+/* Gold star marking AI features (Growth's Ask AI, Intelligence's
+   three AI agents) — same slot and size as the check it replaces. */
+.pricing-star {
+  flex-shrink: 0;
+  color: var(--cta-amber);
+}
+
+/* ---------- Card footer (button) ---------- */
+.pricing-card-footer {
+  padding: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  /* Matches the features section's grey, not the black header — the
+     button sits on the same surface as the feature list above it. */
+    background-color: var(--card-body-bg);
+  /* Rounds itself now that the card no longer clips overflow (the
+     top-edge banner needs to poke out). 11px = card's 12px radius
+     minus its 1px border. */
+  border-radius: 0 0 11px 11px;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-cta {
+  /* Amber, reserved for primary CTAs — now used on all three cards'
+     "Get this plan" buttons, not just the highlighted one. */
+    background-color: var(--cta-amber);
+    color: #1A1200;
+    border: 1.5px solid var(--cta-amber);
+}
+
+.btn-cta:hover {
+    transform: translateY(-2px);
+}
+
+.btn-cta:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.btn-cta:focus-visible {
+    outline: 2px solid #FFFFFF;
+    outline-offset: 3px;
+}
+
+/* Terminal green fill — Growth's button, matching its "Most
+   Popular" tag. Middle rung of the Essentials → Growth →
+   Intelligence CTA ladder (outline → green fill → gold fill). */
+.btn-green {
+  background-color: var(--accent-green);
+  color: var(--bg-black);
+  border: 1.5px solid var(--accent-green);
+}
+
+.btn-green:hover {
+  transform: translateY(-2px);
+}
+
+.btn-green:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-green:focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: 3px;
+}
+
+/* Ghost variant — Essentials, bottom rung of the ladder. Green text
+   and outline over a transparent center (the card's dark footer
+   surface shows through); fills solid green on hover. */
+.btn-outline-green {
+    background-color: transparent;
+    color: var(--accent-green);
+    border: 1.5px solid var(--accent-green);
+    transition: transform 0.2s ease, background-color 0.2s ease,
+              color 0.2s ease;
+}
+
+.btn-outline-green:hover {
+    transform: translateY(-2px);
+    background-color: var(--accent-green);
+    color: var(--bg-black);
+}
+
+.btn-outline-green:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.btn-outline-green:focus-visible {
+    outline: 2px solid #FFFFFF;
+    outline-offset: 3px;
+}
+
+/* ---------- Feature comparison table ---------- */
+.pricing-table-wrap {
+    width: 100%;
+  /* Matches .pricing-inner's own max-width — no point letting the
+     table request more room than the page container actually has. */
+  max-width: 1024px;
+  margin: 64px auto 0;
+}
+
+.pricing-table {
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+/* Sized to match the rows' own scrollable width (not .pricing-table's
+   outer box, which can be narrower once horizontal scroll kicks in) —
+   so content scrolls as one unit instead of the highlight below
+   staying pinned to the visible viewport edge. Dropped from 900px now
+   that Sources folds into Market value instead of being its own
+   column; the feature column (flex:1) still grows to fill whatever's
+   left on wider screens. */
+    .pricing-table-scroll {
+  min-width: 760px;
+}
+
+/* Containing block for the highlight overlay below. Wrapping just the
+   body rows (not the header) means "top: 0" on the overlay lands
+   exactly at the header's own bottom edge automatically — no need to
+   hardcode the header's height, and no risk of it changing later and
+   throwing the offset off. */
+.pricing-table-body {
+    position: relative;
+  /* Forces a new local stacking context. Without this, "position:
+     relative" alone doesn't create one, so the highlight's
+     "z-index: -1" below resolves against the page's ROOT stacking
+     context instead of this container — meaning it looks for
+     something to sit behind much further up the DOM tree and ends up
+     invisible instead of just tucked behind this table's own rows. */
+    isolation: isolate;
+}
+
+/* Single element spanning the Intelligence column's full width and
+   the full height of the body rows in one continuous box, instead of
+   a background repeated per-cell — that's what left the seams/gaps
+   this replaces. Stops at the header row on purpose (see
+   .pricing-table-body above) so the two backgrounds never overlap.
+   z-index: -1 drops it behind the (static, in-flow) row content while
+   staying above .pricing-table's own background.
+   Both edges land on the midpoint of the gap to their neighbor —
+   Growth on the left (16px into the 32px gap), Market value on the
+   right (10px into the 20px row gap) — so it reads as centered on
+   Intelligence without touching either neighboring column.
+   right: 176px = 16px row padding + 150px Market value + 10px (half
+   the 20px gap back to Intelligence).
+   width: 122px = 10px (half gap to Market value) + 96px (Intelligence
+   cell) + 16px (half gap to Growth). */
+.pricing-table-intelligence-highlight {
+  position: absolute;
+  top: 0;
+  right: 176px;
+  bottom: 0;
+  width: 122px;
+  background-color: #F3F4F6;
+  z-index: -1;
+}
+
+.pricing-table-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px;
+  border-top: 1px solid var(--border-light);
+}
+
+.pricing-table-row:first-child {
+  border-top: none;
+}
+
+.pricing-table-row--head {
+  background-color: #F9FAFB;
+}
+
+.pricing-table-feature {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+
+.pricing-table-row--head .pricing-table-feature {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.pricing-table-values {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.pricing-table-plan,
+.pricing-table-cell {
+  width: 96px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.pricing-table-plan {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+
+/* On-light green — this table sits on the page's white background,
+   not inside a dark card, so it takes the WCAG-passing on-light value
+   rather than the raw --accent-green used everywhere on the cards. */
+.pricing-table-check {
+    color: var(--brand-on-light);
+}
+
+.pricing-table-check--intelligence {
+    color: var(--cta-amber);
+}
+
+/* Table twin of the cards' gold AI star. */
+.pricing-table-star {
+  color: var(--cta-amber);
+}
+
+.pricing-table-dash {
+  font-family: var(--font-mono);
+  color: #D1D5DB;
+}
+
+.pricing-table-value {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+
+/* ---------- Market value column (amount + source, stacked) ---------- */
+/* Sources used to be their own trailing column; now folded into this
+   one instead — wider than before (was 90px) to give the source line
+   room to wrap without cramping, and switched to a column layout so
+   the amount and source stack rather than sit side by side. */
+.pricing-table-market-value {
+  width: 150px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  text-align: center;
+}
+
+.pricing-table-market-value-amount {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+
+/* Footnote-sized and muted — clearly subordinate to the dollar amount
+   above it, not a value being compared like the rest of the table. */
+.pricing-table-market-value-source {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1.3;
+  color: var(--text-secondary);
+}
+
+.pricing-table-row--head .pricing-table-market-value {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+/* ---------- Summary rows (Total market value, Our price) ---------- */
+.pricing-table-row--summary {
+  background-color: #F9FAFB;
+  border-top: 2px solid var(--border-light);
+}
+
+.pricing-table-row--summary .pricing-table-feature {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.pricing-table-row--summary .pricing-table-value {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* "Our price" row — black like the cards, with the cards' full
+   price treatment (slash, slide-out, tick) scaled down to row
+   height. The white/gray figure colors from the card rules work
+   as-is on this background. */
+.pricing-table-row--ourprice {
+    background-color: var(--bg-black);
+}
+
+.pricing-table-row--ourprice .pricing-table-feature {
+    color: #FFFFFF;
+}
+
+.pricing-table-price {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.pricing-table-price .price-figure {
+    font-size: 1.0625rem;
+}
+
+.pricing-table-price .price-currency {
+    font-size: 0.75rem;
+}
+
+.pricing-table-price .price-suffix {
+    font-size: 0.6875rem;
+    margin-left: 1px;
+}
+
+.pricing-table-price .price-strike {
+    height: 2px;
+}
+
+/* Total market value figures in the slash's red — the "what it
+   would cost elsewhere" number, visually opposed to the black Our
+   price row below it. */
+.pricing-table-row--market .pricing-table-value {
+  color: #EF4444;
+}
+
+/* ---------- Responsive (nav + footer) ---------- */
+@media (max-width: 768px) {
+  #nav .nav-inner {
+    padding: 12px 20px;
+  }
+
+  /* No mobile menu built yet — matches the homepage's own convention
+     of hiding nav links below 768px rather than leaving them
+     unstyled, until a mobile nav pattern exists for the site. */
+.nav-links {
+    display: none;
+}
+
+.nav-page-heading {
+    font-size: 1.0625rem;
+}
+
+.nav-page-heading-accent {
+    font-size: 0.9375rem;
+}
+
+  /* Stacks logo+tagline / links / copyright into three centered rows
+     instead of the desktop 3-column grid, which has no sensible
+     single-column fallback of its own. */
+.site-footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+}
+
+.footer-brand {
+    justify-self: unset;
+}
+
+.footer-links {
+    justify-self: unset;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 8px;
+}
+
+.footer-copyright {
+    justify-self: unset;
+}
+}
+
+@media (max-width: 860px) {
+    .pricing-cards {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+    }
+
+  /* Cards stack to one column here, so the column alignment the
+     controls grid mirrors no longer exists — stack the toggle and
+     spend input centered instead. */
+    .pricing-controls {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 14px;
+    }
+
+    .pricing-controls .price-calc-toggle,
+  .pricing-controls .pricing-toggle,
+  .pricing-controls .price-input-row {
+        grid-column: auto;
+    }
+
+  /* The notes point at side-by-side columns that don't exist once
+     the controls stack — hide them rather than mis-aim them. */
+  .controls-callout {
+    display: none;
+  }
+
+  .pricing-card--featured {
+    /* Scale fights a single-column, edge-to-edge layout — dropped on
+       mobile, per the brief. The shadow + black background still
+       keep it visually distinct once stacked. */
+    transform: scale(1);
+    order: -1;
+  }
+
+  /* Restated per plan (not just on the shared class) because the
+     desktop glow rules carry attribute-selector specificity that
+     would otherwise beat this block's shadow override. */
+    .pricing-card--featured[data-plan="growth"] {
+        box-shadow: 0 20px 40px -16px rgba(0, 0, 0, 0.4),
+                0 0 44px 4px rgba(34, 197, 94, 0.18);
+    }
+
+    .pricing-card--featured[data-plan="intelligence"] {
+        box-shadow: 0 20px 40px -16px rgba(0, 0, 0, 0.4),
+                0 0 44px 4px rgba(255, 176, 0, 0.18);
+    }
+}
+
+@media (max-width: 640px) {
+    .pricing-section {
+        padding: calc(var(--nav-clearance) + 40px) 0 64px;
+    }
+
+  /* Not enough bar left between the logo and Login on phones — the
+     centered title would overlap both. */
+    .nav-page-heading {
+        display: none;
+    }
+
+    .price-input-row {
+        max-width: 320px;
+    }
+}
+
+/* ---------- Accessibility ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .pricing-toggle-indicator,
+  .price-figure,
+  .price-currency,
+  .price-strike,
+  .price-annual,
+  .price-annual-inner,
+  .btn {
+        transition: none;
+    }
+
+    .toggle-annual-tag.is-wiggling {
+        animation: none;
+    }
+}

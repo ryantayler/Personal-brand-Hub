@@ -1,0 +1,356 @@
+<header id="nav" class="site-header">
+  <div class="nav-inner">
+    <a href="/" class="bos-logo bos-logo--nav" aria-label="Business[OS] home"><span class="bos-logo__word">Business</span><span class="bos-logo__os">[OS]</span><span class="bos-logo__cursor" aria-hidden="true">&#9612;</span></a>
+
+    <h1 class="nav-page-heading">Half Your Costs <span class="nav-page-heading-accent">[Calculator]</span></h1>
+
+    <a href="https://app.businessos.au" class="nav-login">Login</a>
+  </div>
+</header>
+
+<section id="pricing-page" class="pricing-section">
+  <div class="pricing-inner">
+    <div class="pricing-controls">
+      <div class="price-calc-toggle" role="tablist" aria-label="Plan to calculate">
+        <span class="price-calc-toggle-indicator" aria-hidden="true"></span>
+        <button type="button" class="calc-tier-option" data-tier="essentials" role="tab" aria-selected="false">Essentials</button>
+        <button type="button" class="calc-tier-option is-active" data-tier="growth" role="tab" aria-selected="true">Growth</button>
+        <button type="button" class="calc-tier-option" data-tier="intelligence" role="tab" aria-selected="false">Intelligence</button>
+      </div>
+      <div class="pricing-toggle" role="tablist" aria-label="Billing frequency">
+        <span class="pricing-toggle-indicator" aria-hidden="true"></span>
+        <button type="button" class="toggle-option is-active" data-period="monthly" role="tab" aria-selected="true">Monthly</button>
+        <button type="button" class="toggle-option" data-period="yearly" role="tab" aria-selected="false">Annually<span class="toggle-annual-tag">2 months free</span></button>
+      </div>
+      <span class="price-input-row"><span class="price-input-wrap"><input type="number" inputmode="decimal" min="0" step="1" class="price-calculator-input" id="calc-input" placeholder="Current monthly spend" aria-label="Current monthly spend" /><span class="price-input-prefix" aria-hidden="true">$</span></span><span class="price-percent-pill is-placeholder" id="calc-percent" role="status" aria-label="Percentage off">% off</span></span>
+
+      <div class="controls-callout controls-callout--left" aria-hidden="true">
+        <span class="controls-callout-text">Select the plan that matches your current tools</span>
+        <svg class="controls-callout-arrow" width="30" height="36" viewBox="0 0 30 36" fill="none"><path d="M3 6 C 14 8, 21 16, 23 28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M17.5 24.5 L23 30 L25.5 22.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <div class="controls-callout controls-callout--right" aria-hidden="true">
+        <svg class="controls-callout-arrow" width="30" height="36" viewBox="0 0 30 36" fill="none"><path d="M27 6 C 16 8, 9 16, 7 28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12.5 24.5 L7 30 L4.5 22.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="controls-callout-text">Input your current monthly spend</span>
+      </div>
+    </div>
+
+    <div class="pricing-cards">
+
+      <article class="pricing-card" data-plan="essentials">
+        <div class="pricing-card-header">
+          <div class="pricing-card-name">Essentials</div>
+          <p class="pricing-card-info">For solopreneurs and small teams</p>
+
+          <div class="pricing-card-price">
+            <span class="price-original"><span class="price-currency">$</span><span class="price-figure" data-tier="essentials">49</span><span class="price-strike" aria-hidden="true"></span></span><span class="price-annual"><span class="price-annual-inner"><span class="price-currency">$</span><span class="price-figure price-figure--annual" data-effective-tier="essentials">49</span></span></span><span class="price-suffix">/mo<span class="price-annual-badge" data-price-badge hidden>2 months free</span></span>
+          </div>
+          <p class="price-billed-note" data-billed-label>billed monthly</p>
+        </div>
+
+        <div class="pricing-card-features">
+          <div class="feature-row"><svg class="pricing-check" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>CRM</p></div>
+          <div class="feature-row"><svg class="pricing-check" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Conversations</p></div>
+          <div class="feature-row"><svg class="pricing-check" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Calendar</p></div>
+          <div class="feature-row"><svg class="pricing-check" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Media storage</p></div>
+          <div class="feature-row"><svg class="pricing-check" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Sales pipelines</p></div>
+          <div class="feature-row"><svg class="pricing-check" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Automations</p></div>
+          <div class="feature-row"><svg class="pricing-check" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Reporting</p></div>
+        </div>
+
+        <div class="pricing-card-footer">
+          <a href="https://link.businessos.au/payment-link/6a7b20a5c8cc9a2ce72675ea" data-href-monthly="https://link.businessos.au/payment-link/6a7b20a5c8cc9a2ce72675ea" data-href-yearly="https://link.businessos.au/payment-link/6a7b211273c7ff66b05e79c4" class="btn btn-outline-green pricing-card-cta">Get Business Essentials</a>
+        </div>
+      </article>
+
+      <article class="pricing-card pricing-card--featured" data-plan="growth">
+        <div class="pricing-card-banner pricing-card-banner--popular">Most Popular</div>
+        <div class="pricing-card-header">
+          <div class="pricing-card-name">Growth</div>
+          <p class="pricing-card-info">For scaling businesses and teams</p>
+
+          <div class="pricing-card-price">
+            <span class="price-original"><span class="price-currency">$</span><span class="price-figure" data-tier="growth">189</span><span class="price-strike" aria-hidden="true"></span></span><span class="price-annual"><span class="price-annual-inner"><span class="price-currency">$</span><span class="price-figure price-figure--annual" data-effective-tier="growth">189</span></span></span><span class="price-suffix">/mo<span class="price-annual-badge" data-price-badge hidden>2 months free</span></span>
+          </div>
+          <p class="price-billed-note" data-billed-label>billed monthly</p>
+        </div>
+
+        <div class="pricing-card-features">
+          <div class="feature-row"><svg class="pricing-check" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Everything in Essentials</p></div>
+          <div class="feature-row"><svg class="pricing-check" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Email marketing</p></div>
+          <div class="feature-row"><svg class="pricing-check" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Social media planner</p></div>
+          <div class="feature-row"><svg class="pricing-check" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Websites and stores</p></div>
+          <div class="feature-row"><svg class="pricing-check" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Payments and invoicing</p></div>
+          <div class="feature-row"><svg class="pricing-check" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Reputation management</p></div>
+          <div class="feature-row"><svg class="pricing-star" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.6l2.86 5.8 6.4.93-4.63 4.51 1.09 6.37L12 17.2l-5.72 3.01 1.09-6.37-4.63-4.51 6.4-.93L12 2.6z"/></svg><p>Ask AI</p></div>
+        </div>
+
+        <div class="pricing-card-footer">
+          <a href="https://link.businessos.au/payment-link/6a7b214773c7ff66b05e79c5" data-href-monthly="https://link.businessos.au/payment-link/6a7b214773c7ff66b05e79c5" data-href-yearly="https://link.businessos.au/payment-link/6a7b216873c7ff66b05e79c7" class="btn btn-green pricing-card-cta">Grow Your Business</a>
+        </div>
+      </article>
+
+      <article class="pricing-card pricing-card--featured" data-plan="intelligence">
+        <div class="pricing-card-banner pricing-card-banner--value">Best Value</div>
+        <div class="pricing-card-header">
+          <div class="pricing-card-name">Intelligence</div>
+          <p class="pricing-card-info">For large teams and advanced needs</p>
+
+          <div class="pricing-card-price">
+            <span class="price-original"><span class="price-currency">$</span><span class="price-figure" data-tier="intelligence">329</span><span class="price-strike" aria-hidden="true"></span></span><span class="price-annual"><span class="price-annual-inner"><span class="price-currency">$</span><span class="price-figure price-figure--annual" data-effective-tier="intelligence">329</span></span></span><span class="price-suffix">/mo<span class="price-annual-badge" data-price-badge hidden>2 months free</span></span>
+          </div>
+          <p class="price-billed-note" data-billed-label>billed monthly</p>
+        </div>
+
+        <div class="pricing-card-features">
+          <div class="feature-row"><svg class="pricing-check" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Everything in Essentials</p></div>
+          <div class="feature-row"><svg class="pricing-check" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Everything in Growth</p></div>
+          <div class="feature-row"><svg class="pricing-star" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.6l2.86 5.8 6.4.93-4.63 4.51 1.09 6.37L12 17.2l-5.72 3.01 1.09-6.37-4.63-4.51 6.4-.93L12 2.6z"/></svg><p>AI voice agents</p></div>
+          <div class="feature-row"><svg class="pricing-star" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.6l2.86 5.8 6.4.93-4.63 4.51 1.09 6.37L12 17.2l-5.72 3.01 1.09-6.37-4.63-4.51 6.4-.93L12 2.6z"/></svg><p>AI conversation agents (Email, SMS, social media)</p></div>
+          <div class="feature-row"><svg class="pricing-star" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.6l2.86 5.8 6.4.93-4.63 4.51 1.09 6.37L12 17.2l-5.72 3.01 1.09-6.37-4.63-4.51 6.4-.93L12 2.6z"/></svg><p>AI web chat agent</p></div>
+        </div>
+
+        <div class="pricing-card-footer">
+          <a href="https://link.businessos.au/payment-link/6a7b21c273c7ff66b05e79ca" data-href-monthly="https://link.businessos.au/payment-link/6a7b21c273c7ff66b05e79ca" data-href-yearly="https://link.businessos.au/payment-link/6a7b21dec8cc9a2ce72675ef" class="btn btn-cta pricing-card-cta">Get Business Intelligence</a>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="pricing-table-wrap">
+      <div class="pricing-table">
+        <div class="pricing-table-scroll">
+
+        <div class="pricing-table-row pricing-table-row--head">
+          <div class="pricing-table-feature">Features</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-plan">Essentials</div>
+            <div class="pricing-table-plan">Growth</div>
+            <div class="pricing-table-plan">Intelligence</div>
+          </div>
+          <div class="pricing-table-market-value">Market value</div>
+        </div>
+
+        <div class="pricing-table-body">
+          <div class="pricing-table-intelligence-highlight" aria-hidden="true"></div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">CRM</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check pricing-table-check--intelligence" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="pricing-table-market-value"><span class="pricing-table-market-value-amount">$30</span><span class="pricing-table-market-value-source">Pipedrive, monday CRM, HubSpot</span></div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">Conversations</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check pricing-table-check--intelligence" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="pricing-table-market-value"><span class="pricing-table-dash">&#8722;</span></div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">Calendar</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check pricing-table-check--intelligence" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="pricing-table-market-value"><span class="pricing-table-dash">&#8722;</span></div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">Media storage</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check pricing-table-check--intelligence" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="pricing-table-market-value"><span class="pricing-table-dash">&#8722;</span></div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">Sales pipelines</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check pricing-table-check--intelligence" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="pricing-table-market-value"><span class="pricing-table-dash">&#8722;</span></div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">Automations</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check pricing-table-check--intelligence" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="pricing-table-market-value"><span class="pricing-table-dash">&#8722;</span></div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">Reporting</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check pricing-table-check--intelligence" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="pricing-table-market-value"><span class="pricing-table-dash">&#8722;</span></div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">Email marketing</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check pricing-table-check--intelligence" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="pricing-table-market-value"><span class="pricing-table-market-value-amount">$31</span><span class="pricing-table-market-value-source">Klaviyo</span></div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">Social media planner</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check pricing-table-check--intelligence" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="pricing-table-market-value"><span class="pricing-table-market-value-amount">$29</span><span class="pricing-table-market-value-source">Later, Buffer, Hootsuite</span></div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">Websites and stores</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check pricing-table-check--intelligence" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="pricing-table-market-value"><span class="pricing-table-market-value-amount">$70</span><span class="pricing-table-market-value-source">Squarespace, Shopify, Wix</span></div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">Payments and invoicing</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check pricing-table-check--intelligence" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="pricing-table-market-value"><span class="pricing-table-market-value-amount">$75</span><span class="pricing-table-market-value-source">Xero, QuickBooks</span></div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">Reputation management</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-check pricing-table-check--intelligence" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="pricing-table-market-value"><span class="pricing-table-market-value-amount">$120</span><span class="pricing-table-market-value-source">NiceJob, Birdeye, Podium</span></div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">Ask AI</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.6l2.86 5.8 6.4.93-4.63 4.51 1.09 6.37L12 17.2l-5.72 3.01 1.09-6.37-4.63-4.51 6.4-.93L12 2.6z"/></svg></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.6l2.86 5.8 6.4.93-4.63 4.51 1.09 6.37L12 17.2l-5.72 3.01 1.09-6.37-4.63-4.51 6.4-.93L12 2.6z"/></svg></div>
+          </div>
+          <div class="pricing-table-market-value"><span class="pricing-table-market-value-amount">$30</span><span class="pricing-table-market-value-source">ChatGPT, Claude</span></div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">AI voice agents</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.6l2.86 5.8 6.4.93-4.63 4.51 1.09 6.37L12 17.2l-5.72 3.01 1.09-6.37-4.63-4.51 6.4-.93L12 2.6z"/></svg></div>
+          </div>
+          <div class="pricing-table-market-value"><span class="pricing-table-market-value-amount">$120</span></div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">AI conversation agents (Email, SMS, social media)</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.6l2.86 5.8 6.4.93-4.63 4.51 1.09 6.37L12 17.2l-5.72 3.01 1.09-6.37-4.63-4.51 6.4-.93L12 2.6z"/></svg></div>
+          </div>
+          <div class="pricing-table-market-value"><span class="pricing-table-market-value-amount">$60</span><span class="pricing-table-market-value-source">Retell AI, AI receptionist platforms</span></div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">AI web chat agent</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+            <div class="pricing-table-cell"><span class="pricing-table-dash">&#8722;</span></div>
+            <div class="pricing-table-cell"><svg class="pricing-table-star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.6l2.86 5.8 6.4.93-4.63 4.51 1.09 6.37L12 17.2l-5.72 3.01 1.09-6.37-4.63-4.51 6.4-.93L12 2.6z"/></svg></div>
+          </div>
+          <div class="pricing-table-market-value"><span class="pricing-table-market-value-amount">$60</span><span class="pricing-table-market-value-source">Tidio, Intercom</span></div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">No. users</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="pricing-table-value">5</span></div>
+            <div class="pricing-table-cell"><span class="pricing-table-value">10</span></div>
+            <div class="pricing-table-cell"><span class="pricing-table-value">Unlimited</span></div>
+          </div>
+          <div class="pricing-table-market-value"><span class="pricing-table-dash">&#8722;</span></div>
+        </div>
+
+        <div class="pricing-table-row">
+          <div class="pricing-table-feature">No. contacts</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="pricing-table-value">250</span></div>
+            <div class="pricing-table-cell"><span class="pricing-table-value">1,500</span></div>
+            <div class="pricing-table-cell"><span class="pricing-table-value">Unlimited</span></div>
+          </div>
+          <div class="pricing-table-market-value"><span class="pricing-table-dash">&#8722;</span></div>
+        </div>
+
+        <div class="pricing-table-row pricing-table-row--summary pricing-table-row--market">
+          <div class="pricing-table-feature">Total market value</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="pricing-table-value">$30</span></div>
+            <div class="pricing-table-cell"><span class="pricing-table-value">$385</span></div>
+            <div class="pricing-table-cell"><span class="pricing-table-value">$625</span></div>
+          </div>
+          <div class="pricing-table-market-value"></div>
+        </div>
+
+        <div class="pricing-table-row pricing-table-row--summary pricing-table-row--ourprice">
+          <div class="pricing-table-feature">Our price</div>
+          <div class="pricing-table-values">
+            <div class="pricing-table-cell"><span class="pricing-table-price"><span class="price-original"><span class="price-currency">$</span><span class="price-figure" data-tier="essentials">49</span><span class="price-strike" aria-hidden="true"></span></span><span class="price-annual"><span class="price-annual-inner"><span class="price-currency">$</span><span class="price-figure price-figure--annual" data-effective-tier="essentials">49</span></span></span><span class="price-suffix">/mo</span></span></div>
+            <div class="pricing-table-cell"><span class="pricing-table-price"><span class="price-original"><span class="price-currency">$</span><span class="price-figure" data-tier="growth">189</span><span class="price-strike" aria-hidden="true"></span></span><span class="price-annual"><span class="price-annual-inner"><span class="price-currency">$</span><span class="price-figure price-figure--annual" data-effective-tier="growth">189</span></span></span><span class="price-suffix">/mo</span></span></div>
+            <div class="pricing-table-cell"><span class="pricing-table-price"><span class="price-original"><span class="price-currency">$</span><span class="price-figure" data-tier="intelligence">329</span><span class="price-strike" aria-hidden="true"></span></span><span class="price-annual"><span class="price-annual-inner"><span class="price-currency">$</span><span class="price-figure price-figure--annual" data-effective-tier="intelligence">329</span></span></span><span class="price-suffix">/mo</span></span></div>
+          </div>
+          <div class="pricing-table-market-value"></div>
+        </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="site-footer" class="site-footer">
+  <div class="site-footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="bos-logo bos-logo--mini" aria-label="Business[OS] home"><span class="bos-logo__word">Business</span><span class="bos-logo__os">[OS]</span><span class="bos-logo__cursor" aria-hidden="true">&#9612;</span></a>
+      <p class="footer-tagline">The operating system behind your growth.</p>
+    </div>
+
+    <div class="footer-copyright">
+      <span>&copy; 2026 BusinessOS.</span>
+      <span class="footer-copyright-dot" aria-hidden="true"></span>
+      <span>All rights reserved.</span>
+    </div>
+  </div>
+</footer>
